@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { memo } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import type { Word } from '@/api/types';
 import { colors, fonts, radius, shadow, spacing } from '@/theme';
 import { IconButton } from './IconButton';
@@ -9,8 +9,11 @@ import { IconButton } from './IconButton';
 export interface WordItemProps {
   word: Word;
   saved: boolean;
+  /** Best pronunciation score so far, if the word has been practiced. */
+  score?: number;
   onToggleSave: (id: string) => void;
   onPlay: (word: Word) => void;
+  onOpen: (word: Word) => void;
 }
 
 const rohingyaText = (w: Word) => w.rohingya ?? w.rohingyalish ?? 'Not translated yet';
@@ -33,9 +36,30 @@ function Thumb({ word, size }: { word: Word; size: number }) {
   );
 }
 
-function WordCardBase({ word, saved, onToggleSave, onPlay }: WordItemProps) {
+function PracticePill({ score }: { score?: number }) {
+  const done = score !== undefined;
   return (
-    <View style={styles.card}>
+    <View style={[styles.pill, done && styles.pillDone]}>
+      <Ionicons
+        name={done ? 'checkmark-circle' : 'mic'}
+        size={18}
+        color={done ? colors.confidenceHigh : colors.primary}
+      />
+      <Text style={[styles.pillText, done && { color: colors.text }]}>
+        {done ? `Best ${score}` : 'Practice'}
+      </Text>
+    </View>
+  );
+}
+
+function WordCardBase({ word, saved, score, onToggleSave, onPlay, onOpen }: WordItemProps) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={`Practice saying ${word.english}`}
+      onPress={() => onOpen(word)}
+      style={({ pressed }) => [styles.card, pressed && { opacity: 0.92 }]}
+    >
       <Thumb word={word} size={88} />
       <Text style={styles.rohingya}>{rohingyaText(word)}</Text>
       <Text style={styles.english}>{word.english}</Text>
@@ -52,17 +76,26 @@ function WordCardBase({ word, saved, onToggleSave, onPlay }: WordItemProps) {
           onPress={() => onToggleSave(word.id)}
         />
       </View>
-    </View>
+      <PracticePill score={score} />
+    </Pressable>
   );
 }
 
-function WordRowBase({ word, saved, onToggleSave, onPlay }: WordItemProps) {
+function WordRowBase({ word, saved, score, onToggleSave, onPlay, onOpen }: WordItemProps) {
   return (
-    <View style={styles.row}>
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={`Practice saying ${word.english}`}
+      onPress={() => onOpen(word)}
+      style={styles.row}
+    >
       <Thumb word={word} size={48} />
       <View style={styles.rowText}>
         <Text style={styles.rowRohingya}>{rohingyaText(word)}</Text>
-        <Text style={styles.rowEnglish}>{word.english}</Text>
+        <Text style={styles.rowEnglish}>
+          {word.english}
+          {score !== undefined ? `  ·  Best ${score}` : ''}
+        </Text>
       </View>
       <IconButton
         name="volume-high"
@@ -77,7 +110,7 @@ function WordRowBase({ word, saved, onToggleSave, onPlay }: WordItemProps) {
         onPress={() => onToggleSave(word.id)}
         size={22}
       />
-    </View>
+    </Pressable>
   );
 }
 
@@ -106,6 +139,18 @@ const styles = StyleSheet.create({
   },
   english: { fontSize: fonts.size.md, color: colors.textMuted },
   actions: { flexDirection: 'row', gap: spacing.sm, marginTop: spacing.sm },
+  pill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.xs,
+    marginTop: spacing.sm,
+    minHeight: 36,
+    paddingHorizontal: spacing.md,
+    borderRadius: radius.pill,
+    backgroundColor: colors.primarySoft,
+  },
+  pillDone: { backgroundColor: '#E3F6EC' },
+  pillText: { fontSize: fonts.size.sm, fontWeight: fonts.weight.bold, color: colors.primary },
   row: {
     flexDirection: 'row',
     alignItems: 'center',

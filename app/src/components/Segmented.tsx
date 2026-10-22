@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors, fonts, radius, spacing } from '@/theme';
 
 interface Props<T extends string> {
-  options: { value: T; label: string }[];
+  options: readonly { value: T; label: string }[];
   value: T;
   onChange: (v: T) => void;
 }

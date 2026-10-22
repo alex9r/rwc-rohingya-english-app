@@ -38,6 +38,7 @@ export interface ScenarioTurn {
 
 export interface Scenario {
   id: string;
+  categoryId: string;
   title: string;
   turns: ScenarioTurn[];
 }
@@ -46,4 +47,41 @@ export interface ScenarioFeedback {
   summary: string;
   confidence: number;
   tips: string[];
+}
+
+/** Mirrors POST /api/pronunciation/score; `scoring_unavailable` = score can't be trusted. */
+export interface PronunciationResult {
+  wordId: string;
+  status: 'scored' | 'scoring_unavailable';
+  /** 0..100, null when unavailable. */
+  score: number | null;
+  feedback: string;
+  tips: string[];
+  /** false while the scoring model hasn't been validated with Rohingya/English learners. */
+  validated: boolean;
+}
+
+export type ProgressUpdate =
+  { type: 'word'; wordId: string; score: number } | { type: 'scenario'; scenarioId: string };
+
+export interface CategoryProgress {
+  categoryId: string;
+  name: string;
+  wordsPracticed: number;
+  wordsTotal: number;
+  scenariosDone: number;
+  scenariosTotal: number;
+}
+
+/** Superset of GET /api/progress (completed_lessons, words_practiced, latest_pronunciation_score). */
+export interface ProgressSummary {
+  wordsPracticed: number;
+  wordsTotal: number;
+  scenariosCompleted: number;
+  scenariosTotal: number;
+  latestScore: number | null;
+  /** wordId -> best score */
+  wordScores: Record<string, number>;
+  completedScenarioIds: string[];
+  categories: CategoryProgress[];
 }

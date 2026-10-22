@@ -9,13 +9,13 @@ export function usePlayAudio() {
   useEffect(() => () => void Speech.stop(), []);
 
   return useCallback(
-    (opts: { url?: string | null; fallbackText?: string; language?: string }) => {
+    (opts: { url?: string | null; fallbackText?: string; language?: string; rate?: number }) => {
       void Speech.stop();
       if (opts.url) {
         player.replace({ uri: opts.url });
         player.play();
       } else if (opts.fallbackText) {
-        Speech.speak(opts.fallbackText, { language: opts.language ?? 'en-US' });
+        Speech.speak(opts.fallbackText, { language: opts.language ?? 'en-US', rate: opts.rate });
       }
     },
     [player],

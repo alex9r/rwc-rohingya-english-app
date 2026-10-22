@@ -28,6 +28,10 @@ export default function TabsLayout() {
         name="scenario"
         options={{ title: 'Scenario', tabBarIcon: (p) => <TabIcon name="chatbubbles" {...p} /> }}
       />
+      <Tabs.Screen
+        name="learn"
+        options={{ title: 'Learn', tabBarIcon: (p) => <TabIcon name="school" {...p} /> }}
+      />
     </Tabs>
   );
 }
