@@ -7,7 +7,7 @@ export const categories: Category[] = [
   { id: 'healthcare', name: 'Healthcare', description: 'Hospitals, clinics, appointments' },
   { id: 'education', name: 'Education', description: 'School, teachers, homework' },
   { id: 'housing', name: 'Housing', description: 'Finding a home, rent, repairs' },
-  { id: 'greetings', name: 'Basic Greetings', description: 'Hello, thank you, saying goodbye' },
+  { id: 'greetings', name: 'Greetings', description: 'Hello, thank you, saying goodbye' },
   { id: 'transportation', name: 'Transportation', description: 'Bus, tickets, directions' },
   { id: 'employment', name: 'Employment', description: 'Jobs, schedules, workplace' },
   { id: 'family', name: 'Family', description: 'People at home' },
