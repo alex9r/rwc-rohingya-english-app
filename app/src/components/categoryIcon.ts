@@ -10,7 +10,6 @@ const ICONS: Record<string, IconName> = {
   greetings: 'hand-left',
   transportation: 'bus',
   employment: 'briefcase',
-  family: 'people',
 };
 
 export const categoryIcon = (id: string): IconName => ICONS[id] ?? 'apps';

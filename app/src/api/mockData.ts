@@ -2,7 +2,7 @@
 // not verified translations (see README: data must be marked unvalidated).
 import type { Category, Scenario, ScenarioTurn, Word } from './types';
 
-// Ids follow the backend spec's categories (+ greetings and family; Daily Life is on hold).
+// Ids follow the backend spec's categories (+ greetings; Daily Life and Family are on hold).
 export const categories: Category[] = [
   { id: 'healthcare', name: 'Healthcare', description: 'Hospitals, clinics, appointments' },
   { id: 'education', name: 'Education', description: 'School, teachers, homework' },
@@ -10,7 +10,6 @@ export const categories: Category[] = [
   { id: 'greetings', name: 'Greetings', description: 'Hello, thank you, saying goodbye' },
   { id: 'transportation', name: 'Transportation', description: 'Bus, tickets, directions' },
   { id: 'employment', name: 'Employment', description: 'Jobs, schedules, workplace' },
-  { id: 'family', name: 'Family', description: 'People at home' },
 ];
 
 const w = (id: string, categoryId: string, english: string, rohingyalish: string | null): Word => ({
@@ -35,8 +34,6 @@ export const words: Word[] = [
   w('word_008', 'transportation', 'Ticket', null),
   w('word_009', 'employment', 'Job', '[mock] kam'),
   w('word_010', 'employment', 'Boss', null),
-  w('word_011', 'family', 'Mother', '[mock] amma'),
-  w('word_012', 'family', 'Father', '[mock] abba'),
   w('word_013', 'education', 'School', '[mock] iskul'),
   w('word_014', 'education', 'Teacher', null),
   w('word_015', 'housing', 'Rent', null),
