@@ -1,7 +1,4 @@
 # App (Expo + TypeScript)
-
-Voice-first Rohingya ↔ English learning app. Runs on a **mock API** (`src/api/`), so no backend is needed yet. All Rohingya text is placeholder (`[mock]`) and unvalidated.
-
 ## Run
 
 Requires Node (current LTS) and, for a phone, the **Expo Go** app (must support Expo SDK 58).
@@ -20,8 +17,6 @@ npx expo start        # press w (web), i (iOS sim), a (Android), or scan the QR 
 
 **Phone can't connect?** Phone and computer must share a Wi-Fi network that allows device-to-device traffic (campus Wi-Fi often doesn't). Try `npx expo start --tunnel` or a phone hotspot.
 
-Mic, camera, and audio need a real device or browser permission. Web is handy for quick UI checks but is not the target.
-
 ## Screens
 
 | Tab / route | What it does |
@@ -32,7 +27,7 @@ Mic, camera, and audio need a real device or browser permission. Web is handy fo
 | **Scenario** `scenario/…` | Pick a topic → pick a scenario → chat-style practice with a mic and placeholder feedback after each reply. Finishing marks it complete. |
 | **Learn** `learn` | Overall progress, "Up next" word, saved/scenario/score tiles, per-topic progress that links into Words. |
 
-Topics: Healthcare, Education, Housing, Greetings, Transportation, Employment, Family (words only).
+Topics: Healthcare, Education, Housing, Greetings, Transportation, Employment, Family.
 
 ## Structure
 
@@ -56,5 +51,3 @@ app/
 
 - **Mock persistence:** saved words and progress are stored on-device (AsyncStorage) by `api/client.ts`, standing in for `GET/POST /api/progress`. Clear app/site data to reset.
 - **Swapping in the backend:** replace function bodies in `src/api/client.ts`; screens only call `api.*`.
-- **Theme:** light blue + white. Keep small text navy on white; white text only when large and bold on the gradient.
-- Conventions and Expo gotchas for AI assistants are in `AGENTS.md`.
