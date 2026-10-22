@@ -46,23 +46,26 @@ const loadDb = (): Promise<Db> =>
 const persist = (db: Db) => AsyncStorage.setItem(DB_KEY, JSON.stringify(db)).catch(() => {});
 
 function summarize(db: Db): ProgressSummary {
-  const practiced = new Set(Object.keys(db.wordScores));
+  // Ignore ids saved by older mock data (e.g. removed words/scenarios).
+  const wordIds = new Set(words.map((x) => x.id));
+  const scenarioIds = new Set(scenarios.map((x) => x.id));
+  const practiced = new Set(Object.keys(db.wordScores).filter((id) => wordIds.has(id)));
+  const completed = db.completedScenarios.filter((id) => scenarioIds.has(id));
   return {
     wordsPracticed: practiced.size,
     wordsTotal: words.length,
-    scenariosCompleted: db.completedScenarios.length,
+    scenariosCompleted: completed.length,
     scenariosTotal: scenarios.length,
     latestScore: db.latestScore,
     wordScores: db.wordScores,
-    completedScenarioIds: db.completedScenarios,
+    completedScenarioIds: completed,
     categories: categories.map((c) => ({
       categoryId: c.id,
       name: c.name,
       wordsPracticed: words.filter((x) => x.categoryId === c.id && practiced.has(x.id)).length,
       wordsTotal: words.filter((x) => x.categoryId === c.id).length,
-      scenariosDone: scenarios.filter(
-        (x) => x.categoryId === c.id && db.completedScenarios.includes(x.id),
-      ).length,
+      scenariosDone: scenarios.filter((x) => x.categoryId === c.id && completed.includes(x.id))
+        .length,
       scenariosTotal: scenarios.filter((x) => x.categoryId === c.id).length,
     })),
   };

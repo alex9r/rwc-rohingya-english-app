@@ -2,12 +2,12 @@
 // not verified translations (see README: data must be marked unvalidated).
 import type { Category, Scenario, ScenarioTurn, Word } from './types';
 
-// Ids follow the backend spec's categories (+ family from the README lexicon example).
+// Ids follow the backend spec's categories (+ greetings and family; Daily Life is on hold).
 export const categories: Category[] = [
   { id: 'healthcare', name: 'Healthcare', description: 'Hospitals, clinics, appointments' },
   { id: 'education', name: 'Education', description: 'School, teachers, homework' },
   { id: 'housing', name: 'Housing', description: 'Finding a home, rent, repairs' },
-  { id: 'daily_life', name: 'Daily Life', description: 'Greetings, shopping, requests' },
+  { id: 'greetings', name: 'Basic Greetings', description: 'Hello, thank you, saying goodbye' },
   { id: 'transportation', name: 'Transportation', description: 'Bus, tickets, directions' },
   { id: 'employment', name: 'Employment', description: 'Jobs, schedules, workplace' },
   { id: 'family', name: 'Family', description: 'People at home' },
@@ -28,9 +28,9 @@ export const words: Word[] = [
   w('word_001', 'healthcare', 'Doctor', '[mock] dakhtor'),
   w('word_002', 'healthcare', 'Hospital', '[mock] haspatal'),
   w('word_003', 'healthcare', 'Medicine', '[mock] oshud'),
-  w('word_004', 'daily_life', 'Hello', '[mock] salam'),
-  w('word_005', 'daily_life', 'Thank you', '[mock] shukria'),
-  w('word_006', 'daily_life', 'Water', '[mock] pani'),
+  w('word_004', 'greetings', 'Hello', '[mock] salam'),
+  w('word_005', 'greetings', 'Thank you', '[mock] shukria'),
+  w('word_006', 'greetings', 'Goodbye', null),
   w('word_007', 'transportation', 'Bus', '[mock] bas'),
   w('word_008', 'transportation', 'Ticket', null),
   w('word_009', 'employment', 'Job', '[mock] kam'),
@@ -41,6 +41,12 @@ export const words: Word[] = [
   w('word_014', 'education', 'Teacher', null),
   w('word_015', 'housing', 'Rent', null),
   w('word_016', 'housing', 'Apartment', null),
+  w('word_017', 'greetings', 'Good morning', null),
+  w('word_018', 'greetings', 'Good evening', null),
+  w('word_019', 'greetings', 'Please', null),
+  w('word_020', 'greetings', 'Sorry', null),
+  w('word_021', 'greetings', 'How are you?', null),
+  w('word_022', 'greetings', 'Nice to meet you', null),
 ];
 
 const partner = (id: string, text: string): ScenarioTurn => ({ id, role: 'partner', text });
@@ -71,9 +77,14 @@ export const scenarios: Scenario[] = [
     'This apartment is available. Are you interested?',
     'The rent is $1,200 a month. Is that okay?',
   ]),
-  s('grocery', 'daily_life', 'At the grocery store', [
-    'Hello! Do you need help finding something?',
-    'Would you like a bag?',
+  s('meet_neighbour', 'greetings', 'Meeting a neighbour', [
+    'Hello! I’m your new neighbour.',
+    'How are you today?',
+    'Nice to meet you. Welcome!',
+  ]),
+  s('say_goodbye', 'greetings', 'Saying goodbye', [
+    'It was nice talking to you.',
+    'Have a good day. Goodbye!',
   ]),
   s('bus_ticket', 'transportation', 'Buying a bus ticket', [
     'Where would you like to go?',

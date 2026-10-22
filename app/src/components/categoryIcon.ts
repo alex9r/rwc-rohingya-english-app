@@ -7,7 +7,7 @@ const ICONS: Record<string, IconName> = {
   healthcare: 'medkit',
   education: 'school',
   housing: 'home',
-  daily_life: 'cart',
+  greetings: 'hand-left',
   transportation: 'bus',
   employment: 'briefcase',
   family: 'people',
