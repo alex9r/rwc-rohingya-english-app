@@ -15,7 +15,7 @@ npx expo start        # press w (web), i (iOS sim), a (Android), or scan the QR 
 | `npm run typecheck` | `tsc --noEmit` |
 | `npm run format` | Prettier |
 
-**Phone can't connect?** Phone and computer must share a Wi-Fi network that allows device-to-device traffic (campus Wi-Fi often doesn't). Try `npx expo start --tunnel` or a phone hotspot.
+**Phone can't connect?** Phone and computer must share a Wi-Fi network that allows device-to-device traffic. Try `npx expo start --tunnel` or a phone hotspot.
 
 ## Screens
 
