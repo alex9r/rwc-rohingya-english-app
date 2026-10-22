@@ -52,17 +52,23 @@ function PracticePill({ score }: { score?: number }) {
   );
 }
 
+// Open-area Pressables and IconButtons are siblings, never nested: on web each renders
+// as a <button>, and nested buttons are invalid HTML (React warns / breaks hydration).
 function WordCardBase({ word, saved, score, onToggleSave, onPlay, onOpen }: WordItemProps) {
+  const open = () => onOpen(word);
+  const openLabel = `Practice saying ${word.english}`;
   return (
-    <Pressable
-      accessibilityRole="button"
-      accessibilityLabel={`Practice saying ${word.english}`}
-      onPress={() => onOpen(word)}
-      style={({ pressed }) => [styles.card, pressed && { opacity: 0.92 }]}
-    >
-      <Thumb word={word} size={88} />
-      <Text style={styles.rohingya}>{rohingyaText(word)}</Text>
-      <Text style={styles.english}>{word.english}</Text>
+    <View style={styles.card}>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={openLabel}
+        onPress={open}
+        style={({ pressed }) => [styles.openArea, pressed && { opacity: 0.85 }]}
+      >
+        <Thumb word={word} size={88} />
+        <Text style={styles.rohingya}>{rohingyaText(word)}</Text>
+        <Text style={styles.english}>{word.english}</Text>
+      </Pressable>
       <View style={styles.actions}>
         <IconButton
           name="volume-high"
@@ -76,27 +82,31 @@ function WordCardBase({ word, saved, score, onToggleSave, onPlay, onOpen }: Word
           onPress={() => onToggleSave(word.id)}
         />
       </View>
-      <PracticePill score={score} />
-    </Pressable>
+      <Pressable accessibilityRole="button" accessibilityLabel={openLabel} onPress={open}>
+        <PracticePill score={score} />
+      </Pressable>
+    </View>
   );
 }
 
 function WordRowBase({ word, saved, score, onToggleSave, onPlay, onOpen }: WordItemProps) {
   return (
-    <Pressable
-      accessibilityRole="button"
-      accessibilityLabel={`Practice saying ${word.english}`}
-      onPress={() => onOpen(word)}
-      style={styles.row}
-    >
-      <Thumb word={word} size={48} />
-      <View style={styles.rowText}>
-        <Text style={styles.rowRohingya}>{rohingyaText(word)}</Text>
-        <Text style={styles.rowEnglish}>
-          {word.english}
-          {score !== undefined ? `  ·  Best ${score}` : ''}
-        </Text>
-      </View>
+    <View style={styles.row}>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={`Practice saying ${word.english}`}
+        onPress={() => onOpen(word)}
+        style={styles.rowOpen}
+      >
+        <Thumb word={word} size={48} />
+        <View style={styles.rowText}>
+          <Text style={styles.rowRohingya}>{rohingyaText(word)}</Text>
+          <Text style={styles.rowEnglish}>
+            {word.english}
+            {score !== undefined ? `  ·  Best ${score}` : ''}
+          </Text>
+        </View>
+      </Pressable>
       <IconButton
         name="volume-high"
         label={`Play ${word.english}`}
@@ -110,7 +120,7 @@ function WordRowBase({ word, saved, score, onToggleSave, onPlay, onOpen }: WordI
         onPress={() => onToggleSave(word.id)}
         size={22}
       />
-    </Pressable>
+    </View>
   );
 }
 
@@ -129,6 +139,7 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
     ...shadow.card,
   },
+  openArea: { alignItems: 'center', gap: spacing.xs, alignSelf: 'stretch' },
   thumb: { backgroundColor: colors.primarySoft, alignItems: 'center', justifyContent: 'center' },
   rohingya: {
     fontSize: fonts.size.lg,
@@ -160,6 +171,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: colors.border,
   },
+  rowOpen: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: spacing.md },
   rowText: { flex: 1 },
   rowRohingya: { fontSize: fonts.size.md, fontWeight: fonts.weight.bold, color: colors.text },
   rowEnglish: { fontSize: fonts.size.sm, color: colors.textMuted },
