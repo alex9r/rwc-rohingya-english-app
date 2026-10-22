@@ -27,7 +27,7 @@ npx expo start        # press w (web), i (iOS sim), a (Android), or scan the QR 
 | **Scenario** `scenario/…` | Pick a topic → pick a scenario → chat-style practice with a mic and placeholder feedback after each reply. Finishing marks it complete. |
 | **Learn** `learn` | Overall progress, "Up next" word, saved/scenario/score tiles, per-topic progress that links into Words. |
 
-Topics: Healthcare, Education, Housing, Greetings, Transportation, Employment, Family.
+Topics: Healthcare, Education, Housing, Greetings, Transportation, Employment.
 
 ## Structure
 
