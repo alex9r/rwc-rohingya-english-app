@@ -12,6 +12,7 @@
     "expo-font": "~58.0.9",
     "expo-image": "~58.0.16",
     "expo-image-picker": "~58.0.10",
+    "expo-linear-gradient": "~58.0.3",
     "expo-linking": "~58.0.14",
     "expo-router": "~58.0.25",
     "expo-speech": "~58.0.3",

@@ -12,10 +12,8 @@ export function ConfidenceBadge({ value }: { value: number }) {
         ? [colors.confidenceMid, 'Fairly sure']
         : [colors.confidenceLow, 'Not sure'];
   return (
-    <View
-      style={[styles.badge, { backgroundColor: color }]}
-      accessibilityLabel={`${label}, ${pct} percent`}
-    >
+    <View style={styles.badge} accessibilityLabel={`${label}, ${pct} percent`}>
+      <View style={[styles.dot, { backgroundColor: color }]} />
       <Text style={styles.text}>
         {label} · {pct}%
       </Text>
@@ -26,9 +24,14 @@ export function ConfidenceBadge({ value }: { value: number }) {
 const styles = StyleSheet.create({
   badge: {
     alignSelf: 'flex-start',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
     paddingHorizontal: spacing.md,
-    paddingVertical: spacing.xs,
+    paddingVertical: spacing.xs + 2,
     borderRadius: radius.pill,
+    backgroundColor: '#FFFFFF',
   },
-  text: { color: colors.textOnPrimary, fontSize: fonts.size.sm, fontWeight: fonts.weight.bold },
+  dot: { width: 10, height: 10, borderRadius: 5 },
+  text: { color: colors.text, fontSize: fonts.size.sm, fontWeight: fonts.weight.bold },
 });

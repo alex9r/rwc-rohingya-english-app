@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import type { ColorValue } from 'react-native';
-import { colors, fonts } from '@/theme';
+import { FloatingTabBar } from '@/components/FloatingTabBar';
+import { colors } from '@/theme';
 
 type IconName = React.ComponentProps<typeof Ionicons>['name'];
 
@@ -12,16 +13,8 @@ function TabIcon({ name, color, size }: { name: IconName; color: ColorValue; siz
 export default function TabsLayout() {
   return (
     <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: colors.primary,
-        tabBarInactiveTintColor: colors.textMuted,
-        tabBarLabelStyle: { fontSize: fonts.size.sm, fontWeight: fonts.weight.medium },
-        tabBarStyle: { height: 64, paddingTop: 6, backgroundColor: colors.surface },
-        headerStyle: { backgroundColor: colors.background },
-        headerTitleStyle: { color: colors.text },
-        headerShadowVisible: false,
-        sceneStyle: { backgroundColor: colors.background },
-      }}
+      tabBar={(props) => <FloatingTabBar {...props} />}
+      screenOptions={{ headerShown: false, sceneStyle: { backgroundColor: colors.background } }}
     >
       <Tabs.Screen
         name="speak"

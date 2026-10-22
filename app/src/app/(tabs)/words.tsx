@@ -1,159 +1,179 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useEffect, useState } from 'react';
+import { useCallback, useDeferredValue, useEffect, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { api } from '@/api/client';
 import type { Category, Word } from '@/api/types';
+import { GradientScreen } from '@/components/GradientScreen';
 import { IconButton } from '@/components/IconButton';
 import { Segmented } from '@/components/Segmented';
+import { Sheet } from '@/components/Sheet';
 import { WordCard, WordRow } from '@/components/WordCard';
-import { useRecorder } from '@/hooks/useRecorder';
 import { usePlayAudio } from '@/hooks/usePlayAudio';
+import { useRecorder } from '@/hooks/useRecorder';
 import { useSavedWords } from '@/hooks/useSavedWords';
-import { colors, fonts, radius, spacing } from '@/theme';
+import { colors, fonts, radius, spacing, TAB_BAR_SPACE, touch } from '@/theme';
 
-type View_ = 'cards' | 'table';
+type ViewMode = 'cards' | 'table';
+const VIEW_OPTIONS = [
+  { value: 'cards', label: 'Cards' },
+  { value: 'table', label: 'Table' },
+] as const;
+const ALL: Category = { id: '', name: 'All', description: '' };
 
 export default function WordsScreen() {
-  const [view, setView] = useState<View_>('cards');
+  const insets = useSafeAreaInsets();
+  const [view, setView] = useState<ViewMode>('cards');
   const [query, setQuery] = useState('');
+  const deferredQuery = useDeferredValue(query);
   const [categoryId, setCategoryId] = useState<string | undefined>();
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<Category[]>([ALL]);
   const [words, setWords] = useState<Word[]>([]);
   const { saved, toggle } = useSavedWords();
   const { recording, toggle: toggleMic } = useRecorder();
   const play = usePlayAudio();
 
   useEffect(() => {
-    api.getCategories().then(setCategories);
+    api.getCategories().then((c) => setCategories([ALL, ...c]));
   }, []);
 
   useEffect(() => {
     let live = true;
-    api.getWords({ categoryId, query }).then((w) => live && setWords(w));
+    api.getWords({ categoryId, query: deferredQuery }).then((w) => live && setWords(w));
     return () => {
       live = false;
     };
-  }, [categoryId, query]);
+  }, [categoryId, deferredQuery]);
 
   const onVoiceSearch = async () => {
     const uri = await toggleMic();
     if (uri) setWords(await api.searchWordByVoice(uri));
   };
 
-  const renderWord = (word: Word) => {
-    const props = {
-      word,
-      saved: saved.has(word.id),
-      onToggleSave: () => toggle(word.id),
-      onPlay: () => play({ url: word.audioUrl, fallbackText: word.english }),
-    };
-    return view === 'cards' ? <WordCard {...props} /> : <WordRow {...props} />;
-  };
+  // Stable callbacks so memoized rows don't re-render when unrelated state changes.
+  const onPlay = useCallback(
+    (w: Word) => play({ url: w.audioUrl, fallbackText: w.english }),
+    [play],
+  );
+
+  const renderWord = useCallback(
+    ({ item }: { item: Word }) => {
+      const props = { word: item, saved: saved.has(item.id), onToggleSave: toggle, onPlay };
+      return view === 'cards' ? <WordCard {...props} /> : <WordRow {...props} />;
+    },
+    [view, saved, toggle, onPlay],
+  );
+
+  const renderChip = useCallback(
+    ({ item }: { item: Category }) => {
+      const active = (item.id || undefined) === categoryId;
+      return (
+        <Pressable
+          onPress={() => setCategoryId(item.id || undefined)}
+          style={[styles.chip, active && styles.chipActive]}
+          accessibilityRole="button"
+          accessibilityState={{ selected: active }}
+        >
+          <Text style={[styles.chipText, active && styles.chipTextActive]}>{item.name}</Text>
+        </Pressable>
+      );
+    },
+    [categoryId],
+  );
 
   return (
-    <View style={styles.container}>
-      <View style={styles.searchRow}>
-        <View style={styles.search}>
-          <Ionicons name="search" size={20} color={colors.textMuted} />
-          <TextInput
-            style={styles.input}
-            value={query}
-            onChangeText={setQuery}
-            placeholder="Search English or Rohingyalish"
-            placeholderTextColor={colors.textMuted}
-            autoCorrect={false}
+    <GradientScreen>
+      <View style={[styles.header, { paddingTop: insets.top + spacing.lg }]}>
+        <Text style={styles.title}>Words</Text>
+        <View style={styles.searchRow}>
+          <View style={styles.search}>
+            <Ionicons name="search" size={20} color={colors.textMuted} />
+            <TextInput
+              style={styles.input}
+              value={query}
+              onChangeText={setQuery}
+              placeholder="Search English or Rohingyalish"
+              placeholderTextColor={colors.textMuted}
+              autoCorrect={false}
+              returnKeyType="search"
+              accessibilityLabel="Search words"
+            />
+          </View>
+          <IconButton
+            variant="glass"
+            name={recording ? 'stop' : 'mic'}
+            label={recording ? 'Stop voice search' : 'Search by voice'}
+            active={recording}
+            onPress={onVoiceSearch}
           />
         </View>
-        <IconButton
-          name={recording ? 'stop' : 'mic'}
-          label="Search by voice"
-          active={recording}
-          onPress={onVoiceSearch}
-        />
+        <Segmented options={VIEW_OPTIONS as never} value={view} onChange={setView} />
       </View>
 
-      <View style={styles.pad}>
-        <Segmented
-          options={[
-            { value: 'cards', label: 'Cards' },
-            { value: 'table', label: 'Table' },
+      <Sheet>
+        <FlatList
+          horizontal
+          data={categories}
+          keyExtractor={(c) => c.id || 'all'}
+          renderItem={renderChip}
+          showsHorizontalScrollIndicator={false}
+          style={styles.chips}
+          contentContainerStyle={styles.chipsContent}
+        />
+        <FlatList
+          key={view}
+          data={words}
+          numColumns={view === 'cards' ? 2 : 1}
+          keyExtractor={(w) => w.id}
+          renderItem={renderWord}
+          initialNumToRender={8}
+          windowSize={7}
+          removeClippedSubviews
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={[
+            view === 'cards' && styles.grid,
+            { paddingBottom: insets.bottom + TAB_BAR_SPACE + spacing.xl },
           ]}
-          value={view}
-          onChange={setView}
+          ListEmptyComponent={<Text style={styles.empty}>No words found. Try another search.</Text>}
         />
-      </View>
-
-      <FlatList
-        horizontal
-        data={[{ id: '', name: 'All' } as Category, ...categories]}
-        keyExtractor={(c) => c.id || 'all'}
-        showsHorizontalScrollIndicator={false}
-        style={styles.chips}
-        contentContainerStyle={styles.chipsContent}
-        renderItem={({ item }) => {
-          const active = (item.id || undefined) === categoryId;
-          return (
-            <Pressable
-              onPress={() => setCategoryId(item.id || undefined)}
-              style={[styles.chip, active && styles.chipActive]}
-              accessibilityRole="button"
-              accessibilityState={{ selected: active }}
-            >
-              <Text style={[styles.chipText, active && styles.chipTextActive]}>{item.name}</Text>
-            </Pressable>
-          );
-        }}
-      />
-
-      <FlatList
-        key={view}
-        data={words}
-        numColumns={view === 'cards' ? 2 : 1}
-        keyExtractor={(w) => w.id}
-        renderItem={({ item }) => renderWord(item)}
-        contentContainerStyle={view === 'cards' ? styles.grid : undefined}
-        ListEmptyComponent={<Text style={styles.empty}>No words found.</Text>}
-      />
-    </View>
+      </Sheet>
+    </GradientScreen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, paddingTop: spacing.xxl * 1.5 },
-  pad: { paddingHorizontal: spacing.lg, marginBottom: spacing.sm },
-  searchRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.sm,
-    paddingHorizontal: spacing.lg,
-    marginBottom: spacing.md,
-  },
+  header: { paddingHorizontal: spacing.xl, paddingBottom: spacing.xl, gap: spacing.lg },
+  title: { fontSize: fonts.size.xl, fontWeight: fonts.weight.bold, color: '#FFFFFF' },
+  searchRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   search: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing.sm,
-    backgroundColor: colors.surface,
-    borderRadius: radius.pill,
+    height: touch,
     paddingHorizontal: spacing.lg,
-    borderWidth: 1,
-    borderColor: colors.border,
-    height: 48,
+    borderRadius: radius.pill,
+    backgroundColor: '#FFFFFF',
   },
   input: { flex: 1, fontSize: fonts.size.md, color: colors.text },
-  chips: { flexGrow: 0 },
-  chipsContent: { paddingHorizontal: spacing.lg, gap: spacing.sm, paddingBottom: spacing.sm },
+  chips: { flexGrow: 0, marginTop: spacing.lg },
+  chipsContent: { paddingHorizontal: spacing.xl, gap: spacing.sm, paddingBottom: spacing.md },
   chip: {
+    minHeight: 44,
     paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.sm,
     borderRadius: radius.pill,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
+    backgroundColor: colors.primarySoft,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  chipActive: { backgroundColor: colors.primary, borderColor: colors.primary },
-  chipText: { fontSize: fonts.size.sm, color: colors.text },
-  chipTextActive: { color: colors.textOnPrimary, fontWeight: fonts.weight.bold },
-  grid: { paddingHorizontal: spacing.md },
-  empty: { textAlign: 'center', color: colors.textMuted, marginTop: spacing.xl },
+  chipActive: { backgroundColor: colors.primary },
+  chipText: { fontSize: fonts.size.sm, color: colors.primary, fontWeight: fonts.weight.bold },
+  chipTextActive: { color: '#FFFFFF' },
+  grid: { paddingHorizontal: spacing.md, paddingTop: spacing.sm },
+  empty: {
+    textAlign: 'center',
+    color: colors.textMuted,
+    fontSize: fonts.size.md,
+    marginTop: spacing.xxl,
+  },
 });

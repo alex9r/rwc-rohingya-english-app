@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 
 /** In-memory saved words. Persist (AsyncStorage / backend) once that exists. */
 export function useSavedWords() {
-  const [saved, setSaved] = useState<Set<string>>(new Set());
+  const [saved, setSaved] = useState<ReadonlySet<string>>(new Set());
   const toggle = useCallback((id: string) => {
     setSaved((prev) => {
       const next = new Set(prev);

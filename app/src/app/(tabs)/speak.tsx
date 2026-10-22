@@ -12,14 +12,18 @@ import {
   Text,
   View,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { api } from '@/api/client';
 import type { Direction, TranslateResult } from '@/api/types';
 import { ConfidenceBadge, LOW_CONFIDENCE } from '@/components/ConfidenceBadge';
+import { GradientScreen } from '@/components/GradientScreen';
 import { IconButton } from '@/components/IconButton';
 import { MicButton } from '@/components/MicButton';
+import { Orb } from '@/components/Orb';
 import { usePlayAudio } from '@/hooks/usePlayAudio';
 import { useRecorder } from '@/hooks/useRecorder';
-import { colors, fonts, radius, spacing } from '@/theme';
+import { colors, fonts, radius, shadow, spacing, TAB_BAR_SPACE } from '@/theme';
+import { promptOpenSettings } from '@/utils/permissions';
 
 const LABELS: Record<Direction, [string, string]> = {
   'rhg-en': ['Rohingya', 'English'],
@@ -27,6 +31,7 @@ const LABELS: Record<Direction, [string, string]> = {
 };
 
 export default function SpeakScreen() {
+  const insets = useSafeAreaInsets();
   const [direction, setDirection] = useState<Direction>('rhg-en');
   const [result, setResult] = useState<TranslateResult | null>(null);
   const [recordingUri, setRecordingUri] = useState<string | null>(null);
@@ -36,37 +41,46 @@ export default function SpeakScreen() {
   const replay = useAudioPlayer(null);
 
   const speakResult = (r: TranslateResult) => {
-    // Read the English side aloud (mock/TTS fallback until backend audio exists).
+    // Read the English side aloud (TTS fallback until backend audio exists).
     const english = r.direction === 'rhg-en' ? r.translatedText : r.sourceText;
     play({ url: r.direction === 'rhg-en' ? r.audioUrl : null, fallbackText: english ?? undefined });
+  };
+
+  const run = async (job: () => Promise<TranslateResult>) => {
+    setBusy(true);
+    try {
+      const r = await job();
+      setResult(r);
+      speakResult(r);
+    } catch {
+      Alert.alert('Translation failed', 'Check your connection and try again.');
+    } finally {
+      setBusy(false);
+    }
   };
 
   const onMic = async () => {
     const uri = await toggle();
     if (!uri) return;
     setRecordingUri(uri);
-    setBusy(true);
-    try {
-      const r = await api.translateSpeech(uri, direction);
-      setResult(r);
-      speakResult(r);
-    } finally {
-      setBusy(false);
-    }
+    await run(() => api.translateSpeech(uri, direction));
   };
 
   const onCamera = async () => {
-    const perm = await ImagePicker.requestCameraPermissionsAsync();
-    if (!perm.granted)
-      return Alert.alert('Camera needed', 'Please allow camera access in Settings.');
+    let perm = await ImagePicker.getCameraPermissionsAsync();
+    if (!perm.granted) {
+      if (!perm.canAskAgain) {
+        return promptOpenSettings(
+          'Camera needed',
+          'Allow camera access to translate text in photos.',
+        );
+      }
+      perm = await ImagePicker.requestCameraPermissionsAsync();
+      if (!perm.granted) return;
+    }
     const shot = await ImagePicker.launchCameraAsync({ mediaTypes: ['images'] });
     if (shot.canceled) return;
-    setBusy(true);
-    try {
-      setResult(await api.translateImage(shot.assets[0].uri, direction));
-    } finally {
-      setBusy(false);
-    }
+    await run(() => api.translateImage(shot.assets[0].uri, direction));
   };
 
   const onReplay = () => {
@@ -78,115 +92,155 @@ export default function SpeakScreen() {
   const onSave = () => {
     if (!recordingUri) return;
     try {
-      const dest = new File(Paths.document, `recording-${Date.now()}.m4a`);
-      new File(recordingUri).copy(dest);
+      new File(recordingUri).copy(new File(Paths.document, `recording-${Date.now()}.m4a`));
       Alert.alert('Saved', 'Recording saved on this device.');
     } catch {
       Alert.alert('Could not save', 'Please try again.');
     }
   };
 
+  const swap = () => {
+    setDirection((d) => (d === 'rhg-en' ? 'en-rhg' : 'rhg-en'));
+    setResult(null);
+  };
+
   const [from, to] = LABELS[direction];
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.langRow}>
-        <Text style={styles.lang}>{from}</Text>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="Swap languages"
-          onPress={() => {
-            setDirection(direction === 'rhg-en' ? 'en-rhg' : 'rhg-en');
-            setResult(null);
-          }}
-          style={styles.swap}
-        >
-          <Ionicons name="swap-horizontal" size={26} color={colors.primary} />
-        </Pressable>
-        <Text style={styles.lang}>{to}</Text>
-      </View>
-
-      <View style={styles.resultCard}>
+    <GradientScreen>
+      <ScrollView
+        style={styles.flex}
+        contentContainerStyle={[styles.hero, { paddingTop: insets.top + spacing.xxl }]}
+      >
         {busy ? (
-          <ActivityIndicator size="large" color={colors.primary} />
+          <ActivityIndicator size="large" color="#FFFFFF" />
         ) : result ? (
-          <>
+          <View style={styles.result}>
             <Text style={styles.source}>{result.sourceText}</Text>
             <Text style={styles.translated}>{result.translatedText ?? 'No translation yet'}</Text>
             <ConfidenceBadge value={result.confidence} />
             {result.confidence < LOW_CONFIDENCE && (
-              <Text style={styles.notSure}>
-                I am not sure. Please try again or ask someone to help.
-              </Text>
+              <View style={styles.notSure}>
+                <Ionicons name="alert-circle" size={22} color="#FFFFFF" />
+                <Text style={styles.notSureText}>Not sure. Try again or ask someone to help.</Text>
+              </View>
             )}
             <View style={styles.actions}>
               <IconButton
+                variant="glass"
                 name="volume-high"
                 label="Read aloud"
                 onPress={() => speakResult(result)}
               />
               <IconButton
+                variant="glass"
                 name="play"
                 label="Replay recording"
                 onPress={onReplay}
                 disabled={!recordingUri}
               />
               <IconButton
+                variant="glass"
                 name="download-outline"
                 label="Save recording"
                 onPress={onSave}
                 disabled={!recordingUri}
               />
             </View>
-          </>
+          </View>
         ) : (
-          <Text style={styles.hint}>Tap the microphone, speak, then tap again to stop.</Text>
+          <View style={styles.idle}>
+            <Orb active={recording} />
+            <Text style={styles.headline}>
+              {recording ? 'Listening…' : 'Tap the mic and speak'}
+            </Text>
+          </View>
         )}
-      </View>
+      </ScrollView>
 
-      <View style={styles.bottom}>
-        <IconButton
-          name="camera"
-          label="Translate text from a photo"
-          onPress={onCamera}
-          size={30}
-        />
-        <MicButton recording={recording} onPress={onMic} disabled={busy} size={104} />
-        <View style={{ width: 48 }} />
+      <View style={[styles.card, { marginBottom: insets.bottom + TAB_BAR_SPACE }]}>
+        <View style={styles.langRow}>
+          <Text style={styles.lang}>{from}</Text>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={`Swap languages. Now ${from} to ${to}`}
+            onPress={swap}
+            style={styles.swap}
+          >
+            <Ionicons name="swap-horizontal" size={24} color={colors.primary} />
+          </Pressable>
+          <Text style={styles.lang}>{to}</Text>
+        </View>
+        <View style={styles.controls}>
+          <IconButton
+            name="camera"
+            label="Translate text from a photo"
+            onPress={onCamera}
+            disabled={busy || recording}
+          />
+          <MicButton recording={recording} onPress={onMic} disabled={busy} />
+          <View style={styles.spacer} />
+        </View>
       </View>
-    </ScrollView>
+    </GradientScreen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flexGrow: 1, padding: spacing.lg, gap: spacing.xl, paddingTop: spacing.xxl * 1.5 },
-  langRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  flex: { flex: 1 },
+  hero: {
+    flexGrow: 1,
     justifyContent: 'center',
-    gap: spacing.lg,
+    paddingHorizontal: spacing.xl,
+    paddingBottom: spacing.xl,
   },
-  lang: { fontSize: fonts.size.lg, fontWeight: fonts.weight.bold, color: colors.text },
-  swap: { padding: spacing.md, backgroundColor: colors.primarySoft, borderRadius: radius.pill },
-  resultCard: {
-    minHeight: 220,
+  idle: { alignItems: 'center', gap: spacing.xl },
+  headline: {
+    fontSize: fonts.size.xl,
+    fontWeight: fonts.weight.bold,
+    color: '#FFFFFF',
+    textAlign: 'center',
+  },
+  result: { gap: spacing.lg },
+  source: {
+    fontSize: fonts.size.lg,
+    color: '#FFFFFF',
+    opacity: 0.9,
+    fontWeight: fonts.weight.bold,
+  },
+  translated: { fontSize: fonts.size.xl, fontWeight: fonts.weight.bold, color: '#FFFFFF' },
+  notSure: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
+  notSureText: {
+    flex: 1,
+    fontSize: fonts.size.md,
+    fontWeight: fonts.weight.bold,
+    color: '#FFFFFF',
+  },
+  actions: { flexDirection: 'row', gap: spacing.md },
+  card: {
+    marginHorizontal: spacing.lg,
+    padding: spacing.lg,
+    gap: spacing.xl,
     backgroundColor: colors.surface,
     borderRadius: radius.lg,
-    padding: spacing.xl,
-    gap: spacing.md,
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: colors.border,
+    ...shadow.card,
   },
-  source: { fontSize: fonts.size.md, color: colors.textMuted },
-  translated: { fontSize: fonts.size.xl, fontWeight: fonts.weight.bold, color: colors.text },
-  notSure: { fontSize: fonts.size.md, color: colors.confidenceLow },
-  hint: { fontSize: fonts.size.md, color: colors.textMuted, textAlign: 'center' },
-  actions: { flexDirection: 'row', gap: spacing.md },
-  bottom: {
-    flexDirection: 'row',
+  langRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  lang: {
+    flex: 1,
+    textAlign: 'center',
+    fontSize: fonts.size.lg,
+    fontWeight: fonts.weight.bold,
+    color: colors.text,
+  },
+  swap: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: colors.primarySoft,
     alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: spacing.lg,
+    justifyContent: 'center',
   },
+  controls: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  spacer: { width: 48 },
 });

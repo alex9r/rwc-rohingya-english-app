@@ -1,52 +1,62 @@
-import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
+import { Image } from 'expo-image';
+import { memo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import type { Word } from '@/api/types';
-import { colors, fonts, radius, spacing } from '@/theme';
+import { colors, fonts, radius, shadow, spacing } from '@/theme';
 import { IconButton } from './IconButton';
 
 export interface WordItemProps {
   word: Word;
   saved: boolean;
-  onToggleSave: () => void;
-  onPlay: () => void;
+  onToggleSave: (id: string) => void;
+  onPlay: (word: Word) => void;
 }
 
-const rohingyaText = (w: Word) => w.rohingya ?? w.rohingyalish ?? '— not translated yet —';
+const rohingyaText = (w: Word) => w.rohingya ?? w.rohingyalish ?? 'Not translated yet';
 
 function Thumb({ word, size }: { word: Word; size: number }) {
   return word.imageUrl ? (
     <Image
       source={{ uri: word.imageUrl }}
-      style={{ width: size, height: size, borderRadius: radius.md }}
+      style={{ width: size, height: size, borderRadius: size / 2 }}
+      contentFit="cover"
+      transition={150}
+      cachePolicy="memory-disk"
+      recyclingKey={word.id}
+      accessibilityLabel={word.english}
     />
   ) : (
-    <View style={[styles.thumb, { width: size, height: size }]}>
-      <Ionicons name="image-outline" size={size * 0.4} color={colors.textMuted} />
+    <View style={[styles.thumb, { width: size, height: size, borderRadius: size / 2 }]}>
+      <Ionicons name="image-outline" size={size * 0.4} color={colors.primary} />
     </View>
   );
 }
 
-export function WordCard({ word, saved, onToggleSave, onPlay }: WordItemProps) {
+function WordCardBase({ word, saved, onToggleSave, onPlay }: WordItemProps) {
   return (
     <View style={styles.card}>
-      <Thumb word={word} size={96} />
+      <Thumb word={word} size={88} />
       <Text style={styles.rohingya}>{rohingyaText(word)}</Text>
       <Text style={styles.english}>{word.english}</Text>
       <View style={styles.actions}>
-        <IconButton name="volume-high" label={`Play ${word.english}`} onPress={onPlay} />
+        <IconButton
+          name="volume-high"
+          label={`Play ${word.english}`}
+          onPress={() => onPlay(word)}
+        />
         <IconButton
           name={saved ? 'bookmark' : 'bookmark-outline'}
-          label={saved ? 'Unsave word' : 'Save word'}
+          label={saved ? `Unsave ${word.english}` : `Save ${word.english}`}
           active={saved}
-          onPress={onToggleSave}
+          onPress={() => onToggleSave(word.id)}
         />
       </View>
     </View>
   );
 }
 
-export function WordRow({ word, saved, onToggleSave, onPlay }: WordItemProps) {
+function WordRowBase({ word, saved, onToggleSave, onPlay }: WordItemProps) {
   return (
     <View style={styles.row}>
       <Thumb word={word} size={48} />
@@ -54,53 +64,56 @@ export function WordRow({ word, saved, onToggleSave, onPlay }: WordItemProps) {
         <Text style={styles.rowRohingya}>{rohingyaText(word)}</Text>
         <Text style={styles.rowEnglish}>{word.english}</Text>
       </View>
-      <IconButton name="volume-high" label={`Play ${word.english}`} onPress={onPlay} size={22} />
+      <IconButton
+        name="volume-high"
+        label={`Play ${word.english}`}
+        onPress={() => onPlay(word)}
+        size={22}
+      />
       <IconButton
         name={saved ? 'bookmark' : 'bookmark-outline'}
-        label={saved ? 'Unsave word' : 'Save word'}
+        label={saved ? `Unsave ${word.english}` : `Save ${word.english}`}
         active={saved}
-        onPress={onToggleSave}
+        onPress={() => onToggleSave(word.id)}
         size={22}
       />
     </View>
   );
 }
 
+// Memoized: with stable callbacks, toggling one word re-renders only that item.
+export const WordCard = memo(WordCardBase);
+export const WordRow = memo(WordRowBase);
+
 const styles = StyleSheet.create({
   card: {
     flex: 1,
-    margin: spacing.xs,
-    padding: spacing.md,
+    margin: spacing.sm,
+    padding: spacing.lg,
     backgroundColor: colors.surface,
-    borderRadius: radius.lg,
-    alignItems: 'center',
-    gap: spacing.xs,
-    borderWidth: 1,
-    borderColor: colors.border,
-  },
-  thumb: {
-    backgroundColor: colors.primarySoft,
     borderRadius: radius.md,
     alignItems: 'center',
-    justifyContent: 'center',
+    gap: spacing.xs,
+    ...shadow.card,
   },
+  thumb: { backgroundColor: colors.primarySoft, alignItems: 'center', justifyContent: 'center' },
   rohingya: {
     fontSize: fonts.size.lg,
     fontWeight: fonts.weight.bold,
     color: colors.text,
     textAlign: 'center',
+    marginTop: spacing.sm,
   },
   english: { fontSize: fonts.size.md, color: colors.textMuted },
-  actions: { flexDirection: 'row', gap: spacing.sm, marginTop: spacing.xs },
+  actions: { flexDirection: 'row', gap: spacing.sm, marginTop: spacing.sm },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing.md,
-    paddingVertical: spacing.sm,
-    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.xl,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: colors.border,
-    backgroundColor: colors.surface,
   },
   rowText: { flex: 1 },
   rowRohingya: { fontSize: fonts.size.md, fontWeight: fonts.weight.bold, color: colors.text },

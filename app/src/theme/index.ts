@@ -1,3 +1,4 @@
 export { colors } from './colors';
 export { fonts } from './fonts';
-export { spacing, radius, touch } from './spacing';
+export { shadow } from './shadows';
+export { spacing, radius, touch, TAB_BAR_SPACE } from './spacing';
