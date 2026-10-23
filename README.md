@@ -86,7 +86,7 @@ Each vocabulary entry in `data/lexicon.json` follows this shape (the schema is s
 
 ## Getting started
 
-> Setup instructions will be added once the first mockup is merged. The goal is that a teammate can run the app in under 10 minutes.
+> Full run instructions, screen overview, and app structure are in [`app/README.md`](app/README.md). The goal is that a teammate can run the app in under 10 minutes.
 
 ```bash
 git clone https://github.com/<org>/rwc-rohingya-english-app.git
