@@ -1,0 +1,4 @@
+faster-whisper>=1.0  # bundles PyAV, so no system ffmpeg needed for decoding
+numpy>=1.24
+jiwer>=3.0           # only for run_clips.py WER/CER
+pytest>=8.0          # tests
