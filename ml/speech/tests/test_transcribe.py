@@ -3,11 +3,10 @@ offline and fast (no weights download). Run: python -m pytest ml/speech -q"""
 
 import io
 import json
-import shutil
-import subprocess
 import wave
 from types import SimpleNamespace
 
+import av
 import numpy as np
 import pytest
 
@@ -30,6 +29,26 @@ def wav_bytes(seconds: float, freq: float | None = 220.0, amp: float = 0.3, rate
         w.setframerate(rate)
         w.writeframes(pcm.tobytes())
     return buf.getvalue()
+
+
+def encoded_tone(path, seconds: float, rate: int, channels: int, codec: str) -> None:
+    """Write a 300 Hz tone with PyAV (no ffmpeg binary needed), e.g. AAC into .m4a."""
+    with av.open(str(path), "w") as out:
+        stream = out.add_stream(codec, rate=rate, layout="stereo" if channels == 2 else "mono")
+        fmt = stream.codec_context.format.name
+        step = stream.codec_context.frame_size or 1024
+        n = int(seconds * rate)
+        x = (0.3 * np.sin(2 * np.pi * 300 * np.arange(n) / rate)).astype(np.float32)
+        for i in range(0, n, step):
+            chunk = np.tile(x[i : i + step], (channels, 1))  # planar: one row per channel
+            if fmt == "s16":  # packed int16: interleave channels into one row
+                chunk = (chunk * 32767).astype(np.int16).reshape(1, -1, order="F")
+            frame = av.AudioFrame.from_ndarray(chunk, format=fmt, layout=stream.layout.name)
+            frame.sample_rate = rate
+            for packet in stream.encode(frame):
+                out.mux(packet)
+        for packet in stream.encode(None):  # flush
+            out.mux(packet)
 
 
 def seg(text, start=0.0, end=1.0, logprob=-0.1, no_speech=0.01, ratio=1.2):
@@ -78,7 +97,7 @@ def test_empty_bytes_is_empty():
 def test_garbage_bytes_is_invalid():
     r = transcribe(b"this is definitely not audio" * 50, model=FakeModel())
     assert r.status == Status.INVALID_AUDIO
-    assert r.error
+    assert r.error and ".audio" not in r.error  # no server temp path in the response
 
 
 def test_wav_header_with_no_frames_is_empty():
@@ -152,11 +171,8 @@ def test_ok_from_bytes_and_file_object(speech_file):
 
 
 def test_stereo_44k_is_resampled(tmp_path):
-    if not shutil.which("ffmpeg"):
-        pytest.skip("ffmpeg not installed")
     p = tmp_path / "stereo.wav"
-    subprocess.run(["ffmpeg", "-v", "error", "-f", "lavfi", "-i", "sine=f=300:d=1",
-                    "-ac", "2", "-ar", "44100", str(p)], check=True)
+    encoded_tone(p, 1.0, rate=44100, channels=2, codec="pcm_s16le")
     model = FakeModel([seg("a")])
     r = transcribe(p, model=model)
     assert r.ok and r.duration_s == pytest.approx(1.0, abs=0.05)
@@ -165,11 +181,8 @@ def test_stereo_44k_is_resampled(tmp_path):
 
 def test_m4a_like_expo_recording(tmp_path):
     """Expo's HIGH_QUALITY preset records AAC in .m4a; make sure it decodes, from bytes too."""
-    if not shutil.which("ffmpeg"):
-        pytest.skip("ffmpeg not installed")
     p = tmp_path / "rec.m4a"
-    subprocess.run(["ffmpeg", "-v", "error", "-f", "lavfi", "-i", "sine=f=300:d=1.2",
-                    "-ac", "1", "-ar", "44100", "-c:a", "aac", str(p)], check=True)
+    encoded_tone(p, 1.2, rate=44100, channels=1, codec="aac")
     assert transcribe(p, model=FakeModel([seg("a")])).ok
     assert transcribe(p.read_bytes(), model=FakeModel([seg("a")])).ok
 

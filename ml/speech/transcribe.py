@@ -223,7 +223,10 @@ def load_audio(audio: AudioInput) -> np.ndarray:
         try:
             samples = _decode(path)
         except Exception as e:  # PyAV raises several error types for bad input
-            raise _AudioError(Status.INVALID_AUDIO, f"could not decode audio: {e}") from e
+            # PyAV's message ends with the file name, which for bytes input is a
+            # server temp path; keep just the reason.
+            reason = getattr(e, "strerror", None) or str(e)
+            raise _AudioError(Status.INVALID_AUDIO, f"could not decode audio: {reason}") from e
     finally:
         if tmp is not None:
             try:
@@ -381,25 +384,3 @@ def transcribe(
         duration_s=duration,
         segments=segments,
     ))
-
-
-# --------------------------------------------------------------------------- CLI
-
-
-def _main() -> None:
-    import argparse
-    import json
-
-    ap = argparse.ArgumentParser(description="Transcribe audio clips with Whisper.")
-    ap.add_argument("files", nargs="+", help="audio files")
-    ap.add_argument("--language", default=None, help="proxy language code, e.g. bn, ur, en")
-    ap.add_argument("--model", default=DEFAULT_MODEL, help="faster-whisper model size")
-    args = ap.parse_args()
-
-    for f in args.files:
-        r = transcribe(f, args.language, model_size=args.model)
-        print(json.dumps({"file": f, **r.to_dict()}, ensure_ascii=False, indent=2))
-
-
-if __name__ == "__main__":
-    _main()

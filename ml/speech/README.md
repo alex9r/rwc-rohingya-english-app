@@ -5,8 +5,7 @@
 behind the backend's `/transcribe` endpoint: bad input never crashes it, it just
 comes back with a status saying what went wrong.
 
-Owner: Mohammed (speech). Pronunciation scoring (`score_pronunciation`) is Luna's
-and will live alongside this.
+Owner: Mohammed (speech).
 
 ## Setup
 
@@ -33,7 +32,7 @@ r.to_dict()     # JSON-ready dict for the API response
 From the command line:
 
 ```bash
-python -m ml.speech.transcribe clip.m4a --language bn --model small
+python -m ml.speech clip.m4a --language bn --model small
 ```
 
 ## Input requirements
@@ -54,7 +53,7 @@ python -m ml.speech.transcribe clip.m4a --language bn --model small
 | `status` | string | see the table below |
 | `text` | string | `""` unless status is `ok` |
 | `confidence` | float 0–1 | `0.0` unless status is `ok` |
-| `is_confident` | bool | `ok` and `confidence >= 0.5`; when false the app should show its "not sure" state |
+| `is_confident` | bool | `ok` and `confidence >= 0.5`; false means the text shouldn't be trusted |
 | `language` | string or null | the language Whisper decoded as (the proxy, not "Rohingya") |
 | `language_probability` | float or null | Whisper's language-ID probability |
 | `duration_s` | float or null | clip length in seconds |
@@ -81,15 +80,15 @@ Example:
 
 ### Statuses
 
-| `status` | Meaning | Suggested app message |
-|---|---|---|
-| `ok` | transcribed | show text (with "not sure" if `is_confident` is false) |
-| `empty_audio` | zero bytes or zero samples | "We didn't get a recording. Try again." |
-| `invalid_audio` | missing file, not audio, or undecodable | "Something went wrong with the recording. Try again." |
-| `too_short` | under 0.3 s | "Hold the button a little longer." |
-| `too_long` | over 60 s or 25 MB | "Try a shorter recording." |
-| `no_speech` | silent, or Whisper heard nothing | "We couldn't hear you. Try again closer to the phone." |
-| `model_error` | model failed to load or run | "Speech isn't available right now." (server-side problem) |
+| `status` | Meaning |
+|---|---|
+| `ok` | transcribed (check `is_confident` before trusting the text) |
+| `empty_audio` | zero bytes or zero samples |
+| `invalid_audio` | missing file, not audio, or undecodable |
+| `too_short` | under 0.3 s |
+| `too_long` | over 60 s or 25 MB |
+| `no_speech` | silent, or Whisper heard nothing |
+| `model_error` | model failed to load or run (a server-side problem, not the user's audio) |
 
 Silent clips are rejected before the model runs, which also stops Whisper's habit of
 "hearing" phrases like *Thank you.* in silence.
@@ -100,41 +99,24 @@ Per segment: `exp(avg_logprob)` (the average token probability) × `(1 − no_sp
 halved if the compression ratio is above 2.4 (Whisper's sign of a repetition loop).
 The clip score is the duration-weighted mean over segments.
 
-This is a heuristic, not a calibrated probability. Once Hari's evaluation has clips
-with reference transcripts, compare confidence against WER (`run_clips.py` writes
-both) and adjust the 0.5 threshold.
+This is a heuristic, not a calibrated probability. Once Hari's evaluation has WER per
+clip, compare it against the confidence from `run_clips.py` and adjust the 0.5
+threshold.
 
-## Wiring it into the backend (for Nikiel)
+## Calling it from a server
 
-`transcribe()` is blocking and CPU-heavy, so use a plain `def` endpoint (FastAPI runs
-it in a thread pool) and load the model at startup:
+What the backend needs to know about the function (the endpoint itself is the
+backend's):
 
-```python
-from contextlib import asynccontextmanager
-from fastapi import FastAPI, File, UploadFile
-from fastapi.responses import JSONResponse
-from ml.speech import Status, transcribe, warmup
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    warmup()  # load the model at startup so the first request isn't slow
-    yield
-
-app = FastAPI(lifespan=lifespan)
-
-@app.post("/transcribe")
-def transcribe_endpoint(audio: UploadFile = File(...), language: str | None = None):
-    try:
-        result = transcribe(audio.file, language=language)
-    except ValueError as e:  # unsupported language code
-        return JSONResponse({"status": "invalid_request", "error": str(e)}, status_code=422)
-    code = 503 if result.status == Status.MODEL_ERROR else 200
-    return JSONResponse(result.to_dict(), status_code=code)
-```
-
-Audio problems return 200 with a status so the app handles one response shape;
-only a server-side model failure is a 503. The app records with
-`RecordingPresets.HIGH_QUALITY`, so expect `.m4a` uploads.
+- `transcribe()` is blocking and CPU-heavy (about 1.5 s for a 2 s clip with `small`
+  on an M2 CPU). Don't call it directly inside an `async` handler.
+- The model loads on first use (about 1.5 s once downloaded). Call `warmup()` once at
+  startup so the first request isn't slow.
+- It takes a FastAPI `UploadFile.file` directly. The app records `.m4a`/AAC.
+- It only raises for programmer errors: `ValueError` for an unsupported `language`
+  code, `TypeError` for a wrong input type. Every audio problem comes back as a
+  status, and `to_dict()` is the JSON body.
+- `model_error` is the only status that means the server is at fault.
 
 Settings via environment variables:
 
@@ -147,16 +129,15 @@ Settings via environment variables:
 ## Testing on dataset clips
 
 ```bash
-# folder of clips (reference text optional, in clip.txt next to clip.wav)
-python -m ml.speech.run_clips path/to/clips --language bn --limit 50
+# folder of clips
+python -m ml.speech.run_clips path/to/clips --language bn --limit 30
 
-# manifest CSV/TSV with path and transcript columns
-python -m ml.speech.run_clips manifest.tsv --path-col path --ref-col sentence --out results_bn.csv
+# manifest CSV/TSV with a path column
+python -m ml.speech.run_clips manifest.tsv --path-col path --out results.csv
 ```
 
-Writes one CSV row per clip (status, text, confidence, timing, and WER/CER when a
-reference is given) and prints a summary: status counts, mean confidence, speed
-relative to real time.
+Writes one CSV row per clip (status, text, confidence, timing) and prints a summary:
+status counts, mean confidence, speed relative to real time.
 
 ## Tests
 

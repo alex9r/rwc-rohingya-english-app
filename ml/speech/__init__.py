@@ -1,4 +1,4 @@
-"""Speech module: Whisper transcription (this package) and pronunciation scoring."""
+"""Speech module: Whisper transcription."""
 
 from .transcribe import (
     LOW_CONFIDENCE,
