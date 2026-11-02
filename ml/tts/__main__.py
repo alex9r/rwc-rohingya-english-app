@@ -9,7 +9,7 @@ from .generate import DEFAULT_LIMIT, HERO_IDS, generate, load_words, select_word
 
 REPO = Path(__file__).resolve().parents[2]
 # Stand-in until data/lexicon.json lands (Marcus). Same draft shape as the real one.
-DEFAULT_LEXICON = REPO / "ml" / "translation" / "data" / "rohingya_greetings_30.json"
+DEFAULT_LEXICON = REPO / "data" / "rohingya_greetings_40.json"
 
 
 def main() -> None:

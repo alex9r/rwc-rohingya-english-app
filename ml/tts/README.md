@@ -29,7 +29,7 @@ pip install -r ml/tts/requirements.txt
 python -m ml.tts fetch-model          # one-off, ~120 MB, public download, no key
 
 python -m ml.tts generate --hero      # the 3 hero words
-python -m ml.tts generate             # up to 40 words from the lexicon (--limit N)
+python -m ml.tts generate             # up to 40 words from the lexicon (--limit N); all 40 greetings
 python -m ml.tts generate --ids greeting_001 greeting_005
 ```
 
@@ -46,7 +46,8 @@ choice (Hello, Thanks, Goodbye: `greeting_001`, `greeting_004`, `greeting_002`),
 confirmed by the TPMs.
 
 **Lexicon source.** `data/lexicon.json` does not exist yet. Until it does, the default
-`--lexicon` is the stand-in `ml/translation/data/rohingya_greetings_30.json`. The loader
+`--lexicon` is the stand-in `data/rohingya_greetings_40.json` (40 greeting entries, draft
+schema, copied unchanged into this PR; it is Marcus's file to own and replace). The loader
 reads `entries[].id` with `english_meaning.word` or `english`. Point `--lexicon` at
 Marcus's file when it lands.
 
@@ -116,7 +117,7 @@ README shape could carry the same path):
 ```diff
 --- a/data/lexicon.json (draft)
 +++ b/data/lexicon.json (draft)
-@@ -46,5 +46,10 @@
+@@ -50,5 +50,10 @@
        "image": null,
        "different_forms": [],
 -      "validation_status": "dictionary_attested_pending_native_review"
@@ -128,11 +129,11 @@ README shape could carry the same path):
 +      }
      },
      {
-@@ -79,5 +84,10 @@
+@@ -83,5 +88,10 @@
        "image": null,
        "different_forms": [],
--      "validation_status": "translation_pending_source_verification"
-+      "validation_status": "translation_pending_source_verification",
+-      "validation_status": "source_attested_pending_native_review"
++      "validation_status": "source_attested_pending_native_review",
 +      "english_audio": {
 +        "path": "data/audio/greeting_002_en_tts_placeholder.mp3",
 +        "kind": "tts_placeholder",
@@ -140,7 +141,7 @@ README shape could carry the same path):
 +      }
      },
      {
-@@ -148,5 +158,10 @@
+@@ -152,5 +162,10 @@
        "image": null,
        "different_forms": [],
 -      "validation_status": "dictionary_attested_pending_native_review"
@@ -167,8 +168,9 @@ backend registration.
 
 ## Quality check on the default voice
 
-I transcribed the 30 greeting words with Whisper `base` as a rough check that the audio
-says the word. 28 came back exactly as the word; two were ambiguous as single words:
-"Greet" was heard as "Agreed." and "Thank" as "Thank you." None of the three hero words
-was affected. This is a quick intelligibility check, not a listening review, and placeholders remain
-unvalidated.
+I transcribed all 40 generated words with Whisper `base` as a rough check that the audio
+says the word. 36 came back as the word; four were not exact: "Greet" heard as "Agreed.",
+"Thank" as "Thank you.", "Invitation" as "Invitational" and "Grateful" as "A grateful.". The
+first two are ambiguous as single words; the others are small slips. None of the three hero words
+was affected. This is a quick intelligibility check, not a listening review, and
+placeholders remain unvalidated.
