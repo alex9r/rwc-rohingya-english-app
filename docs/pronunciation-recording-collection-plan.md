@@ -43,7 +43,7 @@ Written, plain language, offered in Rohingya and read aloud on request. It must 
 4. **Not a test of the person.** We test the app.
 5. **Right to withdraw** at any time, no reason needed, no effect on Centre services; recordings are
    deleted on request. Say how and who to ask.
-6. **Who holds the data** and **how long** (open questions below).
+6. **Who holds the data** and **how long** (to be decided with the TPMs and the Centre).
 7. **Separate tick-boxes** for optional uses: (a) evaluating the scorer (needed to take part), (b) as
    in-app reference audio, (c) to train or tune a model later, (d) kept after the project ends.
 
@@ -79,14 +79,3 @@ Age and gender only if the Centre says the evaluation needs them.
 Recordings and the CSV **never go in git**. They live in a private, access-limited location run by the
 data holder. The Centre reviews each batch (word right, genuine attempt, nothing inappropriate) before use
 beyond internal testing; until then results are reported as "from unvalidated recordings".
-
-## Open questions for the TPMs
-
-1. **Hero words:** which?
-2. **Data holder and storage** (Centre drive, university storage)? Does a Waterloo / WAT.ai research-data
-   or ethics policy apply, and must it be reviewed before we collect?
-3. **Retention:** how long, and what happens at term end?
-4. **Centre coordinator** and Rohingya speaker for consent; a translated form and who checks it?
-5. **Thanks / compensation** for speakers: allowed or expected?
-6. **Reference audio:** do we ever want these as in-app audio? It needs its own consent and quality bar.
-7. **QA person** on the team; session location, timing and who else is present.

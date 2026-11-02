@@ -58,10 +58,3 @@ An input to Hari's evaluation, not a replacement:
 
 App: two buttons and one `POST /api/pronunciation/feedback` (Nikiel). Backend: a table, no audio unless
 opted in. Analysis: a notebook of 👍/👎 rate per score band (Hari).
-
-## Open questions
-
-1. Before the first evaluation, or after?
-2. Audio-retention opt-in: ship now or later?
-3. Where is the data stored, and for how long?
-4. Can "fair" be translated into Rohingya without changing its meaning? The Centre should check.
