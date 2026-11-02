@@ -106,7 +106,7 @@ wrong sentence.
 | Result | |
 |---|---|
 | Correct target, scored (45 of 50) | mean **97.2**; 38 scored 100; lowest 57 |
-| Correct target, **`scoring_unavailable`** (5 of 50) | confidence 0.40–0.49; each transcript was clearly wrong (for example "Inferm of purpose"), so withholding a score was the right call |
+| Correct target, **`scoring_unavailable`** (5 of 50) | confidence 0.40–0.49. The transcripts were *near misses*, not garbage (see "Why were 5 clips withheld?"). Had they been scored they would have got 82, 94, 68, 77 and 71. |
 | Wrong target (6 pairings) | **0, 0, 0, 0, 0, 0** |
 
 By accent label (scored clips only; **n is 1 to 8 per label, too small to compare groups**):
@@ -139,17 +139,57 @@ Every clip that did not score 100, or was not scored:
 | Hong Kong English | The thing's not working! | the things not working. | 98 | scored | 0.51 |
 | India and South Asia | She bought three cod fishes to cook for dinner. | She bought three cod fishers to cook for dinner. | 99 | scored | 0.58 |
 
+
+### Why were 5 clips withheld? Transcriber or threshold?
+
+Neither is clearly at fault, and I checked rather than guessed. I re-scored all 50 clips with
+the confidence cutoff switched off (`min_confidence=0`) and re-ran the 5 under other
+transcriber settings.
+
+- **The transcripts were mostly close.** Heard vs target: "crystal-seal's man" vs "crystal
+  salesman"; "Inferm of purpose" vs "Infirm of purpose"; "near the more, no less, oratorious" vs
+  "neither more nor less meritorious"; "flashed she thing th…" vs "flashy-thinged"; "biopreferred
+  wine" vs "boy preferred wine". Every one is a rare word, a name, or a made-up word
+  ("neuralizer", "flashy-thinged"). Whisper is unsure about exactly those, which is what a low
+  confidence means.
+- **It is not an obvious `transcribe()` bug.** The function returns the text and a confidence that
+  match what faster-whisper reports for these clips. Changing its settings does not fix them:
+  with VAD off, four of the five confidences got *lower* (0.35–0.48 vs 0.40–0.49); with beam size 1
+  the text changed but stayed wrong, confidences 0.37–0.47. Audio level is normal (RMS 0.02–0.06
+  vs a median of 0.027 for the other 45). I read the function and found nothing wrong with how it computes confidence, but it is a
+  heuristic its own README calls uncalibrated, and I used the
+  `base` model, not the default `small`, which would probably be more confident on rare words.
+- **The 0.5 threshold is not a clean separator either.** Across all 50 clips, at 0.5 it withheld 5, of
+  which 4 would have scored under 90 (good) and 1 would have scored 94 (a loss); and 4 clips with
+  scores under 90 (57, 74, 80, 75) still got through at 0.52–0.61. Raising it to 0.6 withholds 18
+  clips, 7 of them poor, and still lets one poor clip through. Lowering it to 0.45 stops withholding
+  anything useful.
+
+| Threshold | Withheld | Of those, would score under 90 | Poor clips (under 90) still scored |
+|---|---|---|---|
+| 0.40 | 0 | 0 | 8 |
+| 0.45 | 1 | 1 | 7 |
+| **0.50** | **5** | **4** | **4** |
+| 0.55 | 9 | 6 | 2 |
+| 0.60 | 18 | 7 | 1 |
+
+So: confidence does track whether the transcript is wrong (the 8 poor clips have confidences of
+0.40–0.61, while 42 of 50 clips that scored 90+ have a median of 0.64), but it also drops
+for correct-but-hard text. In the app the targets are short, common words, where rare-word
+doubt matters less, so these Common Voice sentences probably overstate the problem. The right
+fix is calibration on data like the app's, which is Hari's job, and perhaps a second signal
+besides Whisper's own confidence. These are 50 clips; they motivate that work and do not settle a
+threshold.
+
 What I take from it, and what I don't:
 
-- The scorer behaves as intended on 50 more clips: low-confidence garbage is withheld,
+- The scorer behaves as intended on 50 more clips: low-confidence clips are withheld,
   mismatched sentences score 0, clear matches score high.
 - **No accent conclusion can be drawn.** Labels are self-declared and coarse, groups have 1–8
   clips, the clips are read prompts with rare words ("genies", "Neuralizer"), and I did not
   listen to any. The lowest scores (England English, Scottish) look like hard words and
   Whisper `base` errors rather than anything about accent, but that is a guess.
-- **Confidence is informative here.** Every clip whose transcript was garbage fell below
-  0.5, and 18 of 50 sat under 0.6, so the threshold is doing work near where it sits. This is the
-  strongest input so far for Hari's calibration, but 50 clips are not a calibration.
+- **Confidence is a weak signal, not a clean gate.** See "Why were 5 clips withheld?" above.
 - Common Voice speakers are not Rohingya, and none of this tells us how the app will do for
   them.
 
