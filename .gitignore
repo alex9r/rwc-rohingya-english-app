@@ -1,3 +1,4 @@
 ml/pronunciation/smoke_clips/
 __pycache__/
 .pytest_cache/
+ml/pronunciation/smoke_clips_cv/

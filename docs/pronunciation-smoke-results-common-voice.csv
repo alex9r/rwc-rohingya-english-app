@@ -1,0 +1,57 @@
+clip_id,pairing,accent_label,target,heard,score,status,confidence,feedback_code,needs_improvement
+cv27-10324156,correct,Scottish English,Use the export command to set environment variables.,Use the Export command to set environment variables.,100,scored,0.7041,great,
+cv27-10324156,wrong_target,Scottish English,I forgot my hat.,Use the Export command to set environment variables.,0,scored,0.7041,try_again,+->use; +->the; +->export; +->command; i->to; forgot->set; my->environment; hat->variables
+cv27-100036,correct,United States English,I forgot my hat.,I forgot my hat,100,scored,0.6734,great,
+cv27-100036,wrong_target,United States English,"""So you know about love,"" the boy said.",I forgot my hat,0,scored,0.6734,try_again,so->-; you->-; know->-; about->-; love->i; the->forgot; boy->my; said->hat
+cv27-100887,correct,England English,"""So you know about love,"" the boy said.",So you know about love the boy said,100,scored,0.62,great,
+cv27-100887,wrong_target,England English,"""That baker..."" he said to himself, without completing the thought.",So you know about love the boy said,0,scored,0.62,try_again,that->-; baker->-; he->so; said->you; to->know; himself->about; without->love; completing->the; the->boy; thought->said
+cv27-10048,correct,"Southern African (South Africa, Zimbabwe, Namibia)","""That baker..."" he said to himself, without completing the thought.",That baker you see to himself without completing the thought.,80,scored,0.5777,good,he->you; said->see
+cv27-10048,wrong_target,"Southern African (South Africa, Zimbabwe, Namibia)",The wireless joypad was experiencing connection issues.,That baker you see to himself without completing the thought.,0,scored,0.5777,try_again,+->that; +->baker; +->you; the->see; wireless->to; joypad->himself; was->without; experiencing->completing; connection->the; issues->thought
+cv27-1009478,correct,"India and South Asia (India, Pakistan, Sri Lanka)",The wireless joypad was experiencing connection issues.,The wireless Joypad was experiencing connection issues.,100,scored,0.5975,great,
+cv27-1009478,wrong_target,"India and South Asia (India, Pakistan, Sri Lanka)","Whenever I fall asleep, I don't dream.",The wireless Joypad was experiencing connection issues.,0,scored,0.5975,try_again,whenever->-; i->the; fall->wireless; asleep->joypad; i->was; do->experiencing; not->connection; dream->issues
+cv27-100319,correct,Hong Kong English,"Whenever I fall asleep, I don't dream.","Whenever I fall asleep, I don't dream.",100,scored,0.6743,great,
+cv27-100319,wrong_target,Hong Kong English,I just know that the Tradition is always right.,"Whenever I fall asleep, I don't dream.",0,scored,0.6743,try_again,i->-; just->whenever; know->i; that->fall; the->asleep; tradition->i; is->do; always->not; right->dream
+cv27-100034,correct,United States English,I just know that the Tradition is always right.,I just know that the tradition is always right.,100,scored,0.7271,great,
+cv27-100885,correct,England English,But they don't count.,but they don't count.,100,scored,0.603,great,
+cv27-10324161,correct,Scottish English,Choose between the high road and the low.,Choose between the high road and the low.,100,scored,0.6967,great,
+cv27-100311,correct,Hong Kong English,I won't shut up!,I won't shut up!,100,scored,0.6621,great,
+cv27-1009475,correct,"India and South Asia (India, Pakistan, Sri Lanka)",She bought three cod fishes to cook for dinner.,She bought three cod fishers to cook for dinner.,99,scored,0.5834,great,fishes->fishers
+cv27-1009476,correct,"India and South Asia (India, Pakistan, Sri Lanka)",The boy shook his head.,The boy shook his head.,100,scored,0.583,great,
+cv27-100706,correct,Canadian English,The everlasting Jew the wandering Jew,"the everlasting Jew, the wandering Jew.",100,scored,0.5293,great,
+cv27-103510,correct,Filipino,He could always become a crystal salesman again.,He could always become a crystal-seal's man again.,,scoring_unavailable,0.4588,low_confidence,
+cv27-100042,correct,United States English,I should say not!,I should say not.,100,scored,0.5929,great,
+cv27-1009482,correct,"India and South Asia (India, Pakistan, Sri Lanka)",She was accused of making wrong accusations.,She was accused of making wrong accusations.,100,scored,0.6934,great,
+cv27-100317,correct,Hong Kong English,"If you are using Firefox, try out this sample module.","If you are using Firefox, try out this sample module.",100,scored,0.6193,great,
+cv27-100714,correct,Canadian English,With that new haircut you look ridiculous.,with that new haircut you look ridiculous,100,scored,0.6871,great,
+cv27-10324151,correct,Scottish English,The couch cover and hall drapes were blue.,A couch cover and hole drapes were blue.,75,scored,0.6129,good,the->a; hall->hole
+cv27-10049,correct,"Southern African (South Africa, Zimbabwe, Namibia)",But in his heart he knew that it did matter.,But in his heart he knew that it did matter.,100,scored,0.6798,great,
+cv27-100316,correct,Hong Kong English,The thing's not working!,the things not working.,98,scored,0.5129,great,thing->things
+cv27-100710,correct,Canadian English,Infirm of purpose,Inferm of purpose,,scoring_unavailable,0.4944,low_confidence,
+cv27-10324160,correct,Scottish English,I shall be neither more nor less meritorious,"I shall be near the more, no less, oratorious.",,scoring_unavailable,0.4571,low_confidence,
+cv27-100040,correct,United States English,The burning fire had been extinguished.,the burning fire had been extinguished.,100,scored,0.6328,great,
+cv27-100315,correct,Hong Kong English,He's looking for you.,He's looking for you,100,scored,0.6569,great,
+cv27-100041,correct,United States English,He didn't want any conversation at this point.,He didn't want any conversation at this point.,100,scored,0.7434,great,
+cv27-10324152,correct,Scottish English,How could that be?,How could that be?,100,scored,0.7225,great,
+cv27-10324155,correct,Scottish English,The picnic was ruined by a marching band.,The picnic was ruined by a marching band.,100,scored,0.6511,great,
+cv27-1009485,correct,"India and South Asia (India, Pakistan, Sri Lanka)","There's no point in disclaiming, we have everything on tape.",There's no point in describing. We have everything on tape.,91,scored,0.5969,great,disclaiming->describing
+cv27-100703,correct,Canadian English,Who is this man?,Who is this man?,100,scored,0.7083,great,
+cv27-100889,correct,England English,"Wearing his new sandals, he descended the stairs silently.","wearing his new sandals, he descended the stairs silently.",100,scored,0.6086,great,
+cv27-10324158,correct,Scottish English,How did it happen?,How did it happen?,100,scored,0.7022,great,
+cv27-100305,correct,Hong Kong English,I recommend investing in a good microphone.,I recommend investing in a good microphone.,100,scored,0.6214,great,
+cv27-1009477,correct,"India and South Asia (India, Pakistan, Sri Lanka)",We like to see clear weather.,we like to see clear weather,100,scored,0.6502,great,
+cv27-100704,correct,Canadian English,"Please look up the song, Twist of shadows.","Please look up the song, Twist of Shadows.",100,scored,0.6169,great,
+cv27-100314,correct,Hong Kong English,Read all about it!,Read all about it,100,scored,0.6281,great,
+cv27-10324157,correct,Scottish English,"Welcome to the party, Sandra!",Welcome to the party Sandra,100,scored,0.7112,great,
+cv27-100322,correct,Hong Kong English,This is a ludicrous situation.,This is a ludicrous situation,100,scored,0.6384,great,
+cv27-1009480,correct,"India and South Asia (India, Pakistan, Sri Lanka)",But it was not to be.,but it was not to be,100,scored,0.6908,great,
+cv27-100712,correct,Canadian English,Our influence on their monopoly is tiny.,Our influence on their monopoly is tiny.,100,scored,0.6141,great,
+cv27-100891,correct,England English,"It spoke of journeys, discoveries, books, and change.","This bulk of journeys, discover a box and change.",57,scored,0.5181,keep_going,it->this; spoke->bulk; discoveries->discover; +->a; books->box
+cv27-100705,correct,Canadian English,I think somebody stole one of his crown jewels.,I think somebody stole one of his crown jewels.,100,scored,0.6905,great,
+cv27-100875,correct,England English,The man looked at him without responding.,The man looked at him without responding.,100,scored,0.5704,great,
+cv27-100909,correct,England English,The genies were the spirits of good and evil.,The June is all the spirits of good and evil.,74,scored,0.5181,good,+->june; genies->is; were->all
+cv27-1009474,correct,"India and South Asia (India, Pakistan, Sri Lanka)",Agent Keys took out his neuralizer and flashy-thinged the coroner.,"Agent keys, took out his Neuralizer and flashed she thing the Corona.",,scoring_unavailable,0.4597,low_confidence,
+cv27-100555,correct,England English,Most meteorites are more or less rounded.,Most meteorites are more or less rounded.,100,scored,0.7016,great,
+cv27-100039,correct,United States English,And my name's Michael.,and my name's Michael.,100,scored,0.5744,great,
+cv27-100881,correct,England English,The boy preferred wine.,The biopreferred wine.,,scoring_unavailable,0.4006,low_confidence,
+cv27-103509,correct,Filipino,But you don't know about love.,But you don't know about love.,100,scored,0.5834,great,
+cv27-100715,correct,Canadian English,I won't get my wings with that attitude.,I won't get my wings with that attitude.,100,scored,0.6959,great,

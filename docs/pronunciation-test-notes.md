@@ -1,7 +1,7 @@
 # Pronunciation scorer: smoke-test notes
 
-> **This is a small smoke test, not an evaluation.** 25 clips, one model, no accent labels,
-> no human listening. It shows the scorer runs end to end on real recordings and that wrong
+> **This is a small smoke test, not an evaluation.** 75 clips in two sets, one model, accent
+> labels only on the second set, no human listening. It shows the scorer runs end to end on real recordings and that wrong
 > targets score low. It says nothing about accuracy on Rohingya speakers' English. WER and
 > threshold calibration are Hari's evaluation.
 
@@ -30,7 +30,7 @@ mismatch can come from the recording itself.
 
 | Source | Why not |
 |---|---|
-| Common Voice English (CC0, has accent metadata) | Now hosted on Mozilla Data Collective, which needs an account and agreement to its terms. I did not create accounts or accept terms for you. **Best next source for accented speech; see "What to download" below.** |
+| Common Voice English (CC0, has accent metadata) | **Used in the second set below**, after you supplied API access (Mozilla Data Collective). |
 | L2-ARCTIC (24 non-native speakers; Hindi, Korean, Mandarin, Spanish, Arabic, Vietnamese L1) | Download is behind a licence form on the PSI Lab page (to be reviewed and accepted by a person); licence reported as non-commercial. Not downloaded. No Rohingya L1, but non-native and labelled. |
 | LibriSpeech (CC BY 4.0) | Usable, but the smallest useful archive is hundreds of MB of mostly native audiobook readers, and it has no accent labels; it would not add what Tatoeba doesn't. |
 | Speech Accent Archive (George Mason; labelled non-native speakers) | Licence is CC BY-NC-SA 4.0; one long paragraph per speaker, not short sentences. Usable for a private check, not downloaded. |
@@ -86,13 +86,80 @@ fell under `MIN_CONFIDENCE`.
 
 "Likely reason" is a guess from the transcript. I did not listen to the clips.
 
+
+## Second set: Common Voice English with accent labels
+
+50 clips from Mozilla Common Voice Scripted Speech 27.0 (English), **CC0**, fetched through
+the Mozilla Data Collective download API. The archive is 95 GB, so I streamed it and stopped
+after 628 MB: the metadata files first (`validated.tsv`, which has the self-declared accent),
+then the first clips in the archive that matched. Selection: accent label present, 2–10 words,
+at least 2 up-votes and no down-votes, at most 8 clips per accent label and 6 for "United
+States English" (a baseline). Audio is not committed (`ml/pronunciation/smoke_clips_cv/` is
+git-ignored). The manifest is `ml/pronunciation/smoke_manifest_cv.csv`; full results (all 56 rows)
+are in [`pronunciation-smoke-results-common-voice.csv`](pronunciation-smoke-results-common-voice.csv).
+Common Voice asks that nobody tries to identify speakers: no speaker IDs, ages or genders
+are kept, only the accent label.
+
+Same setup as above (`base` model, `MIN_CONFIDENCE = 0.5`). Six clips were also scored against a
+wrong sentence.
+
+| Result | |
+|---|---|
+| Correct target, scored (45 of 50) | mean **97.2**; 38 scored 100; lowest 57 |
+| Correct target, **`scoring_unavailable`** (5 of 50) | confidence 0.40–0.49; each transcript was clearly wrong (for example "Inferm of purpose"), so withholding a score was the right call |
+| Wrong target (6 pairings) | **0, 0, 0, 0, 0, 0** |
+
+By accent label (scored clips only; **n is 1 to 8 per label, too small to compare groups**):
+
+| Accent label | Scored clips | Mean score |
+|---|---|---|
+| United States English | 6 | 100 |
+| Canadian English | 7 | 100 |
+| Hong Kong English | 8 | 99.8 |
+| India and South Asia | 7 | 98.6 |
+| Scottish English | 7 | 96.4 |
+| Southern African | 2 | 90 |
+| England English | 7 | 90.1 |
+| Filipino | 1 (+1 unavailable) | 100 |
+
+Every clip that did not score 100, or was not scored:
+
+| Accent label (Common Voice) | Target | Heard | Score | Status | Conf. |
+|---|---|---|---|---|---|
+| Filipino | He could always become a crystal salesman again. | He could always become a crystal-seal's man again. | – | scoring_unavailable | 0.46 |
+| Canadian English | Infirm of purpose | Inferm of purpose | – | scoring_unavailable | 0.49 |
+| Scottish English | I shall be neither more nor less meritorious | I shall be near the more, no less, oratorious. | – | scoring_unavailable | 0.46 |
+| India and South Asia | Agent Keys took out his neuralizer and flashy-thinged the coroner. | Agent keys, took out his Neuralizer and flashed she thing the Corona. | – | scoring_unavailable | 0.46 |
+| England English | The boy preferred wine. | The biopreferred wine. | – | scoring_unavailable | 0.40 |
+| England English | It spoke of journeys, discoveries, books, and change. | This bulk of journeys, discover a box and change. | 57 | scored | 0.52 |
+| England English | The genies were the spirits of good and evil. | The June is all the spirits of good and evil. | 74 | scored | 0.52 |
+| Scottish English | The couch cover and hall drapes were blue. | A couch cover and hole drapes were blue. | 75 | scored | 0.61 |
+| Southern African | "That baker..." he said to himself, without completing the thought. | That baker you see to himself without completing the thought. | 80 | scored | 0.58 |
+| India and South Asia | There's no point in disclaiming, we have everything on tape. | There's no point in describing. We have everything on tape. | 91 | scored | 0.60 |
+| Hong Kong English | The thing's not working! | the things not working. | 98 | scored | 0.51 |
+| India and South Asia | She bought three cod fishes to cook for dinner. | She bought three cod fishers to cook for dinner. | 99 | scored | 0.58 |
+
+What I take from it, and what I don't:
+
+- The scorer behaves as intended on 50 more clips: low-confidence garbage is withheld,
+  mismatched sentences score 0, clear matches score high.
+- **No accent conclusion can be drawn.** Labels are self-declared and coarse, groups have 1–8
+  clips, the clips are read prompts with rare words ("genies", "Neuralizer"), and I did not
+  listen to any. The lowest scores (England English, Scottish) look like hard words and
+  Whisper `base` errors rather than anything about accent, but that is a guess.
+- **Confidence is informative here.** Every clip whose transcript was garbage fell below
+  0.5, and 18 of 50 sat under 0.6, so the threshold is doing work near where it sits. This is the
+  strongest input so far for Hari's calibration, but 50 clips are not a calibration.
+- Common Voice speakers are not Rohingya, and none of this tells us how the app will do for
+  them.
+
 ## What this does and doesn't show
 
 - **Works end to end** on real mp3 audio (via `ml/speech`'s decoder) with plausible scores:
   clear speech scores high, mismatched sentences score near 0.
 - The 14 and 15 on wrong targets come from shared small words ("I", "a"); a short common
   word can earn partial credit by chance.
-- **The low-confidence path was not exercised on real audio.** Confidence on these clean
+- **(Tatoeba set only) The low-confidence path was not exercised.** The Common Voice set did exercise it (below). Confidence on these clean
   readings sat between 0.52 and 0.92, with eight clips below 0.62, so the 0.5 threshold
   is close to where ordinary clear speech falls. Hari's calibration should look at this
   before anyone trusts 0.5.
@@ -111,18 +178,10 @@ data yet on Rohingya speakers' English; see the
 [recording collection plan](pronunciation-recording-collection-plan.md). Scores stay
 `provisional: true`.
 
-## What to download for a better test (needs you)
+## Still worth adding
 
-For an accented-speech test, which is the one that matters for this app:
-
-1. **Common Voice English**, from [Mozilla Data Collective](https://datacollective.mozillafoundation.org/)
-   (account and acceptance of the dataset terms needed; CC0; the TSV includes `accents`).
-   Take the English `validated.tsv` plus a few dozen `.mp3` clips whose `accents` field is
-   non-native (for example South Asian), with short sentences.
-2. Or **L2-ARCTIC**, from the [PSI Lab page](https://psi.engr.tamu.edu/l2-arctic-corpus/)
-   after reading its licence (non-commercial).
-
-Drop the audio in `ml/pronunciation/smoke_clips/` (git-ignored), add one row per clip to
-`ml/pronunciation/smoke_manifest.csv` with `clip_id`, `file`, `source`, `source_url`,
-`license`, `attribution`, `target_text`, `accent_label`, and rerun
-`python -m ml.pronunciation.smoke_test ml/pronunciation/smoke_clips`. Do not commit the audio.
+Common Voice is now covered above. L2-ARCTIC (labelled non-native speakers, non-commercial licence,
+download form on the [PSI Lab page](https://psi.engr.tamu.edu/l2-arctic-corpus/)) would add speakers
+with a documented first language; I have not downloaded it. To add clips to either set, put the
+audio in the git-ignored folder, add manifest rows, and run
+`python -m ml.pronunciation.smoke_test <folder> --manifest <manifest.csv>`. Do not commit audio.
