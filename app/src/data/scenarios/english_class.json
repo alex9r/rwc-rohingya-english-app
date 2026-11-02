@@ -1,0 +1,71 @@
+{
+  "id": "english_class",
+  "categoryId": "greetings",
+  "title": "First day at English class",
+  "verification": "unvalidated",
+  "turns": [
+    {
+      "id": "english_class_t0",
+      "role": "partner",
+      "text": "Hi! I speak English. What language do you speak?",
+      "support": {
+        "english": "I speak English and you, what language do you speak?",
+        "rohingya": "Aa*i English hota hoi aar tu*i hon zubanot hota ho?",
+        "phraseId": "phrase_025",
+        "confidence": 0.7
+      },
+      "reply": {
+        "english": "I speak Rohingya.",
+        "rohingya": null,
+        "phraseId": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "english_class_t1",
+      "role": "partner",
+      "text": "Do you understand me?",
+      "support": null,
+      "reply": {
+        "english": "I'm beginning to understand.",
+        "rohingya": "Aa*i buza shuru goijji.",
+        "phraseId": "phrase_026",
+        "confidence": 0.95
+      }
+    },
+    {
+      "id": "english_class_t2",
+      "role": "partner",
+      "text": "Great! Please wait a minute while I get your book.",
+      "support": {
+        "english": "Please wait a minute.",
+        "rohingya": "Ek minith entezar goro.",
+        "phraseId": "phrase_018",
+        "confidence": 0.95
+      },
+      "reply": {
+        "english": "I thank you in advance for your assistance.",
+        "rohingya": "Tua*r modotorla aa*i tua*re agori shukuriya zanai.",
+        "phraseId": "phrase_023",
+        "confidence": 0.95
+      }
+    },
+    {
+      "id": "english_class_t3",
+      "role": "partner",
+      "text": "Class is over. See you tomorrow night!",
+      "support": {
+        "english": "See you tomorrow night.",
+        "rohingya": "Ayedde-hailla raitta daha oibo.",
+        "phraseId": "phrase_021",
+        "confidence": 0.95
+      },
+      "reply": {
+        "english": "Goodbye.",
+        "rohingya": "Allah Hafez.",
+        "phraseId": "phrase_038",
+        "confidence": 0.4
+      }
+    }
+  ]
+}
