@@ -1,128 +1,83 @@
 # Backend skeleton walkthrough
 
-How the speech and pronunciation pieces connect, where each person's work plugs in, and
-how to run what exists. It only describes what is in the repo on this branch; anything not
-built yet is marked **pending**.
+How the speech and pronunciation pieces connect, who plugs in where, and how to run what exists.
+Only what is in the repo is described; the rest is marked **pending**.
 
-## What exists, what doesn't
+## State
 
 | Piece | State |
 |---|---|
 | `app/` Expo app with a **mock** API client (`app/src/api/client.ts`) | exists |
-| `ml/speech`: `transcribe()` (Mohammed, PR #4) | exists on `speech/transcribe-hardening`, not merged to `main` yet; this branch is built on top of it |
-| `ml/pronunciation`: `score_pronunciation()` (this PR) | exists |
-| FastAPI service (`backend/`): `/transcribe`, `/api/pronunciation/score` | **pending** (Nikiel). The folder is not in the repo yet. |
-| `data/lexicon.json` | **pending**. Not in the repo yet; the README describes its planned shape. The app's `mockData.ts` stands in for it. |
-| Reference audio for words (TTS placeholder or native speaker) | **pending, separate task** |
-| WER evaluation and threshold calibration | **pending** (Hari) |
+| `ml/speech` `transcribe()` (Mohammad, PR #4) | PR open; this work builds on it |
+| `ml/pronunciation` `score_pronunciation()` (PR #5) | exists |
+| `ml/tts` English placeholder audio + `data/audio_manifest.json` (PR #7) | exists, separate PR |
+| FastAPI service (`/transcribe`, `/api/pronunciation/score`) | **pending** (Nikiel); no `backend/` folder yet |
+| `data/lexicon.json` | **pending** (Marcus); the app's `mockData.ts` and the greetings JSON stand in |
+| Native-speaker reference audio | **pending** |
+| WER evaluation, threshold calibration | **pending** (Hari) |
 
 ## How the pieces connect
 
 ```
- Expo app (app/)                      FastAPI backend (pending)                 ml/
- ───────────────                      ─────────────────────────                 ───
- record m4a  ──POST /transcribe────▶  ml.speech.transcribe(audio, lang)  ─────▶ faster-whisper
- (useRecorder)                              │
-                                            ▼
- word practice ─POST /api/pronunciation/score ─▶ look up word_id in lexicon
- (word/[id].tsx)  audio + word_id + "en"        │  target_text = English side
-                                                ▼
-                                       ml.pronunciation.score_pronunciation(
-                                           audio, target_text)
-                                                │  calls ml.speech.transcribe(audio, "en")
-                                                │  normalise → align → score
-                                                ▼
-                  ◀── JSON: score, feedback, needs_improvement, ──  + reference_audio_url
-                       reference_audio_url, provisional:true            from lexicon/audio (pending)
+Expo app                         FastAPI backend (pending)               ml/
+────────                         ─────────────────────────               ───
+record m4a ──POST /transcribe──▶ ml.speech.transcribe(audio, lang) ────▶ faster-whisper
+word practice
+ audio + word_id + "en"
+   ──POST /api/pronunciation/score──▶ look up word_id → English target (lexicon)
+                                      ml.pronunciation.score_pronunciation(audio, target)
+                                        └─ transcribe(audio, "en") → normalise → align → score
+   ◀── score, feedback, needs_improvement, provisional:true
+       + reference_audio_url (from lexicon / audio manifest)
 ```
 
-1. **App → backend.** The app records m4a/AAC (`app/src/hooks/useRecorder.ts`) and today
-   calls a mock (`api.translateSpeech`, `api.scorePronunciation`). "Swapping in the backend"
-   means replacing those function bodies with `fetch()` calls; screens only call `api.*`.
-2. **Backend → `ml/speech`.** `/transcribe` calls `transcribe(audio, language)`. It returns
-   text, a 0–1 confidence and a status, and never raises on bad audio.
-3. **Backend → `ml/pronunciation`.** `/api/pronunciation/score` looks up `word_id` in the
-   lexicon to get the English target, then calls
-   `score_pronunciation(audio, target_text)`. That function itself calls
-   `transcribe(audio, language="en")` (English, because the learners are practising
-   spoken English; Whisper has no Rohingya), then compares transcript and target.
-4. **Lexicon / audio.** The endpoint adds `reference_audio_url` and
-   `reference_audio_kind` from the lexicon entry. Until the audio exists these are `null`.
+1. **App → backend.** The app records m4a (`useRecorder`) and currently calls mocks
+   (`api.translateSpeech`, `api.scorePronunciation`). Going live means replacing those bodies with `fetch()`.
+2. **Backend → `ml/speech`.** `/transcribe` returns text, 0–1 confidence and a status; bad audio never raises.
+3. **Backend → `ml/pronunciation`.** It scores in **English** (`language="en"`): learners practise spoken
+   English and Whisper has no Rohingya. The transcriber is a parameter, so tests and caching can swap it.
+4. **Reference audio.** `reference_audio_url` and `reference_audio_kind` come from the lexicon / audio
+   manifest; `null` until audio exists.
 
-The scorer takes the transcriber as a parameter (`transcriber=`), so tests and any
-future caching layer can swap it without touching the scoring code.
+## Who plugs in where
 
-## Where each person's work plugs in
-
-Roles I could verify from the task brief and the repo are filled in. **Nidhi and Linxi:
-their areas were not stated, so those rows are left for the TPMs to fill in rather than
-guessed.**
+Nidhi's role was not given to me, so that row is blank for the TPMs.
 
 | Person | Work | Plugs in at |
 |---|---|---|
-| Mohammed | `ml/speech` `transcribe()` (PR #4) | Called by `/transcribe` and, inside `score_pronunciation`, with `language="en"`. Review the usage in `ml/pronunciation/scorer.py`. |
-| Hari | WER evaluation, threshold calibration | Tunes `LOW_CONFIDENCE` / `MIN_CONFIDENCE` (0.5), `DEFAULT_FUZZY_THRESHOLD` (0.8) and the score bands (constants at the top of `scorer.py`). Decides when `provisional` can go. |
-| Nikiel | FastAPI service | Builds `/transcribe` and `/api/pronunciation/score`; adopts or amends [the contract](pronunciation-api-contract.md); calls `warmup()` at startup. |
-| Marcus | Words / lexicon content; TTS placeholder audio (later task) | Words he adds are the `word_id` → `target_text` source. Reference audio fills `reference_audio_url`. All data stays marked unvalidated until the Welcome Centre reviews it. |
+| Mohammad | `ml/speech` | Called by `/transcribe` and inside the scorer; review its use in `scorer.py` |
+| Hari | WER evaluation, calibration | Tunes `MIN_CONFIDENCE` (0.5), fuzzy threshold (0.8), score bands (constants in `scorer.py`); decides when `provisional` can go |
+| Nikiel | FastAPI service | Builds both endpoints; adopts or amends the [contract](pronunciation-api-contract.md); calls `warmup()` at startup |
+| Marcus | Lexicon content, audio naming | `word_id` → target text source; approves the `<word_id>_en_tts_placeholder.mp3` naming and `audio_url` field; later native recordings |
+| Linxi | Word Detail screen | Plays `audio_url`; labels it a placeholder |
 | Nidhi | not stated | _TPMs to fill in_ |
-| Linxi | not stated | _TPMs to fill in_ |
-| Luna (speech) | `ml/pronunciation`, smoke test, these docs | this PR |
+| Luna | `ml/pronunciation`, `ml/tts`, these docs | PRs #5 and #7 |
 
-## How to run it
+## Run it
 
-All commands from the repo root. Python 3.10 or newer (the code uses `X | None` types).
+From the repo root, Python 3.10+:
 
 ```bash
 python3.12 -m venv .venv && source .venv/bin/activate
-pip install -r ml/pronunciation/requirements.txt     # also installs ml/speech's requirements
+pip install -r ml/pronunciation/requirements.txt
+python -m pytest ml -q                                          # offline, no model download
+python -m ml.pronunciation clip.m4a "I need a doctor" --model base   # first run downloads the model
+python -m ml.pronunciation.smoke_test ml/pronunciation/smoke_clips_cv --manifest ml/pronunciation/smoke_manifest_cv.csv --model base
+cd app && npm install && npx expo start                          # mock data, no backend needed
 ```
 
-**Tests (offline, no model download, safe for CI):**
+The backend: nothing to run yet. When it lands, use the same venv so it can import `ml.*` from the repo root.
 
-```bash
-python -m pytest ml -q          # ml/speech + ml/pronunciation
-```
+## API contract
 
-**Score one clip** (downloads the Whisper `small` model, about 460 MB, on first use):
+Full version: [`pronunciation-api-contract.md`](pronunciation-api-contract.md). In short: request
+`audio`, `word_id`, `language:"en"`; response `score`, `status`, `transcript`, `confidence`, `feedback`,
+`feedback_code`, `needs_improvement`, `reference_audio_url/_kind`, `score_basis:"asr_match"`,
+`provisional:true`; statuses `scored`, `scoring_unavailable` plus `transcribe()`'s own.
 
-```bash
-python -m ml.pronunciation clip.m4a "I need a doctor"
-python -m ml.speech clip.m4a --language en            # just the transcript
-```
+## Related
 
-**Smoke test on public clips** (see [pronunciation-test-notes.md](pronunciation-test-notes.md)):
-
-```bash
-python -m ml.pronunciation.fetch_tatoeba_clips --out ml/pronunciation/smoke_clips
-python -m ml.pronunciation.smoke_test ml/pronunciation/smoke_clips --out results.csv
-```
-
-**The app** (mock data, no backend needed):
-
-```bash
-cd app && npm install && npx expo start
-```
-
-**The backend:** nothing to run yet. When Nikiel's service lands, run it with the same
-virtual environment so it can `import ml.speech` and `import ml.pronunciation` from the repo
-root.
-
-## The proposed API contract
-
-Full version, with field tables, statuses and open questions:
-[`pronunciation-api-contract.md`](pronunciation-api-contract.md). In short:
-
-- **Request** (multipart): `audio`, `word_id` (backend looks up the target text), `language: "en"`.
-- **Response:** `word_id`, `score`, `max_score`, `status`, `transcript`, `confidence`,
-  `feedback`, `feedback_code`, `needs_improvement[{word, heard, issue}]`,
-  `reference_audio_url`, `reference_audio_kind` (`tts_placeholder` | `native_speaker`),
-  `score_basis: "asr_match"`, `provisional: true`.
-- **Statuses:** `scored`, `scoring_unavailable`, and `transcribe()`'s own statuses
-  (`empty_audio`, `invalid_audio`, `too_short`, `too_long`, `no_speech`, `model_error`).
-
-## Related docs
-
-- [`ml/pronunciation/README.md`](../ml/pronunciation/README.md): the scorer
-- [`pronunciation-test-notes.md`](pronunciation-test-notes.md): smoke test on public audio
-- [`pronunciation-recording-collection-plan.md`](pronunciation-recording-collection-plan.md): collecting Welcome Centre recordings
-- [`pronunciation-feedback-idea.md`](pronunciation-feedback-idea.md): "was this score fair?" proposal
+[`ml/pronunciation`](../ml/pronunciation/README.md) ·
+[test notes](pronunciation-test-notes.md) ·
+[collection plan](pronunciation-recording-collection-plan.md) ·
+[feedback idea](pronunciation-feedback-idea.md)

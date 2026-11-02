@@ -1,90 +1,67 @@
 # Idea: "Was this score fair?" feedback
 
-**Status: proposal only. Nothing is built, and nothing should be collected until the consent
-questions below are answered.**
+**Proposal only. Nothing is built; collect nothing until the consent questions below are answered.**
 
 ## The idea
 
-After a learner sees a pronunciation score, the app asks one question with two buttons:
-**"Was this score fair?" 👍 / 👎**. The answer is stored with the clip ID, the transcript and
-the score. That gives us a steady trickle of real-world evidence about when the scorer is
-too harsh or too generous, from the people who actually use it.
+After a score, the app asks one question: **"Was this score fair?" 👍 / 👎**. The answer is stored with the
+clip ID, transcript and score, giving a steady stream of real-world evidence from the people using it.
 
-## Why it is useful
+## Why
 
-The scorer is an uncalibrated ASR match (`score_basis: "asr_match"`, `provisional: true`).
-Two things go wrong that we cannot see from tests:
+The scorer is an uncalibrated ASR match (`provisional: true`). Two failures are invisible to tests:
 
-- **Too harsh:** a clear attempt that Whisper misheard, scoring low (👎 on a low score).
-- **Too generous:** Whisper "autocorrects" accented speech, scoring high on an attempt a
-  listener would find hard to understand (👎 on a high score).
+- **Too harsh:** a clear attempt Whisper misheard (👎 on a low score).
+- **Too generous:** Whisper "autocorrects" an accent, so a hard-to-understand attempt scores high (👎 on a high score).
 
-A thumbs signal is cheap, needs no extra effort from the learner, and is easy to give in
-any language.
+Thumbs are cheap, take no effort and work in any language.
 
-## What would be stored
-
-One row per answer:
+## What is stored
 
 | Field | Notes |
 |---|---|
-| `clip_id` | an opaque id for the recording (not a filename with a name in it) |
-| `word_id` / `target_text` | what was being practised |
+| `clip_id` | opaque id, not a filename containing a name |
+| `word_id` / `target_text` | what was practised |
 | `transcript`, `confidence`, `score`, `status`, `feedback_code` | exactly what the app showed |
-| `fair` | `true` (👍) or `false` (👎) |
-| `scorer_version` | which thresholds/model produced the score |
-| `created_at` | timestamp |
-| `user_id` | only a pseudonymous id, and only if progress tracking already needs it |
+| `fair` | `true` (👍) / `false` (👎) |
+| `scorer_version`, `created_at` | which thresholds produced it, when |
+| `user_id` | pseudonymous only, and only if progress tracking already needs it |
 
-The audio itself is stored only if the learner has separately agreed to that (below).
+Audio is stored only with a separate opt-in (below).
 
 ## How it feeds calibration
 
-This is input to Hari's evaluation, not a replacement for it.
+An input to Hari's evaluation, not a replacement:
 
-1. Hari's WER evaluation, done on recordings with known transcripts, sets the first
-   thresholds (`MIN_CONFIDENCE`, fuzzy threshold, score bands).
-2. Thumbs data is then used as a **check**: for each score band, what share of answers
-   say "fair"? If many 👎 sit on high scores, the scorer is too generous there; if many on
-   low scores, too harsh.
-3. Rows with 👎 are the shortlist for a qualified speaker to listen to (only where audio
-   is stored with consent). Their judgement, not the learners' votes, decides any threshold
-   change.
-4. Votes are noisy (people tap casually, and a learner cannot judge their own accent), so
-   they are **never used to retrain or set thresholds automatically**.
+1. Hari's WER evaluation on recordings with known transcripts sets the first thresholds.
+2. Thumbs are a **check**: per score band, what share say "fair"? Many 👎 on high scores means too
+   generous; many on low scores means too harsh.
+3. 👎 rows are the shortlist for a qualified speaker to listen to (only where audio is kept with consent).
+   That judgement, not the votes, decides any threshold change.
+4. Votes are noisy, and learners can't judge their own accent, so they **never** retrain or set
+   thresholds automatically.
 
 ## Consent and privacy
 
-- **The app must say what happens.** A short, plain-language, translated notice: "Tell us
-  if this score was fair. We keep your answer to improve the app."
-- **Answer-only vs answer-plus-audio are different.** Keeping a thumbs answer with the
-  transcript and score is low risk. Keeping the voice recording is personal data and
-  needs an explicit, separate opt-in ("Can we keep this recording to improve the app?"),
-  with a way to withdraw and delete it.
-- **Transcripts are personal too**: they contain what a learner said. Same retention and
-  access rules as other project data.
-- **Minimise:** no real names or contact details attached; pseudonymous ids only; set a
-  retention period.
-- **Children and vulnerable users:** the audience is newcomers, some potentially in
-  precarious situations. Participation must be optional and must never affect their
-  access, progress or anything from the Centre.
-- **Don't over-interpret:** a 👎 is not evidence the learner pronounced badly or well.
-  It must not be shown back to the learner as a judgement.
-- **Governance:** the Welcome Centre and the TPMs should agree on who holds this data,
-  where it is stored, and whether a research-ethics review is needed, the same questions
-  as the [recording collection plan](pronunciation-recording-collection-plan.md).
+- The app must say what happens, in plain language, translated: "Tell us if this score was fair. We keep
+  your answer to improve the app."
+- **Answer-only is low risk; answer plus audio is personal data** and needs its own explicit opt-in, a way
+  to withdraw, and deletion.
+- Transcripts are personal too (they hold what a learner said): same retention and access rules.
+- Minimise: no names or contact details, pseudonymous ids, a set retention period.
+- Participation is optional and must never affect access, progress or Centre services.
+- A 👎 is not evidence of good or bad pronunciation and is never shown back to the learner as a judgement.
+- The Centre and TPMs agree who holds the data, where, and whether ethics review is needed (same questions
+  as the [collection plan](pronunciation-recording-collection-plan.md)).
 
 ## Rough build (if approved)
 
-- App: two buttons under the score; one `POST /api/pronunciation/feedback` call with the
-  fields above (Nikiel).
-- Backend: a table; no audio unless the opt-in is set.
-- Analysis: a small notebook comparing 👍/👎 rates per score band (Hari).
+App: two buttons and one `POST /api/pronunciation/feedback` (Nikiel). Backend: a table, no audio unless
+opted in. Analysis: a notebook of 👍/👎 rate per score band (Hari).
 
 ## Open questions
 
-1. Do we want this before the first evaluation is done, or only after?
-2. Opt-in for audio retention: does it ship with the app, or is it a later addition?
+1. Before the first evaluation, or after?
+2. Audio-retention opt-in: ship now or later?
 3. Where is the data stored, and for how long?
-4. Does the translated wording of the question work in Rohingya ("fair" is easy to
-   mistranslate)? The Centre should check it.
+4. Can "fair" be translated into Rohingya without changing its meaning? The Centre should check.
