@@ -1,0 +1,2 @@
+direction,input,expected,got,status,confidence,problem
+en->roh,Take your pills.,Wrong answer here,Tua*r bori lo.,ok,1.0,wrong
