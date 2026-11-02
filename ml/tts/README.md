@@ -53,10 +53,11 @@ Marcus's file when it lands.
 
 ## Regenerating
 
-Delete the file(s) you want redone (and optionally their manifest entry) and rerun. Files
-are git-ignored (`data/audio/.gitignore`), so a fresh clone gets the same audio by running
-`generate`. The manifest is committed. Note that Kokoro output is not guaranteed
-bit-identical across versions or machines; the manifest records the engine, voice and date.
+Delete the file(s) you want redone (and optionally their manifest entry) and rerun. The
+40 placeholder `.mp3` files (about 150 KB in total) and the manifest are committed so the
+app can play them straight from a clone. Kokoro output is not guaranteed bit-identical across
+versions or machines, so avoid regenerating them without a reason: every version stays in git
+history. Once audio moves to hosted storage (Firebase), stop committing it.
 
 ## Swapping the backend
 
