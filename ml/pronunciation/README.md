@@ -6,19 +6,10 @@ encouraging feedback. It is built on [`ml/speech`](../speech/README.md): it tran
 the clip with `transcribe(audio, language="en")` and compares the transcript to the
 target, word by word.
 
-Owner: Luna (speech). The `/api/pronunciation/score` endpoint is Nikiel's; this module is
-what that endpoint calls.
-
-> **This score is provisional.** It measures whether Whisper *understood* the learner
+> It measures whether Whisper *understood* the learner
 > (intelligibility). It does not look at individual sounds, and the thresholds are
 > uncalibrated until Hari's evaluation. Every result carries `provisional: true` and
 > `score_basis: "asr_match"`. See [Known limitations](#known-limitations).
-
-## Why English, not Rohingya
-
-Learners are Rohingya newcomers practising spoken **English**, so the scorer judges
-English speech and always calls the transcriber with `language="en"`. Whisper has no
-Rohingya, and there is no Rohingya TTS, so nothing here tries to score Rohingya.
 
 ## Setup
 
