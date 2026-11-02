@@ -1,0 +1,610 @@
+{
+  "dataset": "Rohingya Settlement Phrases",
+  "schema_version": "draft-1",
+  "entry_count": 18,
+  "source_priority": "https://www.rohingyalanguage.com/download",
+  "notes": [
+    "18 practical phrases for Rohingya refugees entering Canada, covering pharmacy/medical, transportation, groceries, and rules/regulations.",
+    "Phrases marked 'source_attested' are directly taken from the CLEAR Global Gamayun kit5k parallel corpus (professionally translated by CLEAR Global translators).",
+    "Phrases marked 'ai_draft' are composed from attested vocabulary patterns found in the corpus but are not directly attested as complete sentences.",
+    "All entries require native-speaker review before use as gold evaluation data.",
+    "Corpus source: Gamayun Language Data Kits — Rohingya (5k), CC BY 4.0, CLEAR Global.",
+    "Do not treat AI-drafted entries as validated training or evaluation gold data before native-speaker review."
+  ],
+  "entries": [
+    {
+      "id": "phrase_001",
+      "rohingya_text": "Tua*r bori lo.",
+      "english_meaning": {
+        "word": "Take your pills",
+        "definition": "An instruction to take prescribed medication.",
+        "explanation": "Practical phrase for pharmacy/medical domain: reminding someone to take their medicine."
+      },
+      "part_of_speech": "Imperative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "Take your pills.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Pharmacy / Medical",
+      "example_sentence": {
+        "english": "Take your pills.",
+        "rohingya": "Tua*r bori lo.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 109). Professional translation by CLEAR Global translators. Pending native-speaker review. Tatoeba ID: 2250069 | Corpus line: 109"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review"
+    },
+    {
+      "id": "phrase_002",
+      "rohingya_text": "Hibaye hibare dabai haba bondo goijjil.",
+      "english_meaning": {
+        "word": "She stopped taking her medicine",
+        "definition": "Reporting that someone has discontinued their medication.",
+        "explanation": "Practical phrase for pharmacy/medical domain: informing a healthcare provider that a patient stopped medication."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "She stopped taking her medicine.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Pharmacy / Medical",
+      "example_sentence": {
+        "english": "She stopped taking her medicine.",
+        "rohingya": "Hibaye hibare dabai haba bondo goijjil.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 933). Key vocabulary: 'dabai' = medicine/medication. Pending native-speaker review. Tatoeba ID: 7391165 | Corpus line: 933"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review"
+    },
+    {
+      "id": "phrase_003",
+      "rohingya_text": "Horaf aramiyotor oktot, beshi gori gum zonnan oilde behetor dabai.",
+      "english_meaning": {
+        "word": "At times of poor health, getting plenty of sleep is the best medicine",
+        "definition": "Health advice that rest is important when unwell.",
+        "explanation": "Practical phrase for pharmacy/medical domain: general health guidance about rest and recovery."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "At times of poor health, getting plenty of sleep is the best medicine.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Pharmacy / Medical",
+      "example_sentence": {
+        "english": "At times of poor health, getting plenty of sleep is the best medicine.",
+        "rohingya": "Horaf aramiyotor oktot, beshi gori gum zonnan oilde behetor dabai.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 2474). Key vocabulary: 'aramiyot' = health, 'dabai' = medicine, 'gum' = sleep. Pending native-speaker review. Corpus line: 2474"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review"
+    },
+    {
+      "id": "phrase_004",
+      "rohingya_text": "Aa*ttu dhath'tha-hanat zaito zoruri.",
+      "english_meaning": {
+        "word": "I need to go to the hospital",
+        "definition": "Expressing urgent need for hospital care.",
+        "explanation": "Practical phrase for pharmacy/medical domain: requesting to be taken to a hospital."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "hospital / dhath'tha-hanat",
+        "evidence": "ai_draft_from_attested_vocabulary"
+      },
+      "related_topic": "Pharmacy / Medical",
+      "example_sentence": {
+        "english": "I need to go to the hospital.",
+        "rohingya": "Aa*ttu dhath'tha-hanat zaito zoruri. (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "ai_draft",
+        "example_source_url": null,
+        "review_note": "AI-composed from attested vocabulary in kit5k corpus. 'dhath'tha-hanat' (hospital, locative) from lines 864, 1480, 4397; 'zoruri' (need) from lines 81, 110; 'zaito' (to go) from line 508. Sentence structure may have errors. Requires native-speaker review. Vocabulary sources: 'dhath'tha-hanat' (hospital (locative), lines [864, 1480, 4397]); 'zoruri' (need/necessary, lines [81, 110, 175]); 'zaito' (to go, lines [508, 1498])"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "ai_draft_pending_native_review"
+    },
+    {
+      "id": "phrase_005",
+      "rohingya_text": "Dath'tha-hanttu dabai gori biaram gom oit fare.",
+      "english_meaning": {
+        "word": "Perhaps the illness is cured through medical treatment",
+        "definition": "Expressing hope that medical treatment will cure the illness.",
+        "explanation": "Practical phrase for pharmacy/medical domain: discussing treatment outcomes with healthcare providers."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "Perhaps the illness is cured through medical treatment.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Pharmacy / Medical",
+      "example_sentence": {
+        "english": "Perhaps the illness is cured through medical treatment.",
+        "rohingya": "Dath'tha-hanttu dabai gori biaram gom oit fare.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 4228). Key vocabulary: 'biaram' = illness, 'dabai' = medicine/treatment, 'gom' = good/better. Pending native-speaker review. Corpus line: 4228"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review"
+    },
+    {
+      "id": "phrase_006",
+      "rohingya_text": "Bas iyan ki relor estheshonot za niki?",
+      "english_meaning": {
+        "word": "Does this bus go to the train station?",
+        "definition": "Asking whether a bus route goes to the train station.",
+        "explanation": "Practical phrase for transportation domain: navigating public transit connections."
+      },
+      "part_of_speech": "Interrogative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "Does this bus go to the train station?",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Transportation",
+      "example_sentence": {
+        "english": "Does this bus go to the train station?",
+        "rohingya": "Bas iyan ki relor estheshonot za niki?",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 513). Key vocabulary: 'bas' = bus, 'relor estheshonot' = train station (locative), 'za' = go. Pending native-speaker review. Tatoeba ID: 60703 | Corpus line: 513"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review"
+    },
+    {
+      "id": "phrase_007",
+      "rohingya_text": "Aa*i ekkan ek-dinna thiket faiyum ne?",
+      "english_meaning": {
+        "word": "Can I have a one-day ticket?",
+        "definition": "Requesting a single-day transit pass.",
+        "explanation": "Practical phrase for transportation domain: purchasing daily transit passes."
+      },
+      "part_of_speech": "Interrogative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "Can I have a one-day ticket?",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Transportation",
+      "example_sentence": {
+        "english": "Can I have a one-day ticket?",
+        "rohingya": "Aa*i ekkan ek-dinna thiket faiyum ne?",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 589). Key vocabulary: 'thiket' = ticket, 'ek-dinna' = one-day. Pending native-speaker review. Tatoeba ID: 5565505 | Corpus line: 589"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review"
+    },
+    {
+      "id": "phrase_008",
+      "rohingya_text": "Iyontu estheshenot zaite hotun lage?",
+      "english_meaning": {
+        "word": "How long does it take from here to the station?",
+        "definition": "Asking about travel time to the station.",
+        "explanation": "Practical phrase for transportation domain: estimating travel time to transit hubs."
+      },
+      "part_of_speech": "Interrogative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "How long does it take from here to the station?",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Transportation",
+      "example_sentence": {
+        "english": "How long does it take from here to the station?",
+        "rohingya": "Iyontu estheshenot zaite hotun lage?",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 1498). Key vocabulary: 'estheshenot' = station (locative), 'hotun lage' = how long does it take. Pending native-speaker review. Tatoeba ID: 62099 | Corpus line: 1498"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review"
+    },
+    {
+      "id": "phrase_009",
+      "rohingya_text": "Aa*ttun aijjo ekkan thiketh nai.",
+      "english_meaning": {
+        "word": "I don't have a ticket yet",
+        "definition": "Stating that you have not yet purchased a ticket.",
+        "explanation": "Practical phrase for transportation domain: informing transit staff you still need a ticket."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "I don't have a ticket yet.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Transportation",
+      "example_sentence": {
+        "english": "I don't have a ticket yet.",
+        "rohingya": "Aa*ttun aijjo ekkan thiketh nai.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 675). Key vocabulary: 'thiketh' = ticket, 'nai' = not/don't have, 'aijjo' = yet. Pending native-speaker review. Tatoeba ID: 5850054 | Corpus line: 675"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review"
+    },
+    {
+      "id": "phrase_010",
+      "rohingya_text": "Aa*ttu hono theksi zorurot ne?",
+      "english_meaning": {
+        "word": "Do I need a taxi?",
+        "definition": "Asking whether a taxi is needed.",
+        "explanation": "Practical phrase for transportation domain: determining whether taxi transport is necessary. Adapted from attested sentence 'She asked if I need a taxi.'"
+      },
+      "part_of_speech": "Interrogative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "She asked if I need a taxi.",
+        "evidence": "adapted_from_source"
+      },
+      "related_topic": "Transportation",
+      "example_sentence": {
+        "english": "She asked if I need a taxi.",
+        "rohingya": "Hiba fusar loiye aa*ttu hono theksi zorurot ne.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Full sentence directly attested in kit5k corpus (line 802). The phrase entry extracts the embedded question. Key vocabulary: 'theksi' = taxi, 'zorurot' = needed. Pending native-speaker review. Tatoeba ID: 5143356 | Corpus line: 802 | Extracted the embedded question 'aa*ttu hono theksi zorurot ne' from the full attested sentence 'Hiba fusar loiye aa*ttu hono theksi zorurot ne.' (line 802)"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review"
+    },
+    {
+      "id": "phrase_011",
+      "rohingya_text": "Maherbani-gori Mas do.",
+      "english_meaning": {
+        "word": "Fish, please",
+        "definition": "Politely requesting fish at a market or restaurant.",
+        "explanation": "Practical phrase for groceries domain: ordering or purchasing fish, a staple in Rohingya cuisine."
+      },
+      "part_of_speech": "Imperative sentence (polite request)",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "Fish, please.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Groceries",
+      "example_sentence": {
+        "english": "Fish, please.",
+        "rohingya": "Maherbani-gori Mas do.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 541). Key vocabulary: 'Maherbani-gori' = please, 'Mas' = fish, 'do' = give. Pattern can be adapted: '[item], Maherbani-gori [item] do.' Pending native-speaker review. Tatoeba ID: 19342 | Corpus line: 541"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review"
+    },
+    {
+      "id": "phrase_012",
+      "rohingya_text": "Aa*i kengori tortaza mas basi loi fariyum?",
+      "english_meaning": {
+        "word": "How can I pick out fresh fish?",
+        "definition": "Asking how to select fresh fish at a market.",
+        "explanation": "Practical phrase for groceries domain: shopping for fresh fish, evaluating quality at markets."
+      },
+      "part_of_speech": "Interrogative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "How can I pick out fresh fish?",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Groceries",
+      "example_sentence": {
+        "english": "How can I pick out fresh fish?",
+        "rohingya": "Aa*i kengori tortaza mas basi loi fariyum?",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 88). Key vocabulary: 'tortaza' = fresh, 'mas' = fish, 'basi loi' = pick out/select. Pending native-speaker review. Tatoeba ID: 38349 | Corpus line: 88"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review"
+    },
+    {
+      "id": "phrase_013",
+      "rohingya_text": "Tu*i kissu gula-gala haiba ne?",
+      "english_meaning": {
+        "word": "Would you like some fruit?",
+        "definition": "Offering fruit to someone.",
+        "explanation": "Practical phrase for groceries domain: offering or requesting fruit at a shop or home."
+      },
+      "part_of_speech": "Interrogative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "Would you like some fruit?",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Groceries",
+      "example_sentence": {
+        "english": "Would you like some fruit?",
+        "rohingya": "Tu*i kissu gula-gala haiba ne?",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 365). Key vocabulary: 'gula-gala' = fruit, 'haiba' = eat (will you eat). Pending native-speaker review. Tatoeba ID: 23932 | Corpus line: 365"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review"
+    },
+    {
+      "id": "phrase_014",
+      "rohingya_text": "Iyan beshi dami.",
+      "english_meaning": {
+        "word": "It really is a good price",
+        "definition": "Commenting that a price is reasonable or good.",
+        "explanation": "Practical phrase for groceries domain: evaluating and discussing prices while shopping."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "It really is a good price.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Groceries",
+      "example_sentence": {
+        "english": "It really is a good price.",
+        "rohingya": "Iyan beshi dami.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 826). Key vocabulary: 'dami' = price/value, 'beshi' = very/really. Pending native-speaker review. Tatoeba ID: 3147972 | Corpus line: 826"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review"
+    },
+    {
+      "id": "phrase_015",
+      "rohingya_text": "Aa*ttu hota hoibolla honikkare lagibo.",
+      "english_meaning": {
+        "word": "I need someone to talk to",
+        "definition": "Expressing the need for someone to speak with, for support or guidance.",
+        "explanation": "Practical phrase for rules/regulations/help domain: seeking assistance, interpretation services, or emotional support upon arrival."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "I need someone to talk to.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Rules / Help",
+      "example_sentence": {
+        "english": "I need someone to talk to.",
+        "rohingya": "Aa*ttu hota hoibolla honikkare lagibo.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 22). Key vocabulary: 'hota hoibolla' = to talk to, 'lagibo' = will be needed. Pending native-speaker review. Tatoeba ID: 980726 | Corpus line: 22"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review"
+    },
+    {
+      "id": "phrase_016",
+      "rohingya_text": "Meherbani-gori aa*re iiyaanor babute zano.",
+      "english_meaning": {
+        "word": "Please let me know about it",
+        "definition": "Politely asking to be informed about something.",
+        "explanation": "Practical phrase for rules/regulations domain: requesting information from officials, caseworkers, or service providers."
+      },
+      "part_of_speech": "Imperative sentence (polite request)",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "Please let me know about it.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Rules / Help",
+      "example_sentence": {
+        "english": "Please let me know about it.",
+        "rohingya": "Meherbani-gori aa*re iiyaanor babute zano.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 101). Key vocabulary: 'Meherbani-gori' = please, 'zano' = let know/inform, 'babute' = about. Pending native-speaker review. Tatoeba ID: 250026 | Corpus line: 101"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review"
+    },
+    {
+      "id": "phrase_017",
+      "rohingya_text": "Hite hitar faskuth a*zai felaiyede iiyan ekkan fushkara ham.",
+      "english_meaning": {
+        "word": "It was unfortunate that he lost his passport",
+        "definition": "Expressing that losing a passport is an unfortunate event.",
+        "explanation": "Practical phrase for rules/regulations domain: reporting a lost passport to officials or immigration services."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "It was unfortunate that he lost his passport.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Rules / Regulations",
+      "example_sentence": {
+        "english": "It was unfortunate that he lost his passport.",
+        "rohingya": "Hite hitar faskuth a*zai felaiyede iiyan ekkan fushkara ham.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 414). Key vocabulary: 'faskuth' = passport, 'a*zai felaiyede' = lost. Critical vocabulary for immigration and border services. Pending native-speaker review. Tatoeba ID: 318583 | Corpus line: 414"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review"
+    },
+    {
+      "id": "phrase_018",
+      "rohingya_text": "Ek minith entezar goro.",
+      "english_meaning": {
+        "word": "Please wait a minute",
+        "definition": "Asking someone to wait briefly.",
+        "explanation": "Practical phrase for general settlement use: requesting patience during interactions at offices, shops, or transit stops."
+      },
+      "part_of_speech": "Imperative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "Please wait a minute.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Rules / Help",
+      "example_sentence": {
+        "english": "Please wait a minute.",
+        "rohingya": "Ek minith entezar goro.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 236). Key vocabulary: 'ek minith' = one minute, 'entezar goro' = wait. Pending native-speaker review. Tatoeba ID: 1939683 | Corpus line: 236"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review"
+    }
+  ]
+}
