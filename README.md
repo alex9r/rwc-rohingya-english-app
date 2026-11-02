@@ -1,6 +1,6 @@
 # Rohingya Reception House: Rohingya–English Learning App
 
-An AI-enabled, voice-first app that helps Rohingya newcomers build practical spoken English for work and everyday life in Canada. Built with the Rohingya community by a [WAT.ai](https://wat.ai) project team at the University of Waterloo, in partnership with the Rohingya Welcome Centre and The Reception House.
+An AI-enabled, voice-first app that helps Rohingya newcomers build practical spoken English for work and everyday life in Canada. Built with the Rohingya community by a [WAT.ai](https://wat.ai) project team at the University of Waterloo, in partnership with the Rohingya Welcome Centre and The Reception House.   
 
 > **Status:** Early development (Term 1). The UI mockup and data schema come first, followed by the backend and the speech and translation experiments.
 
@@ -118,7 +118,7 @@ Built by WAT.ai student members across full-stack/mobile development and ML/spee
 
 ## Acknowledgments
 
-Thank you to the Rohingya Welcome Centre and The Reception House for their partnership, community connections, and language resources, and to WAT.ai for project support.
+Thank you to the Rohingya Welcome Centre and The Reception House for their partnership, community connections, and language resources, and to WAT.ai for project support.  
 
 ## License
 
