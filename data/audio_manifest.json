@@ -1,0 +1,45 @@
+{
+  "schema_version": "draft-1",
+  "notes": [
+    "All audio listed as kind 'tts_placeholder' is machine-generated English speech, NOT a native-speaker recording, and is unvalidated.",
+    "Native-speaker recordings, once reviewed by the Welcome Centre, are added as kind 'native_speaker' and replace the placeholder for the same word_id."
+  ],
+  "entries": [
+    {
+      "word_id": "greeting_001",
+      "path": "data/audio/greeting_001_en_tts_placeholder.mp3",
+      "kind": "tts_placeholder",
+      "validated": false,
+      "language": "en",
+      "text": "Hello",
+      "engine": "kokoro",
+      "voice": "af_heart",
+      "license": "Kokoro-82M weights Apache-2.0 (hexgrad/Kokoro-82M); kokoro-onnx MIT. Model card lists CC BY training data (Koniwa, SIWIS): credit in app credits.",
+      "date": "2026-11-02"
+    },
+    {
+      "word_id": "greeting_002",
+      "path": "data/audio/greeting_002_en_tts_placeholder.mp3",
+      "kind": "tts_placeholder",
+      "validated": false,
+      "language": "en",
+      "text": "Goodbye",
+      "engine": "kokoro",
+      "voice": "af_heart",
+      "license": "Kokoro-82M weights Apache-2.0 (hexgrad/Kokoro-82M); kokoro-onnx MIT. Model card lists CC BY training data (Koniwa, SIWIS): credit in app credits.",
+      "date": "2026-11-02"
+    },
+    {
+      "word_id": "greeting_004",
+      "path": "data/audio/greeting_004_en_tts_placeholder.mp3",
+      "kind": "tts_placeholder",
+      "validated": false,
+      "language": "en",
+      "text": "Thanks",
+      "engine": "kokoro",
+      "voice": "af_heart",
+      "license": "Kokoro-82M weights Apache-2.0 (hexgrad/Kokoro-82M); kokoro-onnx MIT. Model card lists CC BY training data (Koniwa, SIWIS): credit in app credits.",
+      "date": "2026-11-02"
+    }
+  ]
+}

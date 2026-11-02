@@ -1,0 +1,3 @@
+# Generated placeholder audio is not committed; regenerate with `python -m ml.tts generate`.
+# Native-speaker recordings (reviewed by the Welcome Centre) are added deliberately, not ignored.
+*_tts_placeholder.mp3
