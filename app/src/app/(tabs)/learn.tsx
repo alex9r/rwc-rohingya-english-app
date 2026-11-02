@@ -8,6 +8,7 @@ import type { Word } from '@/api/types';
 import { categoryIcon } from '@/components/categoryIcon';
 import { GradientScreen } from '@/components/GradientScreen';
 import { ProgressBar } from '@/components/ProgressBar';
+import { LoadState } from '@/components/LoadState';
 import { Sheet } from '@/components/Sheet';
 import { useAppState } from '@/state/AppState';
 import { colors, fonts, radius, shadow, spacing, TAB_BAR_SPACE } from '@/theme';
@@ -17,12 +18,26 @@ export default function LearnScreen() {
   const router = useRouter();
   const { progress, saved } = useAppState();
   const [next, setNext] = useState<Word | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [retryKey, setRetryKey] = useState(0);
+  // Retry is a user event, so resetting request state here is safe under
+  // react-hooks/set-state-in-effect and makes the loading indicator visible.
+  const retryLoad = () => {
+    setLoading(true);
+    setLoadError(null);
+    setRetryKey((n) => n + 1);
+  };
   const practiced = progress?.wordsPracticed;
-
   // Re-fetch the suggestion whenever practice progress changes.
   useEffect(() => {
-    api.getNextWord().then(setNext);
-  }, [practiced]);
+    let live = true;
+    api.getNextWord()
+      .then((word) => { if (live) { setNext(word); setLoadError(null); } })
+      .catch(() => { if (live) setLoadError('Could not load your next word.'); })
+      .finally(() => { if (live) setLoading(false); });
+    return () => { live = false; };
+  }, [practiced, retryKey]);
 
   const total = progress?.wordsTotal ?? 0;
   const pct = total ? (progress?.wordsPracticed ?? 0) / total : 0;
@@ -45,7 +60,9 @@ export default function LearnScreen() {
             { paddingBottom: insets.bottom + TAB_BAR_SPACE + spacing.xl },
           ]}
         >
-          {next ? (
+          {loading || loadError ? (
+            <LoadState loading={loading} error={loadError} onRetry={retryLoad} message="Loading next word…" />
+          ) : next ? (
             <Pressable
               accessibilityRole="button"
               accessibilityLabel={`Practice next word: ${next.english}`}
@@ -82,6 +99,23 @@ export default function LearnScreen() {
             />
             <Tile icon="ribbon" value={progress?.latestScore ?? '–'} label="Latest score" />
           </View>
+
+          <Text style={styles.section}>Practice</Text>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Open Phrase Practice"
+            onPress={() => router.push('/phrases')}
+            style={styles.phraseEntry}
+          >
+            <View style={styles.phraseIcon}>
+              <Ionicons name="chatbox-ellipses-outline" size={26} color={colors.primary} />
+            </View>
+            <View style={styles.phraseBody}>
+              <Text style={styles.phraseTitle}>Phrase Practice</Text>
+              <Text style={styles.phraseDescription}>15 everyday English phrases · Speak and practice</Text>
+            </View>
+            <Ionicons name="chevron-forward" size={22} color={colors.textMuted} />
+          </Pressable>
 
           <Text style={styles.section}>By topic</Text>
           {progress?.categories.map((c) => {
@@ -198,6 +232,27 @@ const styles = StyleSheet.create({
     color: colors.text,
     marginTop: spacing.sm,
   },
+  phraseEntry: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
+    padding: spacing.lg,
+    borderRadius: radius.md,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  phraseIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: radius.md,
+    backgroundColor: colors.primarySoft,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  phraseBody: { flex: 1, gap: spacing.xs },
+  phraseTitle: { fontSize: fonts.size.md, fontWeight: fonts.weight.bold, color: colors.text },
+  phraseDescription: { fontSize: fonts.size.sm, color: colors.textMuted },
   topic: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -219,4 +274,5 @@ const styles = StyleSheet.create({
   topicBody: { flex: 1, gap: spacing.sm },
   topicName: { fontSize: fonts.size.md, fontWeight: fonts.weight.bold, color: colors.text },
   topicMeta: { fontSize: fonts.size.sm, color: colors.textMuted },
+
 });

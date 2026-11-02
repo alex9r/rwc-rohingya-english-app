@@ -157,6 +157,20 @@ export const api = {
       500,
     ),
 
+  /**
+   * Temporary phrase-practice upload stub.
+   * No network request is made and no pronunciation score is calculated.
+   * Replace with the real upload endpoint when it becomes available.
+   */
+  submitPhraseRecording: async (phraseId: string, audioUri: string): Promise<{
+    phraseId: string;
+    status: 'mock_submitted';
+    scoringAvailable: false;
+  }> => {
+    if (!phraseId || !audioUri) throw new Error('A phrase and recording are required.');
+    return delay({ phraseId, status: 'mock_submitted', scoringAvailable: false }, 600);
+  },
+
   /** Mock of GET /api/progress. */
   getProgress: async (): Promise<ProgressSummary> => summarize(await loadDb()),
 
@@ -186,6 +200,6 @@ export const api = {
   getNextWord: async (categoryId?: string): Promise<Word | null> => {
     const db = await loadDb();
     const pool = words.filter((x) => !categoryId || x.categoryId === categoryId);
-    return pool.find((x) => !(x.id in db.wordScores)) ?? null;
+    return delay(pool.find((x) => !(x.id in db.wordScores)) ?? null, 100);
   },
 };
