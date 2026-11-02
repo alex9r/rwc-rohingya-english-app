@@ -14,20 +14,34 @@ import argparse, csv, json
 from .translate import translate, norm
 
 ap = argparse.ArgumentParser()
-ap.add_argument("--file", default=__file__.replace("run_tests.py", "tests.csv"))
+ap.add_argument("--file", nargs="+", default=[__file__.replace("run_tests.py", "tests.csv")],
+                help="one or more .csv / .json test files")
 ap.add_argument("--reverse", action="store_true", help="also test rohingya -> english")
 args = ap.parse_args()
 
-if args.file.lower().endswith(".json"):   # same format as David's / Linxi's files
-    with open(args.file, encoding="utf-8") as f:
-        tests = [(e["example_sentence"]["english"].strip(),
-                  e["example_sentence"]["rohingya"].replace("(not verified)", "").strip(), True)
-                 for e in json.load(f)["entries"] if e.get("example_sentence")]
-else:                                      # csv: english, rohingya, reverse
-    with open(args.file, encoding="utf-8") as f:
-        tests = [(r["english"].strip(), r["rohingya"].strip(), r.get("reverse", "yes").strip().lower() != "no")
-                 for r in csv.DictReader(f)]
 
+def load(path):
+    """Return [(english, rohingya or "", reverse_ok)] from a .csv or .json file."""
+    if not path.lower().endswith(".json"):          # csv: english, rohingya, reverse
+        with open(path, encoding="utf-8") as f:
+            return [(r["english"].strip(), (r.get("rohingya") or "").strip(),
+                     (r.get("reverse") or "yes").strip().lower() != "no")
+                    for r in csv.DictReader(f)]
+    with open(path, encoding="utf-8") as f:
+        data = json.load(f)
+    items = data["entries"] if isinstance(data, dict) else data
+    out = []
+    for e in items:
+        if "example_sentence" in e:                 # David's / Linxi's format
+            en, roh = e["example_sentence"]["english"], e["example_sentence"]["rohingya"]
+        else:                                       # simple: {"english": ..., "rohingya": ...}
+            en, roh = e["english"], e.get("rohingya")
+        out.append((en.strip(), (roh or "").replace("(not verified)", "").strip(),
+                    str(e.get("reverse", "yes")).lower() != "no"))
+    return out
+
+
+tests = [t for path in args.file for t in load(path)]
 failures, total = [], 0
 for en, roh, rev in tests:
     runs = [("en->roh", en, roh or None)]
