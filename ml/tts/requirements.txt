@@ -1,0 +1,5 @@
+numpy>=1.24
+av>=12.0             # PyAV: encodes mp3 (no system ffmpeg needed)
+kokoro-onnx>=0.4     # default engine: Kokoro-82M via ONNX, no API key (MIT code, Apache-2.0 weights)
+espeakng-loader>=0.2 # phonemizer data used by kokoro-onnx
+pytest>=8.0          # tests
