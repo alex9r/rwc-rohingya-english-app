@@ -1,0 +1,15 @@
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B"]
+ignore = ["B008"]  # FastAPI's File()/Form()/Query() defaults
+
+[tool.ruff.lint.per-file-ignores]
+"app/mock_data.py" = ["E501"]  # long sample-data rows
+
+[tool.pytest.ini_options]
+# "." for `import app`, ".." for the repo's `ml` package.
+pythonpath = [".", ".."]
+testpaths = ["tests"]
