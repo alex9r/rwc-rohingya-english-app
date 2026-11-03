@@ -1,5 +1,7 @@
 // All content below is MOCK and unvalidated. Rohingya strings are placeholders,
 // not verified translations (see README: data must be marked unvalidated).
+import englishClass from '@/data/scenarios/english_class.json';
+import greetCaseworker from '@/data/scenarios/greet_caseworker.json';
 import type { Category, Scenario, ScenarioTurn, Word } from './types';
 
 // Ids follow the backend spec's categories (+ greetings; Daily Life and Family are on hold).
@@ -92,6 +94,9 @@ export const scenarios: Scenario[] = [
     'What kind of work have you done before?',
     'When can you start?',
   ]),
+  // Scripted from the phrase set: Rohingya comes from sourced phrases, with their confidence.
+  greetCaseworker as Scenario,
+  englishClass as Scenario,
 ];
 
 export const mockTranslations: Record<string, string> = {
