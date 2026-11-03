@@ -30,6 +30,7 @@ import unicodedata
 from dataclasses import dataclass, field
 from typing import Any, Callable, Optional
 
+from ml.speech import LOW_CONFIDENCE
 from ml.speech.transcribe import AudioInput, Status, TranscriptionResult
 from ml.speech.transcribe import transcribe as _default_transcribe
 
@@ -53,9 +54,9 @@ MAX_SCORE = 100
 SCORE_BASIS = "asr_match"
 
 # Below this ASR confidence the transcript is not trusted and no score is given.
-# UNCALIBRATED: starts equal to ml.speech.LOW_CONFIDENCE. To be tuned against WER
-# by Hari's evaluation.
-MIN_CONFIDENCE = 0.5
+# UNCALIBRATED: follows ml.speech.LOW_CONFIDENCE so the two stay in step when Hari
+# calibrates; override per call with ``min_confidence``.
+MIN_CONFIDENCE = LOW_CONFIDENCE
 
 # Two words count as "the same word, said slightly differently" at or above this
 # string similarity (0-1). UNCALIBRATED. "doctors"/"doctor" = 0.92, "ship"/"sheep" = 0.67.
@@ -327,9 +328,7 @@ def score_pronunciation(
     fn = transcriber or _default_transcribe
     try:
         tr = fn(audio, language=LANGUAGE)
-    except TypeError:
-        return _unscored(Status.INVALID_AUDIO.value, Status.INVALID_AUDIO.value)
-    except Exception:  # transcribe() should not raise, but a fake or a bug might
+    except Exception:  # transcribe() raises only on a wrong argument type (our bug), not bad audio
         return _unscored(Status.MODEL_ERROR.value, Status.MODEL_ERROR.value)
 
     status = getattr(tr.status, "value", tr.status)

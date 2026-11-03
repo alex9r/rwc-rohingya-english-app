@@ -187,4 +187,4 @@ def test_real_transcribe_silent_audio_is_no_speech():
 def test_real_transcribe_empty_and_corrupt():
     assert score_pronunciation(b"", "hello").status == "empty_audio"
     assert score_pronunciation(b"not audio at all", "hello").status == "invalid_audio"
-    assert score_pronunciation(12345, "hello").status == "invalid_audio"  # wrong type: still no raise
+    assert score_pronunciation(12345, "hello").status == "model_error"  # wrong type is our bug: still no raise

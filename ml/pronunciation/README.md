@@ -82,8 +82,8 @@ It never raises; anything that stops a score comes back as a status with `score:
 | `scoring_unavailable` | confidence below `min_confidence`, no usable words, or empty target | `low_confidence`, `unclear_transcript`, `invalid_target` |
 | `empty_audio`, `invalid_audio`, `too_short`, `too_long`, `no_speech`, `model_error` | passed through from `transcribe()` | same as the status |
 
-Only `model_error` is the server's fault. A wrong argument type counts as `invalid_audio`; an unexpected
-transcriber exception counts as `model_error`.
+Only `model_error` is the server's fault. Any exception from the transcriber, including a wrong argument
+type (a bug in our code, not the learner's recording), counts as `model_error`.
 
 ## How the score is computed
 
