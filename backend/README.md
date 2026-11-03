@@ -17,7 +17,7 @@ The first run takes a minute to build. After that:
 
 ## Seed the vocabulary database
 
-The optional seed command imports `rohingya_greetings_40.json` and `rohingya_phrases_18.json` from `ml/translation/data/` into PostgreSQL. Run it from `backend/` after the database is healthy:
+The optional seed command imports `rohingya_greetings_40.json` and `rohingya_phrases_38.json` from `ml/translation/data/` into PostgreSQL. Run it from `backend/` after the database is healthy:
 
 ```bash
 docker compose run --rm api python -m app.seed
@@ -26,7 +26,7 @@ docker compose run --rm api python -m app.seed
 To import another JSON dataset, pass its path relative to the repository root as seen inside the API container (the `ml/` directory is included):
 
 ```bash
-docker compose run --rm api python -m app.seed /app/ml/translation/data/rohingya_phrases_18.json
+docker compose run --rm api python -m app.seed /app/ml/translation/data/rohingya_phrases_38.json
 ```
 
 For host development, start PostgreSQL with `docker compose up db`, then from `backend/` run `python -m app.seed` with the backend dependencies installed. The command creates the vocabulary tables as needed and uses an upsert key, so rerunning it updates entries rather than duplicating them. It does not delete database entries omitted from later dataset revisions.

@@ -16,7 +16,7 @@ REPOSITORY_ROOT = BACKEND_ROOT.parent
 # greetings_30 is a strict subset of greetings_40, so it is not seeded by default.
 _DEFAULT_DATASET_PATHS = (
     Path("ml/translation/data/rohingya_greetings_40.json"),
-    Path("ml/translation/data/rohingya_phrases_18.json"),
+    Path("ml/translation/data/rohingya_phrases_38.json"),
 )
 
 
