@@ -4,11 +4,14 @@ Every endpoint returns made-up sample data shaped like the API spec so the
 frontend can build against it. Nothing is persisted yet.
 """
 
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, File, Form, HTTPException, Query, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
-from app import db
+from app import db, ml_adapters
 from app.mock_data import (
     AUDIO,
     CATEGORIES,
@@ -22,7 +25,14 @@ from app.mock_data import (
     WORDS_BY_CATEGORY,
 )
 
-app = FastAPI(title="Rohingya Learning App API (mock)", version="0.1.0")
+
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    ml_adapters.warmup()
+    yield
+
+
+app = FastAPI(title="Rohingya Learning App API (mock)", version="0.1.0", lifespan=lifespan)
 
 # Native Expo apps ignore CORS; this is only for Expo web / browser testing.
 app.add_middleware(
@@ -46,7 +56,11 @@ def _word_or_404(word_id: str) -> tuple[str, dict]:
 
 @app.get("/health", tags=["meta"])
 def health():
-    return {"status": "ok", "database": "up" if db.ping() else "down"}
+    return {
+        "status": "ok",
+        "database": "up" if db.ping() else "down",
+        "ml": ml_adapters.status(),
+    }
 
 
 # ------------------------------------------------------------ categories
@@ -170,7 +184,25 @@ def get_word_forms(word_id: str):
     }
 
 
+# ------------------------------------------------------------ transcribe
+
+
+@app.post("/api/transcribe", tags=["transcribe"])
+def transcribe(audio: UploadFile = File(...), language: str | None = Form(None)):
+    try:
+        result = ml_adapters.transcribe_audio(audio.file, language)
+    except ValueError as exc:  # unsupported language code
+        raise HTTPException(status_code=400, detail=str(exc)) from None
+    if result["status"] == "model_error":
+        return JSONResponse(result, status_code=503)
+    if result["status"] != "ok":  # empty, invalid, too short/long, no speech
+        return JSONResponse(result, status_code=422)
+    return result
+
+
 # ------------------------------------------------------------- translate
+
+DIRECTIONS = {("en", "rhg"): "en->roh", ("rhg", "en"): "roh->en"}
 
 
 class TranslateRequest(BaseModel):
@@ -182,15 +214,26 @@ class TranslateRequest(BaseModel):
 
 @app.post("/api/translate", tags=["translate"])
 def translate(body: TranslateRequest):
-    # No verified translations exist yet, so the answer is always "pending".
+    direction = DIRECTIONS.get((body.source_language, body.target_language))
+    if direction is None:
+        raise HTTPException(
+            status_code=400,
+            detail="Supported pairs: en -> rhg and rhg -> en",
+        )
+    result = ml_adapters.translate_text(body.text, direction)
+    if result["status"] == "failed":
+        raise HTTPException(status_code=422, detail="Could not translate empty or invalid text")
+    translated = result["status"] == "ok"
     return {
         "source_text": body.text,
-        "translated_text": None,
+        "translated_text": result["translation"] if translated else None,
         "target_language": body.target_language,
         "script": body.preferred_script,
-        "status": "pending_translation",
+        "status": "translated" if translated else "pending_translation",
+        "confidence": result["confidence"],
         "verified": False,
         "audio_url": None,
+        "stub": result["stub"],
     }
 
 
@@ -198,22 +241,31 @@ def translate(body: TranslateRequest):
 
 
 @app.post("/api/pronunciation/score", tags=["pronunciation"])
-async def score_pronunciation(
-    word_id: str = Form(...),
+def score_pronunciation(
+    audio: UploadFile = File(...),
+    target_text: str | None = Form(None),
+    word_id: str | None = Form(None),
     language: str = Form("rhg"),
     reference_id: str | None = Form(None),
-    audio: UploadFile = File(...),
 ):
-    _word_or_404(word_id)
-    await audio.read()  # accepted and discarded; nothing is stored
+    if word_id:
+        _, word = _word_or_404(word_id)
+        target_text = target_text or word["english"]
+    if not target_text:
+        raise HTTPException(status_code=422, detail="Provide target_text or word_id")
+
+    result = ml_adapters.score_audio(audio.file, target_text)
+    scored = result.get("score") is not None
     return {
         "word_id": word_id,
-        "score": 82,
+        "target_text": target_text,
+        "score": result.get("score"),
         "max_score": 100,
-        "feedback": "Good attempt. Practice the vowel sound.",
-        "needs_improvement": [{"segment": "vowel_1", "issue": "Vowel differs from reference"}],
-        "reference_audio_url": f"/audio/{word_id}.mp3",
-        "status": "scored",
+        "feedback": result.get("feedback", ""),
+        "tips": result.get("tips", []),
+        "status": "scored" if scored else "scoring_unavailable",
+        "validated": False,
+        "stub": result["stub"],
     }
 
 

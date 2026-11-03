@@ -1,7 +1,6 @@
 """Minimal Postgres connection. Only used for the health check for now."""
 
 import os
-
 import psycopg
 
 def _connect() -> psycopg.Connection:
