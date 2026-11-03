@@ -13,15 +13,21 @@ from app import db
 
 BACKEND_ROOT = Path(__file__).resolve().parents[1]
 REPOSITORY_ROOT = BACKEND_ROOT.parent
-_DATASET_RELATIVE_PATH = Path("ml/translation/data/rohingya_greetings_40.json")
-DEFAULT_DATASET = next(
-    candidate
-    for candidate in (
-        REPOSITORY_ROOT / _DATASET_RELATIVE_PATH,
-        BACKEND_ROOT / _DATASET_RELATIVE_PATH,
-    )
-    if candidate.exists()
+# greetings_30 is a strict subset of greetings_40, so it is not seeded by default.
+_DEFAULT_DATASET_PATHS = (
+    Path("ml/translation/data/rohingya_greetings_40.json"),
+    Path("ml/translation/data/rohingya_phrases_18.json"),
 )
+
+
+def _find_dataset(relative: Path) -> Path:
+    for root in (REPOSITORY_ROOT, BACKEND_ROOT):
+        if (root / relative).exists():
+            return root / relative
+    raise FileNotFoundError(relative)
+
+
+DEFAULT_DATASETS = [_find_dataset(path) for path in _DEFAULT_DATASET_PATHS]
 
 
 def _slug(value: str) -> str:
@@ -108,7 +114,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("datasets", nargs="*", type=Path, help="JSON datasets to import")
     args = parser.parse_args(argv)
-    paths = args.datasets or [DEFAULT_DATASET]
+    paths = args.datasets or DEFAULT_DATASETS
     count = seed_datasets(paths)
     print(f"Seeded {count} entries from {len(paths)} dataset(s) into PostgreSQL")
     return 0

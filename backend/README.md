@@ -17,7 +17,7 @@ The first run takes a minute to build. After that:
 
 ## Seed the vocabulary database
 
-The optional seed command imports the existing `ml/translation/data/rohingya_greetings_40.json` dataset into PostgreSQL. Run it from `backend/` after the database is healthy:
+The optional seed command imports `rohingya_greetings_40.json` and `rohingya_phrases_18.json` from `ml/translation/data/` into PostgreSQL. Run it from `backend/` after the database is healthy:
 
 ```bash
 docker compose run --rm api python -m app.seed
@@ -34,6 +34,14 @@ For host development, start PostgreSQL with `docker compose up db`, then from `b
 After seeding, the existing `/api/categories`, `/api/categories/{category_id}/words`, `/api/words`, and `/api/words/{word_id}` endpoints serve seeded entries when present; mock responses remain available before seeding. Dataset entries retain their original JSON metadata in the database. Content statuses remain unverified unless the source explicitly marks them verified; seeding does not constitute language review.
 
 Browser CORS origins are controlled by `CORS_ORIGINS` in `backend/.env`, as a comma-separated list. The development default allows common local frontend ports. For temporary public tunnels, allow only the frontend's exact origin, share the URL narrowly, and use non-sensitive test data; this API has no authentication.
+
+## Shared dev server (no Docker for teammates)
+
+`backend/scripts/shared-dev.sh` starts the API and Postgres, seeds the data, and opens a temporary Cloudflare tunnel (`brew install cloudflared`). Send the printed `https://*.trycloudflare.com` URL to the frontend pair and the Centre; they only need that URL as their API base, no Docker. The URL changes each run, and the server stops when you press `Ctrl+C`. Set `CORS_ORIGINS` to the frontend's origin if it runs in a browser:
+
+```bash
+CORS_ORIGINS=https://my-frontend.example ./scripts/shared-dev.sh
+```
 
 Press `Ctrl+C` to stop. Run `docker compose down -v` to also wipe the database.
 
