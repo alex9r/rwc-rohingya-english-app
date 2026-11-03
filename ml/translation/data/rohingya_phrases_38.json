@@ -1,0 +1,2906 @@
+{
+  "dataset": "Rohingya Settlement Phrases",
+  "schema_version": "draft-1",
+  "entry_count": 38,
+  "source_priority": "https://www.rohingyalanguage.com/download",
+  "notes": [
+    "38 practical phrases for Rohingya newcomers to Canada, covering greetings, pharmacy/medical, transportation, groceries, employment, and rules/help.",
+    "Phrases marked 'source_attested' are directly taken from the CLEAR Global Gamayun kit5k parallel corpus (professionally translated by CLEAR Global translators).",
+    "Phrases marked 'ai_draft' are composed from attested vocabulary patterns found in the corpus but are not directly attested as complete sentences.",
+    "All entries require native-speaker review before use as gold evaluation data.",
+    "Corpus source: Gamayun Language Data Kits — Rohingya (5k), CC BY 4.0, CLEAR Global.",
+    "Do not treat AI-drafted entries as validated training or evaluation gold data before native-speaker review.",
+    "Each entry has sources_checked (Gamayun, VOA), second_review (IOM Rohingya Dictionary word-level check) and reference_translation (the pair to evaluate against, with origin and confidence). Regenerate with ml/translation/review_phrases.py.",
+    "Confidence: 0.95 = Gamayun sentence + IOM word check agree; 0.70 = Gamayun sentence only; 0.40 = model fallback draft; capped at 0.50 where the sources disagree.",
+    "IOM Rohingya Dictionary data is CC BY-NC-SA 4.0. Only short glosses are quoted in second_review; do not copy the dictionary into this repo."
+  ],
+  "entries": [
+    {
+      "id": "phrase_001",
+      "rohingya_text": "Tua*r bori lo.",
+      "english_meaning": {
+        "word": "Take your pills",
+        "definition": "An instruction to take prescribed medication.",
+        "explanation": "Practical phrase for pharmacy/medical domain: reminding someone to take their medicine."
+      },
+      "part_of_speech": "Imperative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "Take your pills.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Pharmacy / Medical",
+      "example_sentence": {
+        "english": "Take your pills.",
+        "rohingya": "Tua*r bori lo.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 109). Professional translation by CLEAR Global translators. Pending native-speaker review. Tatoeba ID: 2250069 | Corpus line: 109"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 109
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "partial",
+        "key_words_covered": "1/2",
+        "covered": [
+          "pill"
+        ],
+        "missing": [
+          "take"
+        ],
+        "matches": [
+          {
+            "rohingya": "bori",
+            "iom_headword": "bori",
+            "iom_gloss": "pill, tablet",
+            "english": [
+              "pill"
+            ]
+          }
+        ]
+      },
+      "reference_translation": {
+        "english": "Take your pills.",
+        "rohingya": "Tua*r bori lo.",
+        "origin": "Gamayun kit5k line 109",
+        "confidence": 0.7,
+        "confidence_tier": "single_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_002",
+      "rohingya_text": "Hibaye hibare dabai haba bondo goijjil.",
+      "english_meaning": {
+        "word": "She stopped taking her medicine",
+        "definition": "Reporting that someone has discontinued their medication.",
+        "explanation": "Practical phrase for pharmacy/medical domain: informing a healthcare provider that a patient stopped medication."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "She stopped taking her medicine.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Pharmacy / Medical",
+      "example_sentence": {
+        "english": "She stopped taking her medicine.",
+        "rohingya": "Hibaye hibare dabai haba bondo goijjil.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 933). Key vocabulary: 'dabai' = medicine/medication. Pending native-speaker review. Tatoeba ID: 7391165 | Corpus line: 933"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 933
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "partial",
+        "key_words_covered": "1/3",
+        "covered": [
+          "medicine"
+        ],
+        "missing": [
+          "stopp",
+          "tak"
+        ],
+        "matches": [
+          {
+            "rohingya": "dabai",
+            "iom_headword": "dabai",
+            "iom_gloss": "medicine; treatment",
+            "english": [
+              "medicine"
+            ]
+          }
+        ]
+      },
+      "reference_translation": {
+        "english": "She stopped taking her medicine.",
+        "rohingya": "Hibaye hibare dabai haba bondo goijjil.",
+        "origin": "Gamayun kit5k line 933",
+        "confidence": 0.7,
+        "confidence_tier": "single_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_003",
+      "rohingya_text": "Horaf aramiyotor oktot, beshi gori gum zonnan oilde behetor dabai.",
+      "english_meaning": {
+        "word": "At times of poor health, getting plenty of sleep is the best medicine",
+        "definition": "Health advice that rest is important when unwell.",
+        "explanation": "Practical phrase for pharmacy/medical domain: general health guidance about rest and recovery."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "At times of poor health, getting plenty of sleep is the best medicine.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Pharmacy / Medical",
+      "example_sentence": {
+        "english": "At times of poor health, getting plenty of sleep is the best medicine.",
+        "rohingya": "Horaf aramiyotor oktot, beshi gori gum zonnan oilde behetor dabai.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 2474). Key vocabulary: 'aramiyot' = health, 'dabai' = medicine, 'gum' = sleep. Pending native-speaker review. Corpus line: 2474"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 2474
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "partial",
+        "key_words_covered": "2/8",
+        "covered": [
+          "medicine",
+          "sleep"
+        ],
+        "missing": [
+          "best",
+          "gett",
+          "health",
+          "plenty",
+          "poor",
+          "tim"
+        ],
+        "matches": [
+          {
+            "rohingya": "gum",
+            "iom_headword": "gúm",
+            "iom_gloss": "sleep",
+            "english": [
+              "sleep"
+            ]
+          },
+          {
+            "rohingya": "dabai",
+            "iom_headword": "dabai",
+            "iom_gloss": "medicine; treatment",
+            "english": [
+              "medicine"
+            ]
+          }
+        ]
+      },
+      "reference_translation": {
+        "english": "At times of poor health, getting plenty of sleep is the best medicine.",
+        "rohingya": "Horaf aramiyotor oktot, beshi gori gum zonnan oilde behetor dabai.",
+        "origin": "Gamayun kit5k line 2474",
+        "confidence": 0.7,
+        "confidence_tier": "single_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_004",
+      "rohingya_text": "Aa*ttu dhath'tha-hanat zaito zoruri.",
+      "english_meaning": {
+        "word": "I need to go to the hospital",
+        "definition": "Expressing urgent need for hospital care.",
+        "explanation": "Practical phrase for pharmacy/medical domain: requesting to be taken to a hospital."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "hospital / dhath'tha-hanat",
+        "evidence": "ai_draft_from_attested_vocabulary"
+      },
+      "related_topic": "Pharmacy / Medical",
+      "example_sentence": {
+        "english": "I need to go to the hospital.",
+        "rohingya": "Aa*ttu dhath'tha-hanat zaito zoruri. (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "ai_draft",
+        "example_source_url": null,
+        "review_note": "AI-composed from attested vocabulary in kit5k corpus. 'dhath'tha-hanat' (hospital, locative) from lines 864, 1480, 4397; 'zoruri' (need) from lines 81, 110; 'zaito' (to go) from line 508. Sentence structure may have errors. Requires native-speaker review. Vocabulary sources: 'dhath'tha-hanat' (hospital (locative), lines [864, 1480, 4397]); 'zoruri' (need/necessary, lines [81, 110, 175]); 'zaito' (to go, lines [508, 1498])"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "ai_draft_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "not_found"
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "not_corroborated",
+        "key_words_covered": "0/3",
+        "covered": [],
+        "missing": [
+          "go",
+          "hospital",
+          "need"
+        ],
+        "matches": []
+      },
+      "reference_translation": {
+        "english": "I need to go to the hospital.",
+        "rohingya": "Aa*ttu dhath'tha-hanat zaito zoruri.",
+        "origin": "model_fallback",
+        "confidence": 0.4,
+        "confidence_tier": "model_fallback",
+        "needs_review": true
+      }
+    },
+    {
+      "id": "phrase_005",
+      "rohingya_text": "Dath'tha-hanttu dabai gori biaram gom oit fare.",
+      "english_meaning": {
+        "word": "Perhaps the illness is cured through medical treatment",
+        "definition": "Expressing hope that medical treatment will cure the illness.",
+        "explanation": "Practical phrase for pharmacy/medical domain: discussing treatment outcomes with healthcare providers."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "Perhaps the illness is cured through medical treatment.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Pharmacy / Medical",
+      "example_sentence": {
+        "english": "Perhaps the illness is cured through medical treatment.",
+        "rohingya": "Dath'tha-hanttu dabai gori biaram gom oit fare.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 4228). Key vocabulary: 'biaram' = illness, 'dabai' = medicine/treatment, 'gom' = good/better. Pending native-speaker review. Corpus line: 4228"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 4228
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "corroborated",
+        "key_words_covered": "3/6",
+        "covered": [
+          "illnes",
+          "perhap",
+          "treatment"
+        ],
+        "missing": [
+          "cur",
+          "medical",
+          "through"
+        ],
+        "matches": [
+          {
+            "rohingya": "dabai",
+            "iom_headword": "dabai",
+            "iom_gloss": "medicine; treatment",
+            "english": [
+              "treatment"
+            ]
+          },
+          {
+            "rohingya": "biaram",
+            "iom_headword": "biaram",
+            "iom_gloss": "illness, disease",
+            "english": [
+              "illnes"
+            ]
+          },
+          {
+            "rohingya": "oit fare",
+            "iom_headword": "óitfare",
+            "iom_gloss": "possible; perhaps",
+            "english": [
+              "perhap"
+            ]
+          }
+        ]
+      },
+      "reference_translation": {
+        "english": "Perhaps the illness is cured through medical treatment.",
+        "rohingya": "Dath'tha-hanttu dabai gori biaram gom oit fare.",
+        "origin": "Gamayun kit5k line 4228",
+        "confidence": 0.95,
+        "confidence_tier": "multi_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_006",
+      "rohingya_text": "Bas iyan ki relor estheshonot za niki?",
+      "english_meaning": {
+        "word": "Does this bus go to the train station?",
+        "definition": "Asking whether a bus route goes to the train station.",
+        "explanation": "Practical phrase for transportation domain: navigating public transit connections."
+      },
+      "part_of_speech": "Interrogative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "Does this bus go to the train station?",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Transportation",
+      "example_sentence": {
+        "english": "Does this bus go to the train station?",
+        "rohingya": "Bas iyan ki relor estheshonot za niki?",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 513). Key vocabulary: 'bas' = bus, 'relor estheshonot' = train station (locative), 'za' = go. Pending native-speaker review. Tatoeba ID: 60703 | Corpus line: 513"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 513
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "corroborated",
+        "key_words_covered": "2/4",
+        "covered": [
+          "bus",
+          "train"
+        ],
+        "missing": [
+          "go",
+          "station"
+        ],
+        "matches": [
+          {
+            "rohingya": "bas",
+            "iom_headword": "baás",
+            "iom_gloss": "bus",
+            "english": [
+              "bus"
+            ]
+          },
+          {
+            "rohingya": "relor",
+            "iom_headword": "rell",
+            "iom_gloss": "train",
+            "english": [
+              "train"
+            ]
+          }
+        ]
+      },
+      "reference_translation": {
+        "english": "Does this bus go to the train station?",
+        "rohingya": "Bas iyan ki relor estheshonot za niki?",
+        "origin": "Gamayun kit5k line 513",
+        "confidence": 0.95,
+        "confidence_tier": "multi_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_007",
+      "rohingya_text": "Aa*i ekkan ek-dinna thiket faiyum ne?",
+      "english_meaning": {
+        "word": "Can I have a one-day ticket?",
+        "definition": "Requesting a single-day transit pass.",
+        "explanation": "Practical phrase for transportation domain: purchasing daily transit passes."
+      },
+      "part_of_speech": "Interrogative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "Can I have a one-day ticket?",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Transportation",
+      "example_sentence": {
+        "english": "Can I have a one-day ticket?",
+        "rohingya": "Aa*i ekkan ek-dinna thiket faiyum ne?",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 589). Key vocabulary: 'thiket' = ticket, 'ek-dinna' = one-day. Pending native-speaker review. Tatoeba ID: 5565505 | Corpus line: 589"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 589
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "partial",
+        "key_words_covered": "1/3",
+        "covered": [
+          "one"
+        ],
+        "missing": [
+          "day",
+          "ticket"
+        ],
+        "matches": [
+          {
+            "rohingya": "ekkan",
+            "iom_headword": "ekkán",
+            "iom_gloss": "a, an; one",
+            "english": [
+              "one"
+            ]
+          }
+        ]
+      },
+      "reference_translation": {
+        "english": "Can I have a one-day ticket?",
+        "rohingya": "Aa*i ekkan ek-dinna thiket faiyum ne?",
+        "origin": "Gamayun kit5k line 589",
+        "confidence": 0.7,
+        "confidence_tier": "single_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_008",
+      "rohingya_text": "Iyontu estheshenot zaite hotun lage?",
+      "english_meaning": {
+        "word": "How long does it take from here to the station?",
+        "definition": "Asking about travel time to the station.",
+        "explanation": "Practical phrase for transportation domain: estimating travel time to transit hubs."
+      },
+      "part_of_speech": "Interrogative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "How long does it take from here to the station?",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Transportation",
+      "example_sentence": {
+        "english": "How long does it take from here to the station?",
+        "rohingya": "Iyontu estheshenot zaite hotun lage?",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 1498). Key vocabulary: 'estheshenot' = station (locative), 'hotun lage' = how long does it take. Pending native-speaker review. Tatoeba ID: 62099 | Corpus line: 1498"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 1498
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "partial",
+        "key_words_covered": "1/3",
+        "covered": [
+          "long"
+        ],
+        "missing": [
+          "station",
+          "take"
+        ],
+        "matches": [
+          {
+            "rohingya": "hotun",
+            "iom_headword": "hotúun",
+            "iom_gloss": "how long; for some time",
+            "english": [
+              "long"
+            ]
+          }
+        ]
+      },
+      "reference_translation": {
+        "english": "How long does it take from here to the station?",
+        "rohingya": "Iyontu estheshenot zaite hotun lage?",
+        "origin": "Gamayun kit5k line 1498",
+        "confidence": 0.7,
+        "confidence_tier": "single_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_009",
+      "rohingya_text": "Aa*ttun aijjo ekkan thiketh nai.",
+      "english_meaning": {
+        "word": "I don't have a ticket yet",
+        "definition": "Stating that you have not yet purchased a ticket.",
+        "explanation": "Practical phrase for transportation domain: informing transit staff you still need a ticket."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "I don't have a ticket yet.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Transportation",
+      "example_sentence": {
+        "english": "I don't have a ticket yet.",
+        "rohingya": "Aa*ttun aijjo ekkan thiketh nai.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 675). Key vocabulary: 'thiketh' = ticket, 'nai' = not/don't have, 'aijjo' = yet. Pending native-speaker review. Tatoeba ID: 5850054 | Corpus line: 675"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 675
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "not_corroborated",
+        "key_words_covered": "0/1",
+        "covered": [],
+        "missing": [
+          "ticket"
+        ],
+        "matches": []
+      },
+      "reference_translation": {
+        "english": "I don't have a ticket yet.",
+        "rohingya": "Aa*ttun aijjo ekkan thiketh nai.",
+        "origin": "Gamayun kit5k line 675",
+        "confidence": 0.7,
+        "confidence_tier": "single_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_010",
+      "rohingya_text": "Aa*ttu hono theksi zorurot ne?",
+      "english_meaning": {
+        "word": "Do I need a taxi?",
+        "definition": "Asking whether a taxi is needed.",
+        "explanation": "Practical phrase for transportation domain: determining whether taxi transport is necessary. Adapted from attested sentence 'She asked if I need a taxi.'"
+      },
+      "part_of_speech": "Interrogative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "She asked if I need a taxi.",
+        "evidence": "adapted_from_source"
+      },
+      "related_topic": "Transportation",
+      "example_sentence": {
+        "english": "She asked if I need a taxi.",
+        "rohingya": "Hiba fusar loiye aa*ttu hono theksi zorurot ne.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Full sentence directly attested in kit5k corpus (line 802). The phrase entry extracts the embedded question. Key vocabulary: 'theksi' = taxi, 'zorurot' = needed. Pending native-speaker review. Tatoeba ID: 5143356 | Corpus line: 802 | Extracted the embedded question 'aa*ttu hono theksi zorurot ne' from the full attested sentence 'Hiba fusar loiye aa*ttu hono theksi zorurot ne.' (line 802)"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "not_found",
+          "note": "Phrase is adapted from line 802, not a corpus sentence itself: Hiba fusar loiye aa*ttu hono theksi zorurot ne."
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "not_corroborated",
+        "key_words_covered": "0/2",
+        "covered": [],
+        "missing": [
+          "need",
+          "taxi"
+        ],
+        "matches": []
+      },
+      "reference_translation": {
+        "english": "Do I need a taxi?",
+        "rohingya": "Aa*ttu hono theksi zorurot ne?",
+        "origin": "model_fallback",
+        "confidence": 0.4,
+        "confidence_tier": "model_fallback",
+        "needs_review": true
+      }
+    },
+    {
+      "id": "phrase_011",
+      "rohingya_text": "Maherbani-gori Mas do.",
+      "english_meaning": {
+        "word": "Fish, please",
+        "definition": "Politely requesting fish at a market or restaurant.",
+        "explanation": "Practical phrase for groceries domain: ordering or purchasing fish, a staple in Rohingya cuisine."
+      },
+      "part_of_speech": "Imperative sentence (polite request)",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "Fish, please.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Groceries",
+      "example_sentence": {
+        "english": "Fish, please.",
+        "rohingya": "Maherbani-gori Mas do.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 541). Key vocabulary: 'Maherbani-gori' = please, 'Mas' = fish, 'do' = give. Pattern can be adapted: '[item], Maherbani-gori [item] do.' Pending native-speaker review. Tatoeba ID: 19342 | Corpus line: 541"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 541
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "corroborated",
+        "key_words_covered": "2/2",
+        "covered": [
+          "fish",
+          "please"
+        ],
+        "missing": [],
+        "matches": [
+          {
+            "rohingya": "maherbani-gori",
+            "iom_headword": "mehérbani gori",
+            "iom_gloss": "kindly (do something); please",
+            "english": [
+              "please"
+            ]
+          },
+          {
+            "rohingya": "mas",
+            "iom_headword": "mas",
+            "iom_gloss": "fish",
+            "english": [
+              "fish"
+            ]
+          }
+        ]
+      },
+      "reference_translation": {
+        "english": "Fish, please.",
+        "rohingya": "Maherbani-gori Mas do.",
+        "origin": "Gamayun kit5k line 541",
+        "confidence": 0.95,
+        "confidence_tier": "multi_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_012",
+      "rohingya_text": "Aa*i kengori tortaza mas basi loi fariyum?",
+      "english_meaning": {
+        "word": "How can I pick out fresh fish?",
+        "definition": "Asking how to select fresh fish at a market.",
+        "explanation": "Practical phrase for groceries domain: shopping for fresh fish, evaluating quality at markets."
+      },
+      "part_of_speech": "Interrogative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "How can I pick out fresh fish?",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Groceries",
+      "example_sentence": {
+        "english": "How can I pick out fresh fish?",
+        "rohingya": "Aa*i kengori tortaza mas basi loi fariyum?",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 88). Key vocabulary: 'tortaza' = fresh, 'mas' = fish, 'basi loi' = pick out/select. Pending native-speaker review. Tatoeba ID: 38349 | Corpus line: 88"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 88
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "partial",
+        "key_words_covered": "1/3",
+        "covered": [
+          "fish"
+        ],
+        "missing": [
+          "fresh",
+          "pick"
+        ],
+        "matches": [
+          {
+            "rohingya": "mas",
+            "iom_headword": "mas",
+            "iom_gloss": "fish",
+            "english": [
+              "fish"
+            ]
+          }
+        ]
+      },
+      "reference_translation": {
+        "english": "How can I pick out fresh fish?",
+        "rohingya": "Aa*i kengori tortaza mas basi loi fariyum?",
+        "origin": "Gamayun kit5k line 88",
+        "confidence": 0.7,
+        "confidence_tier": "single_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_013",
+      "rohingya_text": "Tu*i kissu gula-gala haiba ne?",
+      "english_meaning": {
+        "word": "Would you like some fruit?",
+        "definition": "Offering fruit to someone.",
+        "explanation": "Practical phrase for groceries domain: offering or requesting fruit at a shop or home."
+      },
+      "part_of_speech": "Interrogative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "Would you like some fruit?",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Groceries",
+      "example_sentence": {
+        "english": "Would you like some fruit?",
+        "rohingya": "Tu*i kissu gula-gala haiba ne?",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 365). Key vocabulary: 'gula-gala' = fruit, 'haiba' = eat (will you eat). Pending native-speaker review. Tatoeba ID: 23932 | Corpus line: 365"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 365
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "partial",
+        "key_words_covered": "1/2",
+        "covered": [
+          "fruit"
+        ],
+        "missing": [
+          "like"
+        ],
+        "matches": [
+          {
+            "rohingya": "gula-gala",
+            "iom_headword": "gulagala",
+            "iom_gloss": "fruits, fruit",
+            "english": [
+              "fruit"
+            ]
+          }
+        ]
+      },
+      "reference_translation": {
+        "english": "Would you like some fruit?",
+        "rohingya": "Tu*i kissu gula-gala haiba ne?",
+        "origin": "Gamayun kit5k line 365",
+        "confidence": 0.7,
+        "confidence_tier": "single_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_014",
+      "rohingya_text": "Iyan beshi dami.",
+      "english_meaning": {
+        "word": "It really is a good price",
+        "definition": "Commenting that a price is reasonable or good.",
+        "explanation": "Practical phrase for groceries domain: evaluating and discussing prices while shopping."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "It really is a good price.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Groceries",
+      "example_sentence": {
+        "english": "It really is a good price.",
+        "rohingya": "Iyan beshi dami.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 826). Key vocabulary: 'dami' = price/value, 'beshi' = very/really. Pending native-speaker review. Tatoeba ID: 3147972 | Corpus line: 826"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 826
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "conflict",
+        "key_words_covered": "0/2",
+        "covered": [],
+        "missing": [
+          "good",
+          "price"
+        ],
+        "matches": [],
+        "note": "IOM glosses 'dami' as 'expensive, costly; precious' and 'beshi' means 'very', so 'Iyan beshi dami' reads as 'This is very expensive', not Gamayun's 'It really is a good price'. Ask a native speaker which meaning is right before using it."
+      },
+      "reference_translation": {
+        "english": "It really is a good price.",
+        "rohingya": "Iyan beshi dami.",
+        "origin": "Gamayun kit5k line 826",
+        "confidence": 0.5,
+        "confidence_tier": "single_source",
+        "needs_review": true
+      }
+    },
+    {
+      "id": "phrase_015",
+      "rohingya_text": "Aa*ttu hota hoibolla honikkare lagibo.",
+      "english_meaning": {
+        "word": "I need someone to talk to",
+        "definition": "Expressing the need for someone to speak with, for support or guidance.",
+        "explanation": "Practical phrase for rules/regulations/help domain: seeking assistance, interpretation services, or emotional support upon arrival."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "I need someone to talk to.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Rules / Help",
+      "example_sentence": {
+        "english": "I need someone to talk to.",
+        "rohingya": "Aa*ttu hota hoibolla honikkare lagibo.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 22). Key vocabulary: 'hota hoibolla' = to talk to, 'lagibo' = will be needed. Pending native-speaker review. Tatoeba ID: 980726 | Corpus line: 22"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 22
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "not_corroborated",
+        "key_words_covered": "0/3",
+        "covered": [],
+        "missing": [
+          "need",
+          "someone",
+          "talk"
+        ],
+        "matches": []
+      },
+      "reference_translation": {
+        "english": "I need someone to talk to.",
+        "rohingya": "Aa*ttu hota hoibolla honikkare lagibo.",
+        "origin": "Gamayun kit5k line 22",
+        "confidence": 0.7,
+        "confidence_tier": "single_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_016",
+      "rohingya_text": "Meherbani-gori aa*re iiyaanor babute zano.",
+      "english_meaning": {
+        "word": "Please let me know about it",
+        "definition": "Politely asking to be informed about something.",
+        "explanation": "Practical phrase for rules/regulations domain: requesting information from officials, caseworkers, or service providers."
+      },
+      "part_of_speech": "Imperative sentence (polite request)",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "Please let me know about it.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Rules / Help",
+      "example_sentence": {
+        "english": "Please let me know about it.",
+        "rohingya": "Meherbani-gori aa*re iiyaanor babute zano.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 101). Key vocabulary: 'Meherbani-gori' = please, 'zano' = let know/inform, 'babute' = about. Pending native-speaker review. Tatoeba ID: 250026 | Corpus line: 101"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 101
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "partial",
+        "key_words_covered": "1/3",
+        "covered": [
+          "please"
+        ],
+        "missing": [
+          "know",
+          "let"
+        ],
+        "matches": [
+          {
+            "rohingya": "meherbani-gori",
+            "iom_headword": "mehérbani gori",
+            "iom_gloss": "kindly (do something); please",
+            "english": [
+              "please"
+            ]
+          }
+        ]
+      },
+      "reference_translation": {
+        "english": "Please let me know about it.",
+        "rohingya": "Meherbani-gori aa*re iiyaanor babute zano.",
+        "origin": "Gamayun kit5k line 101",
+        "confidence": 0.7,
+        "confidence_tier": "single_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_017",
+      "rohingya_text": "Hite hitar faskuth a*zai felaiyede iiyan ekkan fushkara ham.",
+      "english_meaning": {
+        "word": "It was unfortunate that he lost his passport",
+        "definition": "Expressing that losing a passport is an unfortunate event.",
+        "explanation": "Practical phrase for rules/regulations domain: reporting a lost passport to officials or immigration services."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "It was unfortunate that he lost his passport.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Rules / Regulations",
+      "example_sentence": {
+        "english": "It was unfortunate that he lost his passport.",
+        "rohingya": "Hite hitar faskuth a*zai felaiyede iiyan ekkan fushkara ham.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 414). Key vocabulary: 'faskuth' = passport, 'a*zai felaiyede' = lost. Critical vocabulary for immigration and border services. Pending native-speaker review. Tatoeba ID: 318583 | Corpus line: 414"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 414
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "not_corroborated",
+        "key_words_covered": "0/3",
+        "covered": [],
+        "missing": [
+          "lost",
+          "passport",
+          "unfortunate"
+        ],
+        "matches": []
+      },
+      "reference_translation": {
+        "english": "It was unfortunate that he lost his passport.",
+        "rohingya": "Hite hitar faskuth a*zai felaiyede iiyan ekkan fushkara ham.",
+        "origin": "Gamayun kit5k line 414",
+        "confidence": 0.7,
+        "confidence_tier": "single_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_018",
+      "rohingya_text": "Ek minith entezar goro.",
+      "english_meaning": {
+        "word": "Please wait a minute",
+        "definition": "Asking someone to wait briefly.",
+        "explanation": "Practical phrase for general settlement use: requesting patience during interactions at offices, shops, or transit stops."
+      },
+      "part_of_speech": "Imperative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "Please wait a minute.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Rules / Help",
+      "example_sentence": {
+        "english": "Please wait a minute.",
+        "rohingya": "Ek minith entezar goro.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 236). Key vocabulary: 'ek minith' = one minute, 'entezar goro' = wait. Pending native-speaker review. Tatoeba ID: 1939683 | Corpus line: 236"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 236
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "corroborated",
+        "key_words_covered": "2/3",
+        "covered": [
+          "minute",
+          "wait"
+        ],
+        "missing": [
+          "please"
+        ],
+        "matches": [
+          {
+            "rohingya": "minith",
+            "iom_headword": "miníth",
+            "iom_gloss": "minute",
+            "english": [
+              "minute"
+            ]
+          },
+          {
+            "rohingya": "entezar",
+            "iom_headword": "entezar",
+            "iom_gloss": "wait",
+            "english": [
+              "wait"
+            ]
+          }
+        ]
+      },
+      "reference_translation": {
+        "english": "Please wait a minute.",
+        "rohingya": "Ek minith entezar goro.",
+        "origin": "Gamayun kit5k line 236",
+        "confidence": 0.95,
+        "confidence_tier": "multi_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_019",
+      "rohingya_text": "Aijja binna tua*ttu ken lager? \"Gom lager, shukuria.\"",
+      "english_meaning": {
+        "word": "How are you feeling this morning? Pretty good, thanks",
+        "definition": "Asking how someone feels, with a polite reply.",
+        "explanation": "Everyday greeting exchange; useful for meeting a caseworker, teacher or neighbour."
+      },
+      "part_of_speech": "Question and answer",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "\"How are you feeling this morning?\" \"Pretty good, thanks.\"",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "\"How are you feeling this morning?\" \"Pretty good, thanks.\"",
+        "rohingya": "Aijja binna tua*ttu ken lager? \"Gom lager, shukuria.\"",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 813). Pending native-speaker review. Corpus line: 813"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 813
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "partial",
+        "key_words_covered": "2/5",
+        "covered": [
+          "good",
+          "thank"
+        ],
+        "missing": [
+          "feel",
+          "morn",
+          "pretty"
+        ],
+        "matches": [
+          {
+            "rohingya": "gom",
+            "iom_headword": "gom",
+            "iom_gloss": "good",
+            "english": [
+              "good"
+            ]
+          },
+          {
+            "rohingya": "shukuria",
+            "iom_headword": "cúkuriya",
+            "iom_gloss": "thanks, thank you",
+            "english": [
+              "thank"
+            ]
+          }
+        ]
+      },
+      "reference_translation": {
+        "english": "\"How are you feeling this morning?\" \"Pretty good, thanks.\"",
+        "rohingya": "Aijja binna tua*ttu ken lager? \"Gom lager, shukuria.\"",
+        "origin": "Gamayun kit5k line 813",
+        "confidence": 0.7,
+        "confidence_tier": "single_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_020",
+      "rohingya_text": "Aa*i tu*arloi kub toratori daha goriyum.",
+      "english_meaning": {
+        "word": "I'll see you soon",
+        "definition": "A friendly way to end a conversation.",
+        "explanation": "Leave-taking phrase for greetings and goodbyes."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "I'll see you soon.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "I'll see you soon.",
+        "rohingya": "Aa*i tu*arloi kub toratori daha goriyum.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 744). Pending native-speaker review. Corpus line: 744"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 744
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "not_corroborated",
+        "key_words_covered": "0/2",
+        "covered": [],
+        "missing": [
+          "see",
+          "soon"
+        ],
+        "matches": []
+      },
+      "reference_translation": {
+        "english": "I'll see you soon.",
+        "rohingya": "Aa*i tu*arloi kub toratori daha goriyum.",
+        "origin": "Gamayun kit5k line 744",
+        "confidence": 0.7,
+        "confidence_tier": "single_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_021",
+      "rohingya_text": "Ayedde-hailla raitta daha oibo.",
+      "english_meaning": {
+        "word": "See you tomorrow night",
+        "definition": "Saying goodbye until the next evening.",
+        "explanation": "Leave-taking phrase with a time word (tomorrow, night)."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "See you tomorrow night.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "See you tomorrow night.",
+        "rohingya": "Ayedde-hailla raitta daha oibo.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 812). Pending native-speaker review. Corpus line: 812"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 812
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "corroborated",
+        "key_words_covered": "2/3",
+        "covered": [
+          "night",
+          "tomorrow"
+        ],
+        "missing": [
+          "see"
+        ],
+        "matches": [
+          {
+            "rohingya": "ayedde-hailla",
+            "iom_headword": "ayeddé hailla",
+            "iom_gloss": "tomorrow",
+            "english": [
+              "tomorrow"
+            ]
+          },
+          {
+            "rohingya": "raitta",
+            "iom_headword": "rait",
+            "iom_gloss": "night",
+            "english": [
+              "night"
+            ]
+          },
+          {
+            "rohingya": "raitta",
+            "iom_headword": "raitta",
+            "iom_gloss": "at night",
+            "english": [
+              "night"
+            ]
+          }
+        ]
+      },
+      "reference_translation": {
+        "english": "See you tomorrow night.",
+        "rohingya": "Ayedde-hailla raitta daha oibo.",
+        "origin": "Gamayun kit5k line 812",
+        "confidence": 0.95,
+        "confidence_tier": "multi_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_022",
+      "rohingya_text": "Tua*r meherbanilla shukuriya ze.",
+      "english_meaning": {
+        "word": "Thank you, sir, for your kindness",
+        "definition": "A polite thank-you to someone who helped.",
+        "explanation": "Polite thanks to a worker, official or volunteer."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "Thank you, sir, for your kindness.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "Thank you, sir, for your kindness.",
+        "rohingya": "Tua*r meherbanilla shukuriya ze.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 3978). Pending native-speaker review. Corpus line: 3978"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 3978
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "corroborated",
+        "key_words_covered": "2/3",
+        "covered": [
+          "kindnes",
+          "thank"
+        ],
+        "missing": [
+          "sir"
+        ],
+        "matches": [
+          {
+            "rohingya": "meherbanilla",
+            "iom_headword": "mehérbani",
+            "iom_gloss": "kindness",
+            "english": [
+              "kindnes"
+            ]
+          },
+          {
+            "rohingya": "shukuriya",
+            "iom_headword": "cúkuriya",
+            "iom_gloss": "thanks, thank you",
+            "english": [
+              "thank"
+            ]
+          }
+        ]
+      },
+      "reference_translation": {
+        "english": "Thank you, sir, for your kindness.",
+        "rohingya": "Tua*r meherbanilla shukuriya ze.",
+        "origin": "Gamayun kit5k line 3978",
+        "confidence": 0.95,
+        "confidence_tier": "multi_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_023",
+      "rohingya_text": "Tua*r modotorla aa*i tua*re agori shukuriya zanai.",
+      "english_meaning": {
+        "word": "I thank you in advance for your assistance",
+        "definition": "Thanking someone before they help.",
+        "explanation": "Formal politeness when asking an office or caseworker for help."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "I thank you in advance for your assistance.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Rules / Help",
+      "example_sentence": {
+        "english": "I thank you in advance for your assistance.",
+        "rohingya": "Tua*r modotorla aa*i tua*re agori shukuriya zanai.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 3796). Pending native-speaker review. Corpus line: 3796"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 3796
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "corroborated",
+        "key_words_covered": "2/3",
+        "covered": [
+          "advance",
+          "thank"
+        ],
+        "missing": [
+          "assistance"
+        ],
+        "matches": [
+          {
+            "rohingya": "agori",
+            "iom_headword": "agori",
+            "iom_gloss": "in advance, early",
+            "english": [
+              "advance"
+            ]
+          },
+          {
+            "rohingya": "shukuriya",
+            "iom_headword": "cúkuriya",
+            "iom_gloss": "thanks, thank you",
+            "english": [
+              "thank"
+            ]
+          }
+        ]
+      },
+      "reference_translation": {
+        "english": "I thank you in advance for your assistance.",
+        "rohingya": "Tua*r modotorla aa*i tua*re agori shukuriya zanai.",
+        "origin": "Gamayun kit5k line 3796",
+        "confidence": 0.95,
+        "confidence_tier": "multi_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_024",
+      "rohingya_text": "Aa*ra tua*re entezarot raikkide iiyanolla aa*ra maf sai.",
+      "english_meaning": {
+        "word": "We're sorry that we've kept you waiting",
+        "definition": "An apology for being late or slow.",
+        "explanation": "Common phrase heard at appointments and service counters."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "We're sorry that we've kept you waiting.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "We're sorry that we've kept you waiting.",
+        "rohingya": "Aa*ra tua*re entezarot raikkide iiyanolla aa*ra maf sai.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 723). Pending native-speaker review. Corpus line: 723"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 723
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "partial",
+        "key_words_covered": "1/3",
+        "covered": [
+          "wait"
+        ],
+        "missing": [
+          "kept",
+          "sorry"
+        ],
+        "matches": [
+          {
+            "rohingya": "entezarot",
+            "iom_headword": "entezar",
+            "iom_gloss": "wait",
+            "english": [
+              "wait"
+            ]
+          }
+        ]
+      },
+      "reference_translation": {
+        "english": "We're sorry that we've kept you waiting.",
+        "rohingya": "Aa*ra tua*re entezarot raikkide iiyanolla aa*ra maf sai.",
+        "origin": "Gamayun kit5k line 723",
+        "confidence": 0.7,
+        "confidence_tier": "single_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_025",
+      "rohingya_text": "Aa*i English hota hoi aar tu*i hon zubanot hota ho?",
+      "english_meaning": {
+        "word": "I speak English and you, what language do you speak?",
+        "definition": "Asking which language someone speaks.",
+        "explanation": "Helps a learner find a shared language or ask for an interpreter."
+      },
+      "part_of_speech": "Question",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "I speak English and you, what language do you speak?",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "I speak English and you, what language do you speak?",
+        "rohingya": "Aa*i English hota hoi aar tu*i hon zubanot hota ho?",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 1572). Pending native-speaker review. Corpus line: 1572"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 1572
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "partial",
+        "key_words_covered": "1/3",
+        "covered": [
+          "language"
+        ],
+        "missing": [
+          "english",
+          "speak"
+        ],
+        "matches": [
+          {
+            "rohingya": "hota",
+            "iom_headword": "hotá",
+            "iom_gloss": "speech; language",
+            "english": [
+              "language"
+            ]
+          },
+          {
+            "rohingya": "zubanot",
+            "iom_headword": "zuban",
+            "iom_gloss": "language",
+            "english": [
+              "language"
+            ]
+          }
+        ]
+      },
+      "reference_translation": {
+        "english": "I speak English and you, what language do you speak?",
+        "rohingya": "Aa*i English hota hoi aar tu*i hon zubanot hota ho?",
+        "origin": "Gamayun kit5k line 1572",
+        "confidence": 0.7,
+        "confidence_tier": "single_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_026",
+      "rohingya_text": "Aa*i buza shuru goijji.",
+      "english_meaning": {
+        "word": "I'm beginning to understand",
+        "definition": "Saying you are starting to follow.",
+        "explanation": "Useful in English class and conversations to show progress."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "I'm beginning to understand.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "I'm beginning to understand.",
+        "rohingya": "Aa*i buza shuru goijji.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 185). Pending native-speaker review. Corpus line: 185"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 185
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "corroborated",
+        "key_words_covered": "2/2",
+        "covered": [
+          "beginn",
+          "understand"
+        ],
+        "missing": [],
+        "matches": [
+          {
+            "rohingya": "buza",
+            "iom_headword": "buzá",
+            "iom_gloss": "understand; explain; translate, interpret",
+            "english": [
+              "understand"
+            ]
+          },
+          {
+            "rohingya": "shuru",
+            "iom_headword": "cúru",
+            "iom_gloss": "beginning, start",
+            "english": [
+              "beginn"
+            ]
+          }
+        ]
+      },
+      "reference_translation": {
+        "english": "I'm beginning to understand.",
+        "rohingya": "Aa*i buza shuru goijji.",
+        "origin": "Gamayun kit5k line 185",
+        "confidence": 0.95,
+        "confidence_tier": "multi_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_027",
+      "rohingya_text": "Assalamualikum, iyan ki hamor mainshor dhifarmen ne?",
+      "english_meaning": {
+        "word": "Hello, is this the personnel department?",
+        "definition": "Greeting on the phone and checking you reached the right office.",
+        "explanation": "Phone greeting for employment and offices."
+      },
+      "part_of_speech": "Question",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "Hello, is this the personnel department?",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Employment",
+      "example_sentence": {
+        "english": "Hello, is this the personnel department?",
+        "rohingya": "Assalamualikum, iyan ki hamor mainshor dhifarmen ne?",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 3777). Pending native-speaker review. Corpus line: 3777"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 3777
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "not_corroborated",
+        "key_words_covered": "0/3",
+        "covered": [],
+        "missing": [
+          "department",
+          "hello",
+          "personnel"
+        ],
+        "matches": []
+      },
+      "reference_translation": {
+        "english": "Hello, is this the personnel department?",
+        "rohingya": "Assalamualikum, iyan ki hamor mainshor dhifarmen ne?",
+        "origin": "Gamayun kit5k line 3777",
+        "confidence": 0.7,
+        "confidence_tier": "single_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_028",
+      "rohingya_text": "Hibare saite biaraimmar dhoilla lager.",
+      "english_meaning": {
+        "word": "She looks like she's sick",
+        "definition": "Describing that someone appears ill.",
+        "explanation": "Helps explain a family member's health to a doctor or teacher."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "She looks like she's sick.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Pharmacy / Medical",
+      "example_sentence": {
+        "english": "She looks like she's sick.",
+        "rohingya": "Hibare saite biaraimmar dhoilla lager.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 283). Pending native-speaker review. Corpus line: 283"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 283
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "partial",
+        "key_words_covered": "1/3",
+        "covered": [
+          "like"
+        ],
+        "missing": [
+          "look",
+          "sick"
+        ],
+        "matches": [
+          {
+            "rohingya": "dhoilla",
+            "iom_headword": "dhoilla",
+            "iom_gloss": "as, like; alike, similar to; kind",
+            "english": [
+              "like"
+            ]
+          }
+        ]
+      },
+      "reference_translation": {
+        "english": "She looks like she's sick.",
+        "rohingya": "Hibare saite biaraimmar dhoilla lager.",
+        "origin": "Gamayun kit5k line 283",
+        "confidence": 0.7,
+        "confidence_tier": "single_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_029",
+      "rohingya_text": "Aa*r kuwal gazzore fuijjil.",
+      "english_meaning": {
+        "word": "My forehead burned with fever",
+        "definition": "Describing a high temperature.",
+        "explanation": "Symptom description for a clinic or pharmacy visit."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "My forehead burned with fever.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Pharmacy / Medical",
+      "example_sentence": {
+        "english": "My forehead burned with fever.",
+        "rohingya": "Aa*r kuwal gazzore fuijjil.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 1633). Pending native-speaker review. Corpus line: 1633"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 1633
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "corroborated",
+        "key_words_covered": "2/3",
+        "covered": [
+          "fever",
+          "forehead"
+        ],
+        "missing": [
+          "burn"
+        ],
+        "matches": [
+          {
+            "rohingya": "kuwal",
+            "iom_headword": "kual",
+            "iom_gloss": "forehead",
+            "english": [
+              "forehead"
+            ]
+          },
+          {
+            "rohingya": "gazzore",
+            "iom_headword": "gaat zor",
+            "iom_gloss": "fever",
+            "english": [
+              "fever"
+            ]
+          }
+        ]
+      },
+      "reference_translation": {
+        "english": "My forehead burned with fever.",
+        "rohingya": "Aa*r kuwal gazzore fuijjil.",
+        "origin": "Gamayun kit5k line 1633",
+        "confidence": 0.95,
+        "confidence_tier": "multi_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_030",
+      "rohingya_text": "Aa*r rel lot no'fai.",
+      "english_meaning": {
+        "word": "I've missed my train",
+        "definition": "Saying you did not catch your train.",
+        "explanation": "Transit problem phrase for asking staff for help."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "I've missed my train.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Transportation",
+      "example_sentence": {
+        "english": "I've missed my train.",
+        "rohingya": "Aa*r rel lot no'fai.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 454). Pending native-speaker review. Corpus line: 454"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 454
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "partial",
+        "key_words_covered": "1/2",
+        "covered": [
+          "train"
+        ],
+        "missing": [
+          "miss"
+        ],
+        "matches": [
+          {
+            "rohingya": "rel",
+            "iom_headword": "rell",
+            "iom_gloss": "train",
+            "english": [
+              "train"
+            ]
+          }
+        ]
+      },
+      "reference_translation": {
+        "english": "I've missed my train.",
+        "rohingya": "Aa*r rel lot no'fai.",
+        "origin": "Gamayun kit5k line 454",
+        "confidence": 0.7,
+        "confidence_tier": "single_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_031",
+      "rohingya_text": "Beraibolla hodun horos oibo?",
+      "english_meaning": {
+        "word": "What will the trip cost?",
+        "definition": "Asking the price of a journey.",
+        "explanation": "Asking about fares and travel costs."
+      },
+      "part_of_speech": "Question",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "What will the trip cost?",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Transportation",
+      "example_sentence": {
+        "english": "What will the trip cost?",
+        "rohingya": "Beraibolla hodun horos oibo?",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 329). Pending native-speaker review. Corpus line: 329"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 329
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "not_corroborated",
+        "key_words_covered": "0/2",
+        "covered": [],
+        "missing": [
+          "cost",
+          "trip"
+        ],
+        "matches": []
+      },
+      "reference_translation": {
+        "english": "What will the trip cost?",
+        "rohingya": "Beraibolla hodun horos oibo?",
+        "origin": "Gamayun kit5k line 329",
+        "confidence": 0.7,
+        "confidence_tier": "single_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_032",
+      "rohingya_text": "Dam baijje.",
+      "english_meaning": {
+        "word": "The price has gone up",
+        "definition": "Saying something now costs more.",
+        "explanation": "Shopping and rent conversations about rising prices."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "The price has gone up.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Groceries",
+      "example_sentence": {
+        "english": "The price has gone up.",
+        "rohingya": "Dam baijje.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 1740). Pending native-speaker review. Corpus line: 1740"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 1740
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "partial",
+        "key_words_covered": "1/2",
+        "covered": [
+          "price"
+        ],
+        "missing": [
+          "gone"
+        ],
+        "matches": [
+          {
+            "rohingya": "dam",
+            "iom_headword": "dam",
+            "iom_gloss": "price, value, wage, fee",
+            "english": [
+              "price"
+            ]
+          }
+        ]
+      },
+      "reference_translation": {
+        "english": "The price has gone up.",
+        "rohingya": "Dam baijje.",
+        "origin": "Gamayun kit5k line 1740",
+        "confidence": 0.7,
+        "confidence_tier": "single_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_033",
+      "rohingya_text": "Aa*i zani aa*ttu fura-furii thiya* nai.",
+      "english_meaning": {
+        "word": "I know that I don't have enough money",
+        "definition": "Saying you cannot afford something.",
+        "explanation": "Budgeting phrase for shops, rent or services."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "I know that I don't have enough money.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Groceries",
+      "example_sentence": {
+        "english": "I know that I don't have enough money.",
+        "rohingya": "Aa*i zani aa*ttu fura-furii thiya* nai.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 273). Pending native-speaker review. Corpus line: 273"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 273
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "not_corroborated",
+        "key_words_covered": "0/3",
+        "covered": [],
+        "missing": [
+          "enough",
+          "know",
+          "money"
+        ],
+        "matches": []
+      },
+      "reference_translation": {
+        "english": "I know that I don't have enough money.",
+        "rohingya": "Aa*i zani aa*ttu fura-furii thiya* nai.",
+        "origin": "Gamayun kit5k line 273",
+        "confidence": 0.7,
+        "confidence_tier": "single_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_034",
+      "rohingya_text": "Ehon ham faite aasan no'oibo.",
+      "english_meaning": {
+        "word": "It won't be easy to find a job now",
+        "definition": "Talking about a hard job search.",
+        "explanation": "Employment conversations with a settlement or job counsellor."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "It won't be easy to find a job now.",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Employment",
+      "example_sentence": {
+        "english": "It won't be easy to find a job now.",
+        "rohingya": "Ehon ham faite aasan no'oibo.",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 166). Pending native-speaker review. Corpus line: 166"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 166
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "corroborated",
+        "key_words_covered": "3/5",
+        "covered": [
+          "easy",
+          "job",
+          "now"
+        ],
+        "missing": [
+          "find",
+          "won"
+        ],
+        "matches": [
+          {
+            "rohingya": "ehon",
+            "iom_headword": "ehón",
+            "iom_gloss": "now",
+            "english": [
+              "now"
+            ]
+          },
+          {
+            "rohingya": "ham",
+            "iom_headword": "ham",
+            "iom_gloss": "work; occupation, job; action",
+            "english": [
+              "job"
+            ]
+          },
+          {
+            "rohingya": "aasan",
+            "iom_headword": "asán",
+            "iom_gloss": "easy",
+            "english": [
+              "easy"
+            ]
+          }
+        ]
+      },
+      "reference_translation": {
+        "english": "It won't be easy to find a job now.",
+        "rohingya": "Ehon ham faite aasan no'oibo.",
+        "origin": "Gamayun kit5k line 166",
+        "confidence": 0.95,
+        "confidence_tier": "multi_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_035",
+      "rohingya_text": "Aa*i ki fore kol mari faijjum ne?",
+      "english_meaning": {
+        "word": "May I call later?",
+        "definition": "Asking permission to phone again later.",
+        "explanation": "Phone etiquette for appointments and offices."
+      },
+      "part_of_speech": "Question",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "May I call later?",
+        "evidence": "source_attested"
+      },
+      "related_topic": "Rules / Help",
+      "example_sentence": {
+        "english": "May I call later?",
+        "rohingya": "Aa*i ki fore kol mari faijjum ne?",
+        "translation_verification": "source_attested",
+        "example_origin": "corpus_direct",
+        "example_source_url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "review_note": "Directly attested in CLEAR Global Gamayun kit5k corpus (line 976). Pending native-speaker review. Corpus line: 976"
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "sentence_attested",
+          "line": 976
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "partial",
+        "key_words_covered": "1/2",
+        "covered": [
+          "later"
+        ],
+        "missing": [
+          "call"
+        ],
+        "matches": [
+          {
+            "rohingya": "fore",
+            "iom_headword": "fore",
+            "iom_gloss": "later, next, after",
+            "english": [
+              "later"
+            ]
+          }
+        ]
+      },
+      "reference_translation": {
+        "english": "May I call later?",
+        "rohingya": "Aa*i ki fore kol mari faijjum ne?",
+        "origin": "Gamayun kit5k line 976",
+        "confidence": 0.7,
+        "confidence_tier": "single_source",
+        "needs_review": false
+      }
+    },
+    {
+      "id": "phrase_036",
+      "rohingya_text": "Aa*r nam Amina.",
+      "english_meaning": {
+        "word": "My name is Amina",
+        "definition": "Introducing yourself by name.",
+        "explanation": "Core self-introduction for greetings."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "My name is Amina",
+        "evidence": "ai_draft_from_attested_vocabulary"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "My name is Amina.",
+        "rohingya": "Aa*r nam Amina. (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "ai_draft",
+        "example_source_url": null,
+        "review_note": "Draft. 'Aa*r nam' (my name) as in Gamayun line 4769 'Aa*r nam fuinte...'; IOM headword 'nam' = name. Not a full corpus sentence. Requires native-speaker review."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "ai_draft_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "not_found"
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "partial",
+        "key_words_covered": "1/2",
+        "covered": [
+          "name"
+        ],
+        "missing": [
+          "amina"
+        ],
+        "matches": [
+          {
+            "rohingya": "nam",
+            "iom_headword": "nam",
+            "iom_gloss": "name",
+            "english": [
+              "name"
+            ]
+          }
+        ]
+      },
+      "reference_translation": {
+        "english": "My name is Amina.",
+        "rohingya": "Aa*r nam Amina.",
+        "origin": "model_fallback",
+        "confidence": 0.4,
+        "confidence_tier": "model_fallback",
+        "needs_review": true
+      }
+    },
+    {
+      "id": "phrase_037",
+      "rohingya_text": "Tua*r loi mulakot gori aa*ttun kushi lager.",
+      "english_meaning": {
+        "word": "Nice to meet you",
+        "definition": "A polite phrase when meeting someone for the first time.",
+        "explanation": "Core greeting for first meetings."
+      },
+      "part_of_speech": "Declarative sentence",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "Nice to meet you",
+        "evidence": "ai_draft_from_attested_vocabulary"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "Nice to meet you.",
+        "rohingya": "Tua*r loi mulakot gori aa*ttun kushi lager. (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "ai_draft",
+        "example_source_url": null,
+        "review_note": "Draft. Pattern from Gamayun line 2620 '...goribolla aa*ttun beshi kushi lager' (it is exciting to...); 'mulakot gora' = meet (Rohingya Language Foundation dictionary, see greeting_019). Word order unverified. Requires native-speaker review."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "ai_draft_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "not_found"
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "not_corroborated",
+        "key_words_covered": "0/2",
+        "covered": [],
+        "missing": [
+          "meet",
+          "nice"
+        ],
+        "matches": []
+      },
+      "reference_translation": {
+        "english": "Nice to meet you.",
+        "rohingya": "Tua*r loi mulakot gori aa*ttun kushi lager.",
+        "origin": "model_fallback",
+        "confidence": 0.4,
+        "confidence_tier": "model_fallback",
+        "needs_review": true
+      }
+    },
+    {
+      "id": "phrase_038",
+      "rohingya_text": "Allah Hafez.",
+      "english_meaning": {
+        "word": "Goodbye",
+        "definition": "A common way to say goodbye.",
+        "explanation": "Leave-taking word."
+      },
+      "part_of_speech": "Interjection",
+      "source_reference": {
+        "title": "CLEAR Global Gamayun kit5k — Rohingya–English parallel corpus",
+        "url": "https://huggingface.co/datasets/CLEAR-Global/Gamayun-kits",
+        "lookup_term": "Goodbye",
+        "evidence": "ai_draft_from_attested_vocabulary"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "Goodbye.",
+        "rohingya": "Allah Hafez. (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "ai_draft",
+        "example_source_url": null,
+        "review_note": "Draft. Gamayun line 2353 translates a wave meaning \"good bye\" as \"Allah Hafez hon\". Used here as a standalone farewell; check register with a native speaker. Requires native-speaker review."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "ai_draft_pending_native_review",
+      "sources_checked": [
+        {
+          "source": "CLEAR Global Gamayun kit5k (source 3)",
+          "result": "not_found"
+        },
+        {
+          "source": "VOA Rohingya audio (source 2)",
+          "result": "not_applicable",
+          "note": "Audio only, no transcripts, so it can't confirm a written translation."
+        }
+      ],
+      "second_review": {
+        "source": "IOM Rohingya Dictionary (source 1)",
+        "method": "word-level: key English words checked against IOM glosses of words in the Rohingya sentence",
+        "result": "not_corroborated",
+        "key_words_covered": "0/1",
+        "covered": [],
+        "missing": [
+          "goodbye"
+        ],
+        "matches": []
+      },
+      "reference_translation": {
+        "english": "Goodbye.",
+        "rohingya": "Allah Hafez.",
+        "origin": "model_fallback",
+        "confidence": 0.4,
+        "confidence_tier": "model_fallback",
+        "needs_review": true
+      }
+    }
+  ]
+}
