@@ -2,7 +2,7 @@
 import json, os
 from .translate import translate, norm, DATA
 
-with open(os.path.join(DATA, "rohingya_phrases_38.json"), encoding="utf-8") as f:
+with open(os.path.join(DATA, "rohingya_phrases_18.json"), encoding="utf-8") as f:
     phrases = json.load(f)["entries"]
 
 # Cases that should NOT match (None = must be "uncertain")
