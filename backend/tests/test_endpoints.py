@@ -1,12 +1,17 @@
 import pytest
 from fastapi.testclient import TestClient
 
-from app import db, main, ml_adapters
+from app import db, main, ml_adapters, vocabulary_db
 
 
 @pytest.fixture
 def client(monkeypatch):
     monkeypatch.setattr(db, "ping", lambda: True)  # no Postgres in tests
+    monkeypatch.setattr(vocabulary_db, "categories", lambda: None)
+    monkeypatch.setattr(vocabulary_db, "category_words", lambda category_id: None)
+    monkeypatch.setattr(vocabulary_db, "words", lambda **kwargs: None)
+    monkeypatch.setattr(vocabulary_db, "word_count", lambda **kwargs: None)
+    monkeypatch.setattr(vocabulary_db, "word", lambda word_id: None)
     with TestClient(main.app) as c:
         yield c
 

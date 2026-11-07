@@ -4,6 +4,7 @@ Every endpoint returns made-up sample data shaped like the API spec so the
 frontend can build against it. Nothing is persisted yet.
 """
 
+import os
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, File, Form, HTTPException, Query, UploadFile
@@ -11,7 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
-from app import db, ml_adapters
+from app import db, ml_adapters, vocabulary_db
 from app.mock_data import (
     AUDIO,
     CATEGORIES,
@@ -37,7 +38,14 @@ app = FastAPI(title="Rohingya Learning App API (mock)", version="0.1.0", lifespa
 # Native Expo apps ignore CORS; this is only for Expo web / browser testing.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        origin.strip()
+        for origin in os.getenv(
+            "CORS_ORIGINS",
+            "http://localhost:3000,http://localhost:5173,http://localhost:8081,http://localhost:19006",
+        ).split(",")
+        if origin.strip()
+    ],
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -47,8 +55,69 @@ CATEGORY_NAMES = {c["id"]: c["name"] for c in CATEGORIES}
 
 def _word_or_404(word_id: str) -> tuple[str, dict]:
     if word_id not in WORD_INDEX:
-        raise HTTPException(status_code=404, detail=f"Unknown word_id '{word_id}'")
+        seeded = vocabulary_db.word(word_id)
+        if seeded is None:
+            raise HTTPException(status_code=404, detail=f"Unknown word_id '{word_id}'")
+        return seeded["category_id"], {
+            "id": seeded["id"],
+            "english": seeded["english_text"],
+            "type": "word",
+            "translation_available": seeded["rohingya_text"] is not None,
+        }
     return WORD_INDEX[word_id]
+
+
+def _seeded_detail(word: dict, script: str) -> dict:
+    entry = word["source_entry"]
+    example = entry.get("example_sentence") or {}
+    alternative = entry.get("alternative_spellings_scripts") or {}
+    verified = entry.get("validation_status") == "verified"
+    examples = []
+    if example.get("english"):
+        examples.append(
+            {
+                "id": f"{word['id']}:example",
+                "english": example["english"],
+                "rohingya": example.get("rohingya"),
+                "verified": example.get("translation_verification") == "verified",
+            }
+        )
+    return {
+        "id": word["id"],
+        "english": {
+            "term": word["english_text"],
+            "definition": (entry.get("english_meaning") or {}).get("definition"),
+            "explanation": (entry.get("english_meaning") or {}).get("explanation"),
+        },
+        "rohingya": {
+            "preferred_script": script,
+            "text": word["rohingya_text"],
+            "verified": verified,
+            "variants": [
+                {"script": "latn", "text": text, "type": "alternative", "verified": False}
+                for text in alternative.get("latin") or []
+            ],
+        },
+        "part_of_speech": entry.get("part_of_speech"),
+        "category": {"id": word["category_id"], "name": word["category_name"]},
+        "related_topics": [entry["related_topic"]] if entry.get("related_topic") else [],
+        "examples": examples,
+        "alternative_spellings": alternative.get("latin") or [],
+        "word_forms": entry.get("different_forms") or [],
+        "media": {
+            "audio": [{"url": word["audio_url"], "verified": False}]
+            if word["audio_url"]
+            else [],
+            "images": [{"url": word["image_url"]}] if word["image_url"] else [],
+        },
+        "sources": [entry["source_reference"]] if entry.get("source_reference") else [],
+        "verification": {
+            "status": word["verification_status"] or "pending_review",
+            "reviewed_by": None,
+            "reviewed_at": None,
+        },
+        "source_entry": entry,
+    }
 
 
 # ---------------------------------------------------------------- health
@@ -68,11 +137,28 @@ def health():
 
 @app.get("/api/categories", tags=["categories"])
 def get_categories():
+    seeded = vocabulary_db.categories()
+    if seeded is not None:
+        return {"categories": seeded}
     return {"categories": CATEGORIES}
 
 
 @app.get("/api/categories/{category_id}/words", tags=["categories"])
 def get_category_words(category_id: str):
+    seeded = vocabulary_db.category_words(category_id)
+    if seeded is not None:
+        return {
+            "category_id": category_id,
+            "words": [
+                {
+                    "id": word["id"],
+                    "english": word["english_text"],
+                    "type": "word",
+                    "translation_available": word["rohingya_text"] is not None,
+                }
+                for word in seeded
+            ],
+        }
     if category_id not in WORDS_BY_CATEGORY:
         raise HTTPException(status_code=404, detail=f"Unknown category_id '{category_id}'")
     return {"category_id": category_id, "words": WORDS_BY_CATEGORY[category_id]}
@@ -84,9 +170,29 @@ def get_category_words(category_id: str):
 @app.get("/api/words", tags=["words"])
 def list_words(
     category: str | None = None,
+    q: str | None = None,
     limit: int = Query(20, ge=1, le=100),
     offset: int = Query(0, ge=0),
 ):
+    seeded = vocabulary_db.words(category_id=category, query=q, limit=limit, offset=offset)
+    if seeded is not None:
+        total = vocabulary_db.word_count(category_id=category, query=q) or 0
+        page = [
+            {
+                "id": word["id"],
+                "english": word["english_text"],
+                "type": "word",
+                "translation_available": word["rohingya_text"] is not None,
+                "category_id": word["category_id"],
+            }
+            for word in seeded
+        ]
+        next_offset = offset + limit if offset + limit < total else None
+        return {
+            "words": page,
+            "pagination": {"limit": limit, "offset": offset, "total": total,
+                           "next_offset": next_offset},
+        }
     items = [
         {**w, "category_id": cat_id}
         for cat_id, entries in WORDS_BY_CATEGORY.items()
@@ -104,6 +210,9 @@ def list_words(
 
 @app.get("/api/words/{word_id}", tags=["words"])
 def get_word(word_id: str, script: str = "latn"):
+    seeded = vocabulary_db.word(word_id)
+    if seeded is not None:
+        return _seeded_detail(seeded, script)
     category_id, summary = _word_or_404(word_id)
     details = DEFINITIONS.get(word_id, {})
     return {
@@ -137,6 +246,16 @@ def get_word(word_id: str, script: str = "latn"):
 
 @app.get("/api/words/{word_id}/scripts", tags=["words"])
 def get_word_scripts(word_id: str):
+    seeded = vocabulary_db.word(word_id)
+    if seeded is not None:
+        return {
+            "word_id": word_id,
+            "available_scripts": [
+                {"code": "latn", "label": "Latin transliteration", "available": True},
+                {"code": "rohg", "label": "Hanifi Rohingya", "available": False},
+            ],
+            "preferred_script": "latn",
+        }
     _word_or_404(word_id)
     return {
         "word_id": word_id,
@@ -150,12 +269,26 @@ def get_word_scripts(word_id: str):
 
 @app.get("/api/words/{word_id}/examples", tags=["words"])
 def get_word_examples(word_id: str):
+    seeded = vocabulary_db.word(word_id)
+    if seeded is not None:
+        return {"word_id": word_id, "examples": _seeded_detail(seeded, "latn")["examples"]}
     _word_or_404(word_id)
     return {"word_id": word_id, "examples": EXAMPLES.get(word_id, [])}
 
 
 @app.get("/api/words/{word_id}/audio", tags=["words"])
 def get_word_audio(word_id: str):
+    seeded = vocabulary_db.word(word_id)
+    if seeded is not None:
+        audio = _seeded_detail(seeded, "latn")["media"]["audio"]
+        return {
+            "word_id": word_id,
+            "audio_url": audio[0]["url"] if audio else None,
+            "language": "rhg",
+            "speaker_type": None,
+            "status": "available" if audio else "unavailable",
+            "audio": audio,
+        }
     _word_or_404(word_id)
     recordings = AUDIO.get(word_id, [])
     return {
@@ -170,12 +303,19 @@ def get_word_audio(word_id: str):
 
 @app.get("/api/words/{word_id}/images", tags=["words"])
 def get_word_images(word_id: str):
+    seeded = vocabulary_db.word(word_id)
+    if seeded is not None:
+        return {"word_id": word_id, "images": _seeded_detail(seeded, "latn")["media"]["images"]}
     _word_or_404(word_id)
     return {"word_id": word_id, "images": IMAGES.get(word_id, [])}
 
 
 @app.get("/api/words/{word_id}/forms", tags=["words"])
 def get_word_forms(word_id: str):
+    seeded = vocabulary_db.word(word_id)
+    if seeded is not None:
+        detail = _seeded_detail(seeded, "latn")
+        return {"word_id": word_id, "forms": detail["word_forms"], "examples": detail["examples"]}
     _word_or_404(word_id)
     return {
         "word_id": word_id,

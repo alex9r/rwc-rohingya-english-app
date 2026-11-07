@@ -23,6 +23,7 @@ services:
     env_file: .env
     environment:
       POSTGRES_HOST: db
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000,http://localhost:5173,http://localhost:8081,http://localhost:19006}
       WATCHFILES_FORCE_POLLING: "true"
     ports:
       - "${API_HOST_PORT}:8000"

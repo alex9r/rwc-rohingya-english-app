@@ -1,0 +1,71 @@
+{
+  "id": "greet_caseworker",
+  "categoryId": "greetings",
+  "title": "Meeting your caseworker",
+  "verification": "unvalidated",
+  "turns": [
+    {
+      "id": "greet_caseworker_t0",
+      "role": "partner",
+      "text": "Hello! My name is Daniel. What is your name?",
+      "support": null,
+      "reply": {
+        "english": "My name is Amina.",
+        "rohingya": "Aa*r nam Amina.",
+        "phraseId": "phrase_036",
+        "confidence": 0.4
+      }
+    },
+    {
+      "id": "greet_caseworker_t1",
+      "role": "partner",
+      "text": "How are you feeling this morning?",
+      "support": {
+        "english": "How are you feeling this morning?",
+        "rohingya": "Aijja binna tua*ttu ken lager?",
+        "phraseId": "phrase_019",
+        "confidence": 0.7
+      },
+      "reply": {
+        "english": "Pretty good, thanks.",
+        "rohingya": "Gom lager, shukuria.",
+        "phraseId": "phrase_019",
+        "confidence": 0.7
+      }
+    },
+    {
+      "id": "greet_caseworker_t2",
+      "role": "partner",
+      "text": "Nice to meet you.",
+      "support": {
+        "english": "Nice to meet you.",
+        "rohingya": "Tua*r loi mulakot gori aa*ttun kushi lager.",
+        "phraseId": "phrase_037",
+        "confidence": 0.4
+      },
+      "reply": {
+        "english": "Thank you, sir, for your kindness.",
+        "rohingya": "Tua*r meherbanilla shukuriya ze.",
+        "phraseId": "phrase_022",
+        "confidence": 0.95
+      }
+    },
+    {
+      "id": "greet_caseworker_t3",
+      "role": "partner",
+      "text": "I'll see you soon.",
+      "support": {
+        "english": "I'll see you soon.",
+        "rohingya": "Aa*i tu*arloi kub toratori daha goriyum.",
+        "phraseId": "phrase_020",
+        "confidence": 0.7
+      },
+      "reply": {
+        "english": "Goodbye.",
+        "rohingya": "Allah Hafez.",
+        "phraseId": "phrase_038",
+        "confidence": 0.4
+      }
+    }
+  ]
+}
