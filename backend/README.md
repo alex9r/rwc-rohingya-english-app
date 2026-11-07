@@ -15,34 +15,6 @@ The first run takes a minute to build. After that:
 - Interactive API docs: http://localhost:8000/docs
 - Health check: http://localhost:8000/health (should say `"database": "up"`)
 
-## Seed the vocabulary database
-
-The optional seed command imports `rohingya_greetings_40.json` and `rohingya_phrases_38.json` from `ml/translation/data/` into PostgreSQL. Run it from `backend/` after the database is healthy:
-
-```bash
-docker compose run --rm api python -m app.seed
-```
-
-To import another JSON dataset, pass its path relative to the repository root as seen inside the API container (the `ml/` directory is included):
-
-```bash
-docker compose run --rm api python -m app.seed /app/ml/translation/data/rohingya_phrases_38.json
-```
-
-For host development, start PostgreSQL with `docker compose up db`, then from `backend/` run `python -m app.seed` with the backend dependencies installed. The command creates the vocabulary tables as needed and uses an upsert key, so rerunning it updates entries rather than duplicating them. It does not delete database entries omitted from later dataset revisions.
-
-After seeding, the existing `/api/categories`, `/api/categories/{category_id}/words`, `/api/words`, and `/api/words/{word_id}` endpoints serve seeded entries when present; mock responses remain available before seeding. Dataset entries retain their original JSON metadata in the database. Content statuses remain unverified unless the source explicitly marks them verified; seeding does not constitute language review.
-
-Browser CORS origins are controlled by `CORS_ORIGINS` in `backend/.env`, as a comma-separated list. The development default allows common local frontend ports. For temporary public tunnels, allow only the frontend's exact origin, share the URL narrowly, and use non-sensitive test data; this API has no authentication.
-
-## Shared dev server (no Docker for teammates)
-
-`backend/scripts/shared-dev.sh` starts the API and Postgres, seeds the data, and opens a temporary Cloudflare tunnel (`brew install cloudflared`). Send the printed `https://*.trycloudflare.com` URL to the frontend pair and the Centre; they only need that URL as their API base, no Docker. The URL changes each run, and the server stops when you press `Ctrl+C`. Set `CORS_ORIGINS` to the frontend's origin if it runs in a browser:
-
-```bash
-CORS_ORIGINS=https://my-frontend.example ./scripts/shared-dev.sh
-```
-
 Press `Ctrl+C` to stop. Run `docker compose down -v` to also wipe the database.
 
 ## Calling it from Expo

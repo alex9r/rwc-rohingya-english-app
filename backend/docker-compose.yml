@@ -13,23 +13,18 @@ services:
       retries: 20
 
   api:
-    build:
-      # Repo root
-      context: ..
-      dockerfile: backend/Dockerfile
-      args:
-        INSTALL_SPEECH: ${INSTALL_SPEECH:-0}
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload --reload-dir app --reload-dir ml
+    build: .
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload --reload-dir app
     env_file: .env
     environment:
+      # Service name on the compose network; overrides any host value in .env.
       POSTGRES_HOST: db
-      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000,http://localhost:5173,http://localhost:8081,http://localhost:19006}
+      # File-change events don't reach containers from a Windows host, so poll instead.
       WATCHFILES_FORCE_POLLING: "true"
     ports:
       - "${API_HOST_PORT}:8000"
     volumes:
       - ./app:/app/app
-      - ../ml:/app/ml
     depends_on:
       db:
         condition: service_healthy
