@@ -3,6 +3,7 @@ import { useAudioPlayer } from 'expo-audio';
 import { File, Paths } from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
 import { useState } from 'react';
+import { LoadState } from '@/components/LoadState';
 import {
   ActivityIndicator,
   Alert,
@@ -36,6 +37,8 @@ export default function SpeakScreen() {
   const [result, setResult] = useState<TranslateResult | null>(null);
   const [recordingUri, setRecordingUri] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [requestError, setRequestError] = useState<string | null>(null);
+  const [retryJob, setRetryJob] = useState<(() => Promise<TranslateResult>) | null>(null);
   const { recording, toggle } = useRecorder();
   const play = usePlayAudio();
   const replay = useAudioPlayer(null);
@@ -48,12 +51,14 @@ export default function SpeakScreen() {
 
   const run = async (job: () => Promise<TranslateResult>) => {
     setBusy(true);
+    setRequestError(null);
+    setRetryJob(() => job);
     try {
       const r = await job();
       setResult(r);
       speakResult(r);
     } catch {
-      Alert.alert('Translation failed', 'Check your connection and try again.');
+      setRequestError('Translation failed. Check your connection and try again.');
     } finally {
       setBusy(false);
     }
@@ -114,6 +119,8 @@ export default function SpeakScreen() {
       >
         {busy ? (
           <ActivityIndicator size="large" color="#FFFFFF" />
+        ) : requestError ? (
+          <LoadState error={requestError} onRetry={retryJob ? () => void run(retryJob) : undefined} />
         ) : result ? (
           <View style={styles.result}>
             <Text style={styles.source}>{result.sourceText}</Text>
