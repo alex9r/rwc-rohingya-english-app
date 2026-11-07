@@ -1,7 +1,0 @@
-# Repo-wide default (used for ml/). Only real errors: syntax errors and pyflakes.
-# backend/ has its own stricter config in backend/pyproject.toml.
-[lint]
-select = ["E9", "F"]
-
-[lint.per-file-ignores]
-"__init__.py" = ["F401"]  # re-exports
