@@ -1,0 +1,7 @@
+*
+!backend/requirements.txt
+!backend/app
+!ml
+**/__pycache__
+**/*.pyc
+**/.env
