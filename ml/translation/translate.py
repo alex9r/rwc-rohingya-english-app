@@ -3,7 +3,8 @@
 direction: "roh->en" or "en->roh"
 status:    "ok" | "uncertain" | "failed"
 
-Looks the input up in the phrase bank (data/*.json). It can't invent
+Looks the input up in the phrase bank (data/*.json and data/collections/*.json,
+including alternative translations). It can't invent
 Rohingya: if nothing matches well it returns status "uncertain".
 """
 import glob, json, os, re, unicodedata
@@ -22,11 +23,13 @@ def norm(s):
 
 def _load():
     pairs = []  # (english, rohingya)
-    for path in sorted(glob.glob(os.path.join(DATA, "*.json"))):
+    # data/*.json plus the domain collections in data/collections/
+    for path in sorted(glob.glob(os.path.join(DATA, "**", "*.json"), recursive=True)):
         for e in json.load(open(path, encoding="utf-8"))["entries"]:
             ex = e.get("example_sentence") or {}
-            for en, roh in ((e["english_meaning"]["word"], e.get("rohingya_text")),
-                            (ex.get("english"), ex.get("rohingya"))):
+            alts = [(a.get("english"), a.get("rohingya")) for a in e.get("alternative_translations") or []]
+            for en, roh in [(e["english_meaning"]["word"], e.get("rohingya_text")),
+                            (ex.get("english"), ex.get("rohingya"))] + alts:
                 if en and roh:
                     pairs.append((en, roh.replace("(not verified)", "").strip()))
     return pairs
