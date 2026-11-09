@@ -62,9 +62,71 @@ def _asset_url(value: Any) -> str | None:
     return None
 
 
+def _entry_type(entry: dict[str, Any]) -> str:
+    # Phrase datasets are sentences; word datasets are headwords.
+    return "phrase" if str(entry["id"]).startswith("phrase_") else "word"
+
+
+def _needs_review(entry: dict[str, Any], reference: dict[str, Any]) -> bool:
+    if "needs_review" in reference:
+        return bool(reference["needs_review"]) or entry.get("validation_status") != "verified"
+    return entry.get("validation_status") != "verified"
+
+
+def _child_rows(word_id: str, entry: dict[str, Any]) -> dict[str, list[tuple]]:
+    """Normalise the nested JSON into translation / media / source rows."""
+    reference = entry.get("reference_translation") or {}
+    example = entry.get("example_sentence") or {}
+    alternative = entry.get("alternative_spellings_scripts") or {}
+    translations: list[tuple] = []
+    if entry.get("rohingya_text"):
+        translations.append(
+            (word_id, "headword", "rhg", "latn", entry["rohingya_text"],
+             (entry.get("source_reference") or {}).get("evidence"),
+             entry.get("validation_status"), None)
+        )
+    if example.get("english"):
+        translations.append(
+            (word_id, "example", "en", "latn", example["english"], None, None, None)
+        )
+    if example.get("rohingya"):
+        translations.append(
+            (word_id, "example", "rhg", "latn", example["rohingya"],
+             example.get("example_origin"), example.get("translation_verification"), None)
+        )
+    if reference.get("rohingya"):
+        translations.append(
+            (word_id, "reference", "rhg", "latn", reference["rohingya"],
+             reference.get("origin"), reference.get("confidence_tier"),
+             reference.get("confidence"))
+        )
+    for text in alternative.get("latin") or []:
+        translations.append((word_id, "variant", "rhg", "latn", text, None, None, None))
+
+    media = []
+    for kind, field in (("image", "image"), ("audio", "audio_pronunciation")):
+        location = _asset_url(entry.get(field))
+        if location:
+            media.append((word_id, kind, location, None, False))
+
+    sources = []
+    ref = entry.get("source_reference")
+    if ref:
+        sources.append(
+            (word_id, ref.get("title"), ref.get("url"), ref.get("lookup_term"),
+             ref.get("evidence"), "primary")
+        )
+    for checked in entry.get("sources_checked") or []:
+        sources.append(
+            (word_id, checked.get("source"), None, None, checked.get("result"), "checked")
+        )
+    return {"translations": translations, "media": media, "sources": sources}
+
+
 def _entry_values(dataset: str, entry: dict[str, Any]) -> tuple:
     category_name = str(entry.get("related_topic") or "Uncategorized")
     category_id = _slug(category_name)
+    reference = entry.get("reference_translation") or {}
     dataset_key = f"{_slug(dataset)}-{hashlib.sha256(dataset.encode()).hexdigest()[:10]}"
     return (
         f"{dataset_key}:{entry['id']}",
@@ -77,8 +139,34 @@ def _entry_values(dataset: str, entry: dict[str, Any]) -> tuple:
         _asset_url(entry.get("image")),
         _asset_url(entry.get("audio_pronunciation")),
         entry.get("validation_status"),
+        _entry_type(entry),
+        entry.get("part_of_speech"),
+        reference.get("confidence"),
+        reference.get("confidence_tier"),
+        _needs_review(entry, reference),
         json.dumps(entry, ensure_ascii=False),
     )
+
+
+def _replace_children(conn, word_id: str, entry: dict[str, Any]) -> None:
+    """Rebuild a word's child rows so reseeding mirrors the dataset exactly."""
+    for table in ("vocabulary_translations", "vocabulary_media", "vocabulary_sources"):
+        conn.execute(f"DELETE FROM {table} WHERE word_id=%s", (word_id,))
+    rows = _child_rows(word_id, entry)
+    for row in rows["translations"]:
+        conn.execute(
+            "INSERT INTO vocabulary_translations "
+            "(word_id, role, language, script, text, origin, verification, confidence) "
+            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", row)
+    for row in rows["media"]:
+        conn.execute(
+            "INSERT INTO vocabulary_media (word_id, kind, location, mime_type, verified) "
+            "VALUES (%s, %s, %s, %s, %s)", row)
+    for row in rows["sources"]:
+        conn.execute(
+            "INSERT INTO vocabulary_sources "
+            "(word_id, title, url, lookup_term, evidence, kind) "
+            "VALUES (%s, %s, %s, %s, %s, %s)", row)
 
 
 def seed_datasets(paths: Sequence[str | Path]) -> int:
@@ -97,16 +185,21 @@ def seed_datasets(paths: Sequence[str | Path]) -> int:
                 conn.execute(
                     "INSERT INTO vocabulary_words "
                     "(id, dataset, source_id, category_id, english_text, rohingya_text, "
-                    "image_url, audio_url, verification_status, entry_json) "
-                    "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s::jsonb) "
+                    "image_url, audio_url, verification_status, entry_type, part_of_speech, "
+                    "confidence, confidence_tier, needs_review, entry_json) "
+                    "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s::jsonb) "
                     "ON CONFLICT (dataset, source_id) DO UPDATE SET "
                     "id=EXCLUDED.id, category_id=EXCLUDED.category_id, "
                     "english_text=EXCLUDED.english_text, rohingya_text=EXCLUDED.rohingya_text, "
                     "image_url=EXCLUDED.image_url, audio_url=EXCLUDED.audio_url, "
                     "verification_status=EXCLUDED.verification_status, "
-                    "entry_json=EXCLUDED.entry_json",
-                    values,
+                    "entry_type=EXCLUDED.entry_type, part_of_speech=EXCLUDED.part_of_speech, "
+                    "confidence=EXCLUDED.confidence, confidence_tier=EXCLUDED.confidence_tier, "
+                    "needs_review=EXCLUDED.needs_review, entry_json=EXCLUDED.entry_json",
+                    # values[4] is the category name, stored on vocabulary_categories.
+                    values[:4] + values[5:],
                 )
+                _replace_children(conn, values[0], entry)
     return sum(len(entries) for _, entries in datasets)
 
 

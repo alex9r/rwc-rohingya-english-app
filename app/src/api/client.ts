@@ -20,6 +20,92 @@ import type {
  * AsyncStorage, standing in for POST/GET /api/progress and a saved-words endpoint
  * (which the backend draft doesn't have yet).
  */
+/**
+ * Backend base URL, e.g. http://localhost:8000. When unset, or when a request
+ * fails, the client falls back to mockData.ts so the app always runs.
+ */
+const API_URL = process.env.EXPO_PUBLIC_API_URL?.replace(/\/+$/, '');
+const TIMEOUT_MS = 4000;
+
+async function getJson<T>(path: string): Promise<T | null> {
+  if (!API_URL) return null;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
+  try {
+    const res = await fetch(`${API_URL}${path}`, { signal: controller.signal });
+    return res.ok ? ((await res.json()) as T) : null;
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+// ---- backend response shapes (see backend/app/main.py) ----
+interface ApiCategory {
+  id: string;
+  name: string;
+  description?: string;
+}
+interface ApiWordSummary {
+  id: string;
+  english: string;
+  type?: 'word' | 'phrase';
+  category_id?: string;
+  rohingya?: string | null;
+  image_url?: string | null;
+  audio_url?: string | null;
+  verification_status?: string | null;
+  confidence?: number | null;
+  needs_review?: boolean;
+}
+interface ApiWordDetail {
+  id: string;
+  english: { term: string };
+  rohingya: { text: string | null };
+  category: { id: string };
+  media?: { audio?: { url: string }[]; images?: { url: string }[] };
+  verification: {
+    status: string;
+    confidence?: number | null;
+    needs_review?: boolean;
+  };
+}
+
+/** Backend statuses are free-form strings such as "source_attested_pending_native_review". */
+function toVerification(status: string | null | undefined): Word['verification'] {
+  if (status === 'verified') return 'verified';
+  return status?.includes('pending') ? 'pending_review' : 'unvalidated';
+}
+
+const fromSummary = (x: ApiWordSummary): Word => ({
+  id: x.id,
+  categoryId: x.category_id ?? '',
+  english: x.english,
+  // The datasets store Latin-script Rohingya ("Rohingyalish"); native script isn't available yet.
+  rohingyalish: x.rohingya ?? null,
+  rohingya: null,
+  imageUrl: x.image_url ?? null,
+  audioUrl: x.audio_url ?? null,
+  verification: toVerification(x.verification_status),
+  entryType: x.type ?? 'word',
+  confidence: x.confidence ?? null,
+  needsReview: x.needs_review ?? true,
+});
+
+const fromDetail = (x: ApiWordDetail): Word => ({
+  id: x.id,
+  categoryId: x.category.id,
+  english: x.english.term,
+  rohingyalish: x.rohingya.text,
+  rohingya: null,
+  imageUrl: x.media?.images?.[0]?.url ?? null,
+  audioUrl: x.media?.audio?.[0]?.url ?? null,
+  verification: toVerification(x.verification.status),
+  confidence: x.verification.confidence ?? null,
+  needsReview: x.verification.needs_review ?? true,
+});
+
 const delay = <T>(value: T, ms = 300): Promise<T> =>
   new Promise((resolve) => setTimeout(() => resolve(value), ms));
 
@@ -72,9 +158,24 @@ function summarize(db: Db): ProgressSummary {
 }
 
 export const api = {
-  getCategories: (): Promise<Category[]> => delay(categories, 100),
+  getCategories: async (): Promise<Category[]> => {
+    const res = await getJson<{ categories: ApiCategory[] }>('/api/categories');
+    if (res?.categories.length) {
+      return res.categories.map((c) => ({
+        id: c.id,
+        name: c.name,
+        description: c.description ?? '',
+      }));
+    }
+    return delay(categories, 100);
+  },
 
-  getWords: (opts: { categoryId?: string; query?: string } = {}): Promise<Word[]> => {
+  getWords: async (opts: { categoryId?: string; query?: string } = {}): Promise<Word[]> => {
+    const params = new URLSearchParams({ limit: '100' });
+    if (opts.categoryId) params.set('category', opts.categoryId);
+    if (opts.query?.trim()) params.set('q', opts.query.trim());
+    const res = await getJson<{ words: ApiWordSummary[] }>(`/api/words?${params}`);
+    if (res) return res.words.map(fromSummary);
     const q = opts.query?.trim().toLowerCase();
     return delay(
       words.filter(
@@ -88,7 +189,11 @@ export const api = {
     );
   },
 
-  getWord: (id: string): Promise<Word | null> => delay(words.find((x) => x.id === id) ?? null, 100),
+  getWord: async (id: string): Promise<Word | null> => {
+    const res = await getJson<ApiWordDetail>(`/api/words/${encodeURIComponent(id)}`);
+    if (res) return fromDetail(res);
+    return delay(words.find((x) => x.id === id) ?? null, 100);
+  },
 
   /** Voice search: pretend we transcribed a word and return the best match. */
   searchWordByVoice: (_audioUri: string): Promise<Word[]> => delay([words[0]], 600),

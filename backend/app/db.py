@@ -49,6 +49,56 @@ def ensure_vocabulary_schema(conn: psycopg.Connection) -> None:
             UNIQUE (dataset, source_id)
         )
         """,
+        # Structured columns promoted out of entry_json (added in place so existing
+        # databases upgrade without a migration tool).
+        "ALTER TABLE vocabulary_words ADD COLUMN IF NOT EXISTS entry_type TEXT "
+        "NOT NULL DEFAULT 'word' CHECK (entry_type IN ('word', 'phrase'))",
+        "ALTER TABLE vocabulary_words ADD COLUMN IF NOT EXISTS part_of_speech TEXT",
+        # NULL confidence means "no scored reference translation", never "zero".
+        "ALTER TABLE vocabulary_words ADD COLUMN IF NOT EXISTS confidence "
+        "NUMERIC(3,2) CHECK (confidence BETWEEN 0 AND 1)",
+        "ALTER TABLE vocabulary_words ADD COLUMN IF NOT EXISTS confidence_tier TEXT",
+        "ALTER TABLE vocabulary_words ADD COLUMN IF NOT EXISTS needs_review "
+        "BOOLEAN NOT NULL DEFAULT TRUE",
+        """
+        CREATE TABLE IF NOT EXISTS vocabulary_translations (
+            id BIGSERIAL PRIMARY KEY,
+            word_id TEXT NOT NULL REFERENCES vocabulary_words(id) ON DELETE CASCADE,
+            role TEXT NOT NULL CHECK (role IN ('headword', 'example', 'reference', 'variant')),
+            language TEXT NOT NULL CHECK (language IN ('en', 'rhg')),
+            script TEXT NOT NULL DEFAULT 'latn',
+            text TEXT NOT NULL,
+            origin TEXT,
+            verification TEXT,
+            confidence NUMERIC(3,2) CHECK (confidence BETWEEN 0 AND 1)
+        )
+        """,
+        "CREATE INDEX IF NOT EXISTS vocabulary_translations_word_idx "
+        "ON vocabulary_translations(word_id)",
+        """
+        CREATE TABLE IF NOT EXISTS vocabulary_media (
+            id BIGSERIAL PRIMARY KEY,
+            word_id TEXT NOT NULL REFERENCES vocabulary_words(id) ON DELETE CASCADE,
+            kind TEXT NOT NULL CHECK (kind IN ('image', 'audio')),
+            -- Object key in the media bucket (or a legacy URL until assets are migrated).
+            location TEXT NOT NULL,
+            mime_type TEXT,
+            verified BOOLEAN NOT NULL DEFAULT FALSE
+        )
+        """,
+        "CREATE INDEX IF NOT EXISTS vocabulary_media_word_idx ON vocabulary_media(word_id)",
+        """
+        CREATE TABLE IF NOT EXISTS vocabulary_sources (
+            id BIGSERIAL PRIMARY KEY,
+            word_id TEXT NOT NULL REFERENCES vocabulary_words(id) ON DELETE CASCADE,
+            title TEXT,
+            url TEXT,
+            lookup_term TEXT,
+            evidence TEXT,
+            kind TEXT NOT NULL DEFAULT 'primary' CHECK (kind IN ('primary', 'checked'))
+        )
+        """,
+        "CREATE INDEX IF NOT EXISTS vocabulary_sources_word_idx ON vocabulary_sources(word_id)",
         "CREATE INDEX IF NOT EXISTS vocabulary_words_category_idx "
         "ON vocabulary_words(category_id)",
         "CREATE INDEX IF NOT EXISTS vocabulary_words_english_idx "

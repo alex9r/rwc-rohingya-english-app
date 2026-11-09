@@ -7,6 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { api } from '@/api/client';
 import type { PronunciationResult, Word } from '@/api/types';
 import { BackButton } from '@/components/BackButton';
+import { ConfidenceBadge } from '@/components/ConfidenceBadge';
 import { GradientScreen } from '@/components/GradientScreen';
 import { IconButton } from '@/components/IconButton';
 import { MicButton } from '@/components/MicButton';
@@ -87,6 +88,8 @@ export default function WordPractice() {
               <Text style={styles.rohingya}>
                 {word.rohingya ?? word.rohingyalish ?? 'Not translated yet'}
               </Text>
+              {/* Only shown when the entry has a scored reference translation. */}
+              {word.confidence != null && <ConfidenceBadge value={word.confidence} />}
               <View style={styles.hearRow}>
                 <IconButton
                   variant="glass"

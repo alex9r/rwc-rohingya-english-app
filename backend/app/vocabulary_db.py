@@ -40,7 +40,8 @@ def category_words(category_id: str):
         return None
     rows = _query(
         "SELECT w.id, w.source_id, w.dataset, w.category_id, c.name, w.english_text, "
-        "w.rohingya_text, w.image_url, w.audio_url, w.verification_status, w.entry_json "
+        "w.rohingya_text, w.image_url, w.audio_url, w.verification_status, w.entry_json, "
+        "w.entry_type, w.confidence, w.confidence_tier, w.needs_review "
         "FROM vocabulary_words w JOIN vocabulary_categories c ON c.id=w.category_id "
         "WHERE w.category_id=%s ORDER BY w.english_text",
         (category_id,),
@@ -65,7 +66,8 @@ def words(
     where = f" WHERE {' AND '.join(clauses)}" if clauses else ""
     rows = _query(
         "SELECT w.id, w.source_id, w.dataset, w.category_id, c.name, w.english_text, "
-        "w.rohingya_text, w.image_url, w.audio_url, w.verification_status, w.entry_json "
+        "w.rohingya_text, w.image_url, w.audio_url, w.verification_status, w.entry_json, "
+        "w.entry_type, w.confidence, w.confidence_tier, w.needs_review "
         "FROM vocabulary_words w JOIN vocabulary_categories c ON c.id=w.category_id"
         f"{where} ORDER BY w.english_text LIMIT %s OFFSET %s",
         (*params, limit, offset),
@@ -78,7 +80,8 @@ def words(
 def word(word_id: str):
     rows = _query(
         "SELECT w.id, w.source_id, w.dataset, w.category_id, c.name, w.english_text, "
-        "w.rohingya_text, w.image_url, w.audio_url, w.verification_status, w.entry_json "
+        "w.rohingya_text, w.image_url, w.audio_url, w.verification_status, w.entry_json, "
+        "w.entry_type, w.confidence, w.confidence_tier, w.needs_review "
         "FROM vocabulary_words w JOIN vocabulary_categories c ON c.id=w.category_id "
         "WHERE w.id=%s",
         (word_id,),
@@ -118,6 +121,10 @@ def rows_to_words(rows):
             "audio_url": row[8],
             "verification_status": row[9],
             "source_entry": row[10],
+            "entry_type": row[11],
+            "confidence": float(row[12]) if row[12] is not None else None,
+            "confidence_tier": row[13],
+            "needs_review": row[14],
         }
         for row in rows
     ]

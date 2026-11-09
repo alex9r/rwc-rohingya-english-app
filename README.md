@@ -51,7 +51,7 @@ rwc-rohingya-english-app/
 | UI/UX | Figma, FigJam |
 | Mobile | React Native, Expo, TypeScript |
 | Backend | Python, FastAPI, PostgreSQL |
-| Storage | Firebase |
+| Storage | PostgreSQL (authoring/dev); AWS DynamoDB + S3 proposed for production, see [docs/aws-architecture.md](docs/aws-architecture.md) |
 | Speech-to-text | OpenAI Whisper |
 | LLMs | OpenAI, Google Gemini, Anthropic Claude (under evaluation) |
 | Text-to-speech | ElevenLabs, Google TTS (under evaluation) |

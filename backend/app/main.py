@@ -67,6 +67,23 @@ def _word_or_404(word_id: str) -> tuple[str, dict]:
     return WORD_INDEX[word_id]
 
 
+def _seeded_summary(word: dict) -> dict:
+    """List-item shape for a seeded entry, including what the app needs to render a card."""
+    return {
+        "id": word["id"],
+        "english": word["english_text"],
+        "type": word.get("entry_type", "word"),
+        "translation_available": word["rohingya_text"] is not None,
+        "category_id": word["category_id"],
+        "rohingya": word["rohingya_text"],
+        "image_url": word["image_url"],
+        "audio_url": word["audio_url"],
+        "verification_status": word["verification_status"],
+        "confidence": word.get("confidence"),
+        "needs_review": word.get("needs_review", True),
+    }
+
+
 def _seeded_detail(word: dict, script: str) -> dict:
     entry = word["source_entry"]
     example = entry.get("example_sentence") or {}
@@ -115,6 +132,9 @@ def _seeded_detail(word: dict, script: str) -> dict:
             "status": word["verification_status"] or "pending_review",
             "reviewed_by": None,
             "reviewed_at": None,
+            "confidence": word.get("confidence"),
+            "confidence_tier": word.get("confidence_tier"),
+            "needs_review": word.get("needs_review", True),
         },
         "source_entry": entry,
     }
@@ -149,15 +169,7 @@ def get_category_words(category_id: str):
     if seeded is not None:
         return {
             "category_id": category_id,
-            "words": [
-                {
-                    "id": word["id"],
-                    "english": word["english_text"],
-                    "type": "word",
-                    "translation_available": word["rohingya_text"] is not None,
-                }
-                for word in seeded
-            ],
+            "words": [_seeded_summary(word) for word in seeded],
         }
     if category_id not in WORDS_BY_CATEGORY:
         raise HTTPException(status_code=404, detail=f"Unknown category_id '{category_id}'")
@@ -177,16 +189,7 @@ def list_words(
     seeded = vocabulary_db.words(category_id=category, query=q, limit=limit, offset=offset)
     if seeded is not None:
         total = vocabulary_db.word_count(category_id=category, query=q) or 0
-        page = [
-            {
-                "id": word["id"],
-                "english": word["english_text"],
-                "type": "word",
-                "translation_available": word["rohingya_text"] is not None,
-                "category_id": word["category_id"],
-            }
-            for word in seeded
-        ]
+        page = [_seeded_summary(word) for word in seeded]
         next_offset = offset + limit if offset + limit < total else None
         return {
             "words": page,

@@ -18,6 +18,12 @@ export interface Word {
   imageUrl: string | null;
   audioUrl: string | null;
   verification: VerificationStatus;
+  /** 'phrase' for full sentences, 'word' for headwords. Defaults to 'word'. */
+  entryType?: 'word' | 'phrase';
+  /** 0..1 reference-translation confidence. null/undefined = not scored; never treat as 0. */
+  confidence?: number | null;
+  /** true until a native speaker has reviewed the entry. */
+  needsReview?: boolean;
 }
 
 export interface TranslateResult {

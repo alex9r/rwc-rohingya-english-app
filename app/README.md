@@ -51,3 +51,12 @@ app/
 
 - **Mock persistence:** saved words and progress are stored on-device (AsyncStorage) by `api/client.ts`, standing in for `GET/POST /api/progress`. Clear app/site data to reset.
 - **Swapping in the backend:** replace function bodies in `src/api/client.ts`; screens only call `api.*`.
+## Connecting to the backend
+
+Set `EXPO_PUBLIC_API_URL` to the API base URL (see `backend/README.md` for the right host per device), e.g.:
+
+```bash
+EXPO_PUBLIC_API_URL=http://localhost:8000 npx expo start
+```
+
+Categories, words and word details then come from the backend (seeded Postgres data when seeded). If the variable is unset or a request fails, the app falls back to `src/api/mockData.ts`. Progress, saved words, scenarios, translation and pronunciation scoring are still mocked locally.

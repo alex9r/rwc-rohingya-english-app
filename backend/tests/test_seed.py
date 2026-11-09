@@ -55,7 +55,8 @@ def test_seed_is_repeatable_and_preserves_full_json(monkeypatch):
     statement, params = word_inserts[0]
     assert "ON CONFLICT (dataset, source_id) DO UPDATE" in statement
     assert params[2] == "greeting_001"
-    assert params[5] == "Hello"
+    assert params[4] == "Hello"
+    assert len(params) == statement.split("VALUES")[1].split(")")[0].count("%s")
     stored_entry = json.loads(params[-1])
     assert stored_entry["rohingya_text"] == "sólam"
     assert (
