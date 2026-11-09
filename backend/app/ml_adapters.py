@@ -84,4 +84,7 @@ def score_audio(audio: BinaryIO, target_text: str) -> dict[str, Any]:
             "feedback": "Pronunciation scoring is not available yet.",
             "stub": True,
         }
-    return {**_score(audio, target_text), "stub": False}
+    result = _score(audio, target_text)
+    if hasattr(result, "to_dict"):  
+        result = result.to_dict()
+    return {**result, "stub": False}

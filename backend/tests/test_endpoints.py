@@ -137,3 +137,14 @@ def test_pronunciation_needs_target(client):
 def test_pronunciation_unknown_word(client):
     r = client.post("/api/pronunciation/score", files=audio_upload(), data={"word_id": "nope"})
     assert r.status_code == 404
+
+
+def test_pronunciation_accepts_result_object_with_to_dict(client, monkeypatch):
+    class Result:
+        def to_dict(self):
+            return {"score": 70, "feedback": "OK", "tips": ["Slow down"]}
+
+    monkeypatch.setattr(ml_adapters, "_score", lambda audio, target: Result())
+    r = client.post("/api/pronunciation/score", files=audio_upload(), data={"target_text": "hi"})
+    body = r.json()
+    assert body["score"] == 70 and body["tips"] == ["Slow down"]

@@ -30,9 +30,12 @@ services:
     volumes:
       - ./app:/app/app
       - ../ml:/app/ml
+      # Whisper downloads its model here on first use
+      - hf_cache:/root/.cache/huggingface
     depends_on:
       db:
         condition: service_healthy
 
 volumes:
   pgdata:
+  hf_cache:
