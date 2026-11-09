@@ -1,45 +1,39 @@
 # Whisper on Rohingya audio: evaluation
 
-Hari, 2 Nov 2026. Data: `freococo/rohingya_asr_audio` (VOA Rohingya broadcasts), shard 0.
+Hari, 2 Nov 2026. Data: `freococo/rohingya_asr_audio` (VOA Rohingya broadcasts),
+shard 0. Scripts in [`ml/evaluation`](../ml/evaluation/README.md).
 
-## What this is
+## Scope
 
-I was asked for word error rate and common failures, trying Bengali and English
-settings since Whisper has no Rohingya.
+Asked for WER and common failures, trying Bengali and English settings since
+Whisper has no Rohingya.
 
-WER is not computable here. The corpus has no transcripts, so there is nothing to
-score against. That is the finding, not a gap in the work: there is no reference
-Rohingya speech data anywhere that I could find. What follows is failure modes,
-plus two accuracy checks on clips where I could independently verify the content.
+**WER is not computable.** The corpus has no transcripts, and no reference
+Rohingya speech data exists anywhere I could find. What follows is failure modes
+plus two clips whose content I could verify independently.
 
-Sample: 20 clips, one from each of 20 different broadcasts, fixed seed, 5 seconds
-minimum, skipping broadcast openings. Three models (small, medium, large-v3), each
-clip decoded with Bengali forced, English forced, and auto-detected language,
-greedy at temperature 0. English and Bengali TTS controls on every run.
+20 clips, one per broadcast, fixed seed, 5 s minimum, openings skipped. Three
+models, each decoded with Bengali forced, English forced, and auto. Greedy at
+temperature 0. English and Bengali TTS controls on every run.
 
-## Small and medium produce nothing usable
+## small and medium are unusable, and uninterpretable
 
-Forced Bengali collapsed into a repeated syllable on 20 of 20 clips in both models.
-Compression ratios 4 to 21, against Whisper's own degeneracy threshold of 2.4.
+Forced Bengali collapsed into a repeated syllable on 20/20 clips in both,
+compression ratios 4 to 21 against Whisper's own threshold of 2.4.
 
-These runs cannot be interpreted. The same collapse happens when I force Bengali on
-clean English speech and on real Bengali speech, so it is the model failing on
-Bengali, not on Rohingya. English transcribed perfectly in the same setup, so the
-install is fine.
+These runs say nothing about Rohingya. The same collapse happens on clean English
+and on real Bengali, so it is the model failing on Bengali. English transcribed
+perfectly, so the install is fine.
 
-If anyone repeats this, run a control in the language you are forcing before
-reading anything into the results.
+Run a control in whatever language you force, before reading anything into the
+output.
 
-## large-v3 is a different story
+## large-v3 works, partially
 
-Loops dropped from 20 of 20 to 2 of 20 on forced Bengali, and 0 of 20 on forced
-English. The Bengali control stopped collapsing, so these results mean something.
+Loops dropped to 2/20 on forced Bengali and 0/20 on forced English. The Bengali
+control passed, so the results mean something.
 
-Three pieces of evidence that it is transcribing real speech rather than
-hallucinating.
-
-**The same sounds come back in three scripts.** Clip 007606 decoded into Latin,
-Bengali and Devanagari gives the same sound sequence each time:
+**The same sounds come back in three scripts.** Clip 007606:
 
 | Pass | Output |
 |---|---|
@@ -47,25 +41,21 @@ Bengali and Devanagari gives the same sound sequence each time:
 | forced bn | সুনাসান্দিয়া স্ছিল্দিহিন আর তিহা ভুষা জমা স্ছিল্দিহিন দাহাতিগুরি |
 | auto (Devanagari) | सुनासान्दियाच्छिल्दिहिन आर तिहाँ भुष्याजमाच्छिल्दिहिन |
 
-Three independent decodings converging on one phonetic string is not something a
-hallucinating model does. Same pattern on clip 008400 (Garaja / গরাজা) and clip
-007346, where the English, Bengali and Turkish passes all land on *siyasi*,
-politics.
+Three independent decodings converging on one phonetic string is not
+hallucination. Same on clip 008400 (Garaja / গরাজা) and 007346, where English,
+Bengali and Turkish passes all land on *siyasi*, politics.
 
 **One clip checks out semantically.** Clip 009428, broadcast 7 Nov 2022. Forced
-English gives "the cup 27 meeting ... the relationship between losses and". Forced
-Bengali gives the literal string `COP27` alongside নুকসান (*nuksan*, loss). COP27
-opened on 6 November and loss and damage was its headline agenda item. Right
-acronym, right topic, right date, in two languages.
+English: "the cup 27 meeting ... the relationship between losses and". Forced
+Bengali: `COP27` plus নুকসান (*nuksan*, loss). COP27 opened 6 November with loss
+and damage as its headline item. Right acronym, right topic, right date, two
+languages.
 
-**The station ident transcribes exactly.** Clip 000001 is the broadcast opening. I
-know what it says because I listened to it. Forced English returns "Voice of
-America, Washington." verbatim, log-prob -0.303.
+**The station ident transcribes exactly.** Clip 000001 returns "Voice of America,
+Washington." verbatim, log-prob -0.303. Note the ident is spoken in English, so
+this verifies English transcription in this corpus, not Rohingya.
 
-Worth being precise about that last one: the ident is spoken in English, so it
-verifies English transcription in this corpus, not Rohingya.
-
-## What the numbers say
+## Numbers
 
 | | small | medium | large-v3 |
 |---|---|---|---|
@@ -75,70 +65,60 @@ verifies English transcription in this corpus, not Rohingya.
 | detect confidence, median | 0.40 | 0.45 | 0.57 |
 | Bengali control | failed | failed | passed |
 
-Language detection is unreliable at every model size. large-v3 called one clip
-Spanish at 0.40 and another Turkish at 0.57, then produced fluent Spanish and
-Turkish for them on the auto pass. It also called the clean English ident "English"
-at only 0.352, with Japanese second. Nothing should trust `detect_language` on this
-audio.
+Language detection is unreliable at every size. large-v3 called one clip Spanish
+at 0.40 and another Turkish at 0.57, then produced fluent Spanish and Turkish for
+them. It called the clean English ident "English" at 0.352, with Japanese second.
+Nothing should trust `detect_language` on this audio.
 
-## The useful finding for the transcription function
+## For the transcription function
 
-Average log-probability separates languages better than Whisper's own detector.
+Average log-prob separates languages better than Whisper's detector. On a
+forced-English pass, genuine English scores -0.218 and -0.20; every Rohingya clip
+sits between -1.0 and -1.4. No overlap.
 
-On a forced-English pass, the two clips that genuinely are English score -0.218 and
--0.20. Every Rohingya clip lands between -1.0 and -1.4, median -1.04. No overlap.
+Through `segment_confidence` in `ml/speech`, roughly
+`exp(avg_logprob) x (1 - no_speech_prob)`:
 
-That maps onto `segment_confidence` in `ml/speech`, which is roughly
-`exp(avg_logprob) × (1 - no_speech_prob)`:
+- Rohingya forced to English: 0.25 to 0.37
+- Actual English: about 0.82
 
-- Rohingya speech forced to English: confidence about 0.25 to 0.37
-- Actual English in the same corpus: about 0.82
+So `LOW_CONFIDENCE = 0.5` rejects non-English cleanly. But the gap to Luna's
+withheld Common Voice clips (0.40 to 0.49, real English with hard words) is thin,
+so one number carries two failures: wrong language and hard vocabulary. Two bands
+would be better. Below 0.40 unusable; 0.40 to 0.50 prompt a retry rather than
+withholding silently.
 
-So `LOW_CONFIDENCE = 0.5` does reject non-English cleanly. The gap to Luna's
-withheld Common Voice clips (0.40 to 0.49, real English with hard words) is thin
-though, which means one number is carrying two different failures: wrong language
-and hard vocabulary. Worth two bands rather than one cutoff. Below 0.40, unusable.
-Between 0.40 and 0.50, probably English the model found hard, so prompt a retry
-instead of withholding silently.
+One caveat on log-prob: it only separates languages while the model is not
+looping. A repeated token is trivially predictable, so the small and medium loops
+score -0.17 to -0.24, better than real English. Pair log-prob with the
+compression-ratio check, which `segment_confidence` already does.
 
-## Correction to my earlier writeup
+## MMS is the obvious alternative
 
-I said no usable Rohingya ASR exists. That is too strong, and I was only testing
-Whisper.
+Meta's MMS has a Rohingya adapter, `facebook/mms-1b-all` with `rhg`, plus
+`facebook/mms-tts-rhg` for synthesis. Luna ran it on this corpus and it
+transcribed the station ident as `gásof amérika wacíngthon`, a phonetic
+Rohingyalish spelling of the same English words. Both models heard the same thing
+and spelled it in whichever script they were forced into.
 
-Meta's MMS has an actual Rohingya adapter, `facebook/mms-1b-all` with `rhg`, plus
-`facebook/mms-tts-rhg` for synthesis. Luna ran it on this same corpus in her
-earlier project and it transcribed the station ident as `gásof amérika wacíngthon`,
-a phonetic Rohingyalish spelling of the English words. Both models heard the same
-thing and each spelled it in the script they were forced into.
+MMS should be evaluated against large-v3. Her setup is a Colab T4 behind ngrok,
+fine for a demo and not for the Centre, so hosting is unowned.
 
-MMS should be evaluated properly against large-v3. Her setup runs on a Colab T4
-through ngrok, which is fine for a demo and will not survive contact with the
-Centre, so hosting is an open question nobody has picked up.
-
-## One thing worth knowing about the corpus
+## One thing about the corpus
 
 Clip 007902 transcribes as "Let's start with enhance. Of the three words we are
-studying today, enhance is the least common." That is VOA Learning English content
-inside the Rohingya broadcast. Clip 005490 looks similar. There is English teaching
-material in this corpus aimed at Rohingya listeners, which is close enough to what
-this app does that someone should look at how much of it there is.
+studying today, enhance is the least common." That is VOA Learning English inside
+the Rohingya broadcast, and clip 005490 looks similar. There is English teaching
+material in here aimed at Rohingya listeners. Someone should check how much.
 
 ## Limitations
 
-- Two of 14 shards profiled. I assume the rest match.
-- Twenty clips. Enough for failure modes, not for accuracy.
-- No speaker has checked any transcript. The verification above rests on two clips
-  where I could check content independently.
-- large-v3 output is Bengali script, which matches none of the orthographies the
-  team is using. That is a fourth spelling system on top of the three already in
-  our sources.
-- `base` and `small` were not tested on CPU for latency. Everything here is
-  large-v3 on an M2, roughly 2 minutes a clip, which is not shippable.
+- 2 of 14 shards profiled; I assume the rest match
+- 20 clips, enough for failure modes, not accuracy
+- No speaker has checked any transcript
+- large-v3 output is Bengali script, a fourth spelling system on top of the three
+  already in our sources
+- large-v3 is ~2 min a clip on an M2, not shippable
 
-## Files
-
-Scripts and raw output are in `~/Desktop/voa_rhg/`: `whisper_x0_sample20/` (small),
-`_medium/`, `_largev3/`, and `whisper_x0_finish/` (forced English and the ident
-test). Each has `results.json` with per-segment log-probs and `transcripts.txt`.
-Happy to commit these if useful.
+Raw output in `~/Desktop/voa_rhg/`: `whisper_x0_sample20/`, `_medium/`,
+`_largev3/`, `whisper_x0_finish/`. Each has `results.json` and `transcripts.txt`.
