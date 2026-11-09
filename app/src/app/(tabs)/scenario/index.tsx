@@ -8,6 +8,7 @@ import type { Category, Scenario } from '@/api/types';
 import { categoryIcon } from '@/components/categoryIcon';
 import { GradientScreen } from '@/components/GradientScreen';
 import { ProgressBar } from '@/components/ProgressBar';
+import { LoadState } from '@/components/LoadState';
 import { Sheet } from '@/components/Sheet';
 import { useAppState } from '@/state/AppState';
 import { colors, fonts, radius, shadow, spacing, TAB_BAR_SPACE } from '@/theme';
@@ -19,11 +20,27 @@ export default function ScenarioLanding() {
   const { progress } = useAppState();
   const [categories, setCategories] = useState<Category[]>([]);
   const [scenarios, setScenarios] = useState<Scenario[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [retryKey, setRetryKey] = useState(0);
+  // Retry is a user event, so resetting request state here is safe under
+  // react-hooks/set-state-in-effect and makes the loading indicator visible.
+  const retryLoad = () => {
+    setLoading(true);
+    setLoadError(null);
+    setRetryKey((n) => n + 1);
+  };
 
   useEffect(() => {
-    api.getCategories().then(setCategories);
-    api.getScenarios().then(setScenarios);
-  }, []);
+    let live = true;
+    Promise.all([api.getCategories(), api.getScenarios()])
+      .then(([cats, items]) => {
+        if (live) { setCategories(cats); setScenarios(items); setLoadError(null); }
+      })
+      .catch(() => { if (live) setLoadError('Could not load scenarios.'); })
+      .finally(() => { if (live) setLoading(false); });
+    return () => { live = false; };
+  }, [retryKey]);
 
   const withScenarios = categories.filter((c) => scenarios.some((s) => s.categoryId === c.id));
 
@@ -34,6 +51,9 @@ export default function ScenarioLanding() {
         <Text style={styles.sub}>Pick a topic, then talk it through.</Text>
       </View>
       <Sheet>
+        {loading || loadError ? (
+          <LoadState loading={loading} error={loadError} onRetry={retryLoad} message="Loading scenarios…" />
+        ) : (
         <FlatList
           data={withScenarios}
           numColumns={2}
@@ -65,6 +85,7 @@ export default function ScenarioLanding() {
             );
           }}
         />
+        )}
       </Sheet>
     </GradientScreen>
   );

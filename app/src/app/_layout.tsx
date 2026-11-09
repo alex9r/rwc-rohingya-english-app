@@ -23,6 +23,7 @@ export default function RootLayout() {
       <StatusBar style="light" />
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="word/[id]" options={{ animation: 'slide_from_bottom' }} />
+        <Stack.Screen name="phrases" options={{ animation: 'slide_from_right' }} />
       </Stack>
     </AppStateProvider>
   );
