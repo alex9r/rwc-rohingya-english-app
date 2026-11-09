@@ -1,0 +1,33 @@
+services:
+  db:
+    image: postgres:17-alpine
+    env_file: .env
+    ports:
+      - "${POSTGRES_HOST_PORT}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  api:
+    build: .
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload --reload-dir app
+    env_file: .env
+    environment:
+      # Service name on the compose network; overrides any host value in .env.
+      POSTGRES_HOST: db
+      # File-change events don't reach containers from a Windows host, so poll instead.
+      WATCHFILES_FORCE_POLLING: "true"
+    ports:
+      - "${API_HOST_PORT}:8000"
+    volumes:
+      - ./app:/app/app
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:

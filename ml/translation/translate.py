@@ -11,12 +11,6 @@ import glob, json, os, re, unicodedata
 from difflib import SequenceMatcher
 
 THRESHOLD = 0.85  # higher = safer, but more "uncertain"
-# if a word like "not" or "twice" is the only difference, never match
-RISKY = {"not", "no", "dont", "cant", "never", "nai", "no", "twice", "once",
-         "thrice", "two", "three", "four", "five", "one", "yet",
-         # contractions lose their apostrophe in norm(), so "won't" arrives as "wont"
-         "wont", "isnt", "arent", "wasnt", "werent", "doesnt", "didnt", "havent", "hasnt",
-         "couldnt", "shouldnt", "wouldnt", "aint"}
 DATA = os.path.join(os.path.dirname(__file__), "data")
 
 
@@ -43,6 +37,9 @@ def _load():
 
 PAIRS = _load()
 
+def _call_model(text, direction):
+    """TODO: Implement model fallback once a translation model is selected."""
+    return None
 
 def translate(text, direction):
     out = lambda t, s, c=0.0: {"translation": t, "status": s, "confidence": round(c, 2)}
@@ -57,10 +54,16 @@ def translate(text, direction):
         for pair in PAIRS:
             k = norm(pair[src])
             score = SequenceMatcher(None, q, k).ratio()
-            if score > best_score and not (set(q.split()) ^ set(k.split())) & RISKY:
+            if score > best_score:
                 best, best_score = pair, score
         if best and best_score >= THRESHOLD:
             return out(best[dst], "ok", best_score)
+        model_result = _call_model(text, direction)
+        if model_result is not None:
+            translation, confidence = model_result
+            return out(translation, "ok", confidence)
+
         return out(None, "uncertain", best_score)
+
     except Exception:
         return out(None, "failed")
