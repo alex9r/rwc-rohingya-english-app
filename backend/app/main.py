@@ -12,7 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
-from app import db, ml_adapters, vocabulary_db
+from app import db, ml_adapters, vocabulary
 from app.mock_data import (
     AUDIO,
     CATEGORIES,
@@ -25,6 +25,9 @@ from app.mock_data import (
     WORD_INDEX,
     WORDS_BY_CATEGORY,
 )
+from app.observability import RequestContextMiddleware, configure_logging
+
+configure_logging()
 
 
 @asynccontextmanager
@@ -50,12 +53,25 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.add_middleware(RequestContextMiddleware)
+
 CATEGORY_NAMES = {c["id"]: c["name"] for c in CATEGORIES}
+
+# API Gateway rejects bodies over 10 MB, so match it here (and locally).
+MAX_UPLOAD_BYTES = int(os.getenv("MAX_UPLOAD_BYTES", str(10 * 1024 * 1024)))
+
+
+def _check_upload(audio: UploadFile) -> None:
+    if audio.size is not None and audio.size > MAX_UPLOAD_BYTES:
+        raise HTTPException(
+            status_code=413,
+            detail=f"Audio is larger than {MAX_UPLOAD_BYTES // (1024 * 1024)} MB",
+        )
 
 
 def _word_or_404(word_id: str) -> tuple[str, dict]:
     if word_id not in WORD_INDEX:
-        seeded = vocabulary_db.word(word_id)
+        seeded = vocabulary.word(word_id)
         if seeded is None:
             raise HTTPException(status_code=404, detail=f"Unknown word_id '{word_id}'")
         return seeded["category_id"], {
@@ -147,7 +163,10 @@ def _seeded_detail(word: dict, script: str) -> dict:
 def health():
     return {
         "status": "ok",
-        "database": "up" if db.ping() else "down",
+        # Postgres is only used locally; in AWS the lexicon comes from DynamoDB.
+        "database": ("up" if db.ping() else "down") if vocabulary.BACKEND == "postgres"
+        else "not_used",
+        "data_source": vocabulary.source(),
         "ml": ml_adapters.status(),
     }
 
@@ -157,7 +176,7 @@ def health():
 
 @app.get("/api/categories", tags=["categories"])
 def get_categories():
-    seeded = vocabulary_db.categories()
+    seeded = vocabulary.categories()
     if seeded is not None:
         return {"categories": seeded}
     return {"categories": CATEGORIES}
@@ -165,7 +184,7 @@ def get_categories():
 
 @app.get("/api/categories/{category_id}/words", tags=["categories"])
 def get_category_words(category_id: str):
-    seeded = vocabulary_db.category_words(category_id)
+    seeded = vocabulary.category_words(category_id)
     if seeded is not None:
         return {
             "category_id": category_id,
@@ -186,9 +205,9 @@ def list_words(
     limit: int = Query(20, ge=1, le=100),
     offset: int = Query(0, ge=0),
 ):
-    seeded = vocabulary_db.words(category_id=category, query=q, limit=limit, offset=offset)
+    seeded = vocabulary.words(category_id=category, query=q, limit=limit, offset=offset)
     if seeded is not None:
-        total = vocabulary_db.word_count(category_id=category, query=q) or 0
+        total = vocabulary.word_count(category_id=category, query=q) or 0
         page = [_seeded_summary(word) for word in seeded]
         next_offset = offset + limit if offset + limit < total else None
         return {
@@ -213,7 +232,7 @@ def list_words(
 
 @app.get("/api/words/{word_id}", tags=["words"])
 def get_word(word_id: str, script: str = "latn"):
-    seeded = vocabulary_db.word(word_id)
+    seeded = vocabulary.word(word_id)
     if seeded is not None:
         return _seeded_detail(seeded, script)
     category_id, summary = _word_or_404(word_id)
@@ -249,7 +268,7 @@ def get_word(word_id: str, script: str = "latn"):
 
 @app.get("/api/words/{word_id}/scripts", tags=["words"])
 def get_word_scripts(word_id: str):
-    seeded = vocabulary_db.word(word_id)
+    seeded = vocabulary.word(word_id)
     if seeded is not None:
         return {
             "word_id": word_id,
@@ -272,7 +291,7 @@ def get_word_scripts(word_id: str):
 
 @app.get("/api/words/{word_id}/examples", tags=["words"])
 def get_word_examples(word_id: str):
-    seeded = vocabulary_db.word(word_id)
+    seeded = vocabulary.word(word_id)
     if seeded is not None:
         return {"word_id": word_id, "examples": _seeded_detail(seeded, "latn")["examples"]}
     _word_or_404(word_id)
@@ -281,7 +300,7 @@ def get_word_examples(word_id: str):
 
 @app.get("/api/words/{word_id}/audio", tags=["words"])
 def get_word_audio(word_id: str):
-    seeded = vocabulary_db.word(word_id)
+    seeded = vocabulary.word(word_id)
     if seeded is not None:
         audio = _seeded_detail(seeded, "latn")["media"]["audio"]
         return {
@@ -306,7 +325,7 @@ def get_word_audio(word_id: str):
 
 @app.get("/api/words/{word_id}/images", tags=["words"])
 def get_word_images(word_id: str):
-    seeded = vocabulary_db.word(word_id)
+    seeded = vocabulary.word(word_id)
     if seeded is not None:
         return {"word_id": word_id, "images": _seeded_detail(seeded, "latn")["media"]["images"]}
     _word_or_404(word_id)
@@ -315,7 +334,7 @@ def get_word_images(word_id: str):
 
 @app.get("/api/words/{word_id}/forms", tags=["words"])
 def get_word_forms(word_id: str):
-    seeded = vocabulary_db.word(word_id)
+    seeded = vocabulary.word(word_id)
     if seeded is not None:
         detail = _seeded_detail(seeded, "latn")
         return {"word_id": word_id, "forms": detail["word_forms"], "examples": detail["examples"]}
@@ -332,6 +351,7 @@ def get_word_forms(word_id: str):
 
 @app.post("/api/transcribe", tags=["transcribe"])
 def transcribe(audio: UploadFile = File(...), language: str | None = Form(None)):
+    _check_upload(audio)
     try:
         result = ml_adapters.transcribe_audio(audio.file, language)
     except ValueError as exc:  # unsupported language code
@@ -388,9 +408,13 @@ def score_pronunciation(
     audio: UploadFile = File(...),
     target_text: str | None = Form(None),
     word_id: str | None = Form(None),
-    language: str = Form("rhg"),
-    reference_id: str | None = Form(None),
+    language: str = Form("en"),
+    reference_id: str | None = Form(None),  # accepted, ignored (duplicates word_id)
 ):
+    """Score a spoken English attempt. The scorer judges English, so ``language`` must be en."""
+    if language != "en":
+        raise HTTPException(status_code=422, detail="Only language 'en' can be scored")
+    _check_upload(audio)
     if word_id:
         _, word = _word_or_404(word_id)
         target_text = target_text or word["english"]
@@ -398,18 +422,28 @@ def score_pronunciation(
         raise HTTPException(status_code=422, detail="Provide target_text or word_id")
 
     result = ml_adapters.score_audio(audio.file, target_text)
-    scored = result.get("score") is not None
-    return {
+    score = result.get("score")
+    status = result.get("status") or ("scored" if score is not None else "scoring_unavailable")
+    body = {
         "word_id": word_id,
         "target_text": target_text,
-        "score": result.get("score"),
-        "max_score": 100,
+        "score": score,
+        "max_score": result.get("max_score", 100),
+        "status": status,
+        "transcript": result.get("transcript", ""),
+        "confidence": result.get("confidence", 0.0),
+        "matched_words": result.get("matched_words", []),
+        "missed_words": result.get("missed_words", []),
+        "needs_improvement": result.get("needs_improvement", []),
         "feedback": result.get("feedback", ""),
-        "tips": result.get("tips", []),
-        "status": "scored" if scored else "scoring_unavailable",
-        "validated": False,
+        "feedback_code": result.get("feedback_code", ""),
+        "score_basis": result.get("score_basis", "asr_match"),
+        "provisional": result.get("provisional", True),
         "stub": result["stub"],
     }
+    # Bad audio is a normal outcome (200, with feedback the app can show). Only a
+    # server-side failure is an error.
+    return JSONResponse(body, status_code=503 if status == "model_error" else 200)
 
 
 # ---------------------------------------------------------------- lessons

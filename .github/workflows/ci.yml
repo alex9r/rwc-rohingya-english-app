@@ -28,13 +28,17 @@ jobs:
           python-version: "3.12"
       - run: pip install ruff
       - run: ruff check ml
-      # The speech tests use a fake model, so no Whisper download. Skipped until
-      # ml/speech lands on this branch.
-      - name: Speech tests
+      # The speech and pronunciation tests use a fake model, so no Whisper download.
+      # pronunciation's requirements include speech's.
+      - name: Speech and pronunciation tests
         run: |
-          if [ -f ml/speech/requirements.txt ]; then
-            pip install -r ml/speech/requirements.txt
-            python -m pytest ml/speech -q
-          else
-            echo "ml/speech not present yet; skipping"
-          fi
+          pip install -r ml/pronunciation/requirements.txt
+          python -m pytest ml/speech ml/pronunciation -q
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Stub mode (no Whisper) keeps this fast; it catches a broken Dockerfile.
+      - name: Build the API image
+        run: docker build -f backend/Dockerfile -t rwc-api:ci .

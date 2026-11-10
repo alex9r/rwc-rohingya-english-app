@@ -6,10 +6,14 @@ yet (not merged, or its dependencies aren't installed), it falls back to a stub
 with the same response shape.
 """
 
+import functools
 import importlib
 import importlib.util
 import logging
-from typing import Any, BinaryIO
+import time
+from typing import Any, BinaryIO, Callable
+
+from app.observability import log_ml_request
 
 log = logging.getLogger(__name__)
 
@@ -29,8 +33,13 @@ _transcribe = (
 _warmup = _import("ml.speech", "warmup") if _transcribe else None
 # Youssef: ml/translation/translate.py
 _translate = _import("ml.translation", "translate")
-# Luna: ml/speech (not sure if this was written as yet)
-_score = _import("ml.speech", "score_pronunciation")
+# Luna: ml/pronunciation/scorer.py. It transcribes with Whisper internally, so like
+# transcribe it is only "real" when faster-whisper is installed.
+_score = (
+    _import("ml.pronunciation", "score_pronunciation")
+    if importlib.util.find_spec("faster_whisper")
+    else None
+)
 
 
 def status() -> dict[str, str]:
@@ -39,6 +48,29 @@ def status() -> dict[str, str]:
         "translate": "real" if _translate else "stub",
         "pronunciation": "real" if _score else "stub",
     }
+
+
+def _measured(service: str, status_of: Callable[[dict], str]):
+    """Log one ml_request line (service, outcome, latency) per call, for CloudWatch."""
+
+    def wrap(fn):
+        @functools.wraps(fn)
+        def inner(*args, **kwargs):
+            started = time.perf_counter()
+            status = "exception"
+            try:
+                result = fn(*args, **kwargs)
+                status = "stub" if result.get("stub") else status_of(result)
+                return result
+            except (ValueError, TypeError):
+                status = "invalid_argument"
+                raise
+            finally:
+                log_ml_request(service, status, (time.perf_counter() - started) * 1000)
+
+        return inner
+
+    return wrap
 
 
 def warmup() -> None:
@@ -50,6 +82,7 @@ def warmup() -> None:
             log.exception("Whisper warmup failed; first request will load the model")
 
 
+@_measured("transcribe", lambda r: r["status"])
 def transcribe_audio(audio: BinaryIO, language: str | None) -> dict[str, Any]:
     """Returns TranscriptionResult.to_dict() (plus ``stub``)."""
     if _transcribe is None:
@@ -69,6 +102,7 @@ def transcribe_audio(audio: BinaryIO, language: str | None) -> dict[str, Any]:
     return {**_transcribe(audio, language).to_dict(), "stub": False}
 
 
+@_measured("translate", lambda r: r["status"])
 def translate_text(text: str, direction: str) -> dict[str, Any]:
     """direction is "en->roh" or "roh->en". Returns {translation, status, confidence}."""
     if _translate is None:
@@ -76,15 +110,21 @@ def translate_text(text: str, direction: str) -> dict[str, Any]:
     return {**_translate(text, direction), "stub": False}
 
 
+@_measured(
+    "pronunciation",
+    lambda r: r.get("status") or ("scored" if r.get("score") is not None else "unscored"),
+)
 def score_audio(audio: BinaryIO, target_text: str) -> dict[str, Any]:
-    """Returns {score 0-100, feedback, ...} from score_pronunciation(audio, target_text)."""
+    """Returns PronunciationResult.to_dict() (plus ``stub``). Never raises for bad audio."""
     if _score is None:
         return {
             "score": None,
+            "status": "scoring_unavailable",
             "feedback": "Pronunciation scoring is not available yet.",
+            "feedback_code": "stub",
             "stub": True,
         }
     result = _score(audio, target_text)
-    if hasattr(result, "to_dict"):  
+    if hasattr(result, "to_dict"):
         result = result.to_dict()
     return {**result, "stub": False}

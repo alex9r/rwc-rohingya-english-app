@@ -55,6 +55,7 @@ def test_bad_audio_returns_422_with_status(client, audio, status):
 
 
 def test_rhg_is_rejected_with_400(client):
+    pytest.importorskip("faster_whisper")  # the language list comes from faster-whisper
     r = client.post(
         "/api/transcribe",
         files={"audio": ("clip.wav", silent_wav(1.0), "audio/wav")},

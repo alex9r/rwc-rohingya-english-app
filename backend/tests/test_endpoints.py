@@ -142,9 +142,9 @@ def test_pronunciation_unknown_word(client):
 def test_pronunciation_accepts_result_object_with_to_dict(client, monkeypatch):
     class Result:
         def to_dict(self):
-            return {"score": 70, "feedback": "OK", "tips": ["Slow down"]}
+            return {"score": 70, "feedback": "OK", "feedback_code": "good"}
 
     monkeypatch.setattr(ml_adapters, "_score", lambda audio, target: Result())
     r = client.post("/api/pronunciation/score", files=audio_upload(), data={"target_text": "hi"})
     body = r.json()
-    assert body["score"] == 70 and body["tips"] == ["Slow down"]
+    assert body["score"] == 70 and body["feedback_code"] == "good"
