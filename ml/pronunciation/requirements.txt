@@ -1,0 +1,2 @@
+-r ../speech/requirements.txt
+rapidfuzz>=3.0  # fuzzy word matching (difflib is the fallback if missing)
