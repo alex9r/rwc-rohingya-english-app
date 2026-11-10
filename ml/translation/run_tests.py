@@ -4,6 +4,8 @@
   python -m ml.translation.run_tests                 # english -> rohingya
   python -m ml.translation.run_tests --reverse       # also rohingya -> english
   python -m ml.translation.run_tests --file my.csv   # use another test file
+  python -m ml.translation.run_tests --reverse --file ml/translation/data/collections/*.json
+                                                     # domain collections + their alternatives
 
 tests.csv columns: english, rohingya, reverse
   - both filled  -> translate() must return the other side
@@ -46,6 +48,9 @@ def load(path):
             en, roh = e["english"], e.get("rohingya")
         out.append((en.strip(), (roh or "").replace("(not verified)", "").strip(),
                     str(e.get("reverse", "yes")).lower() != "no"))
+        # data/collections/*.json: each alternative translation must round-trip too
+        out += [(a["english"].strip(), a["rohingya"].strip(), True)
+                for a in e.get("alternative_translations") or []]
     return out
 
 

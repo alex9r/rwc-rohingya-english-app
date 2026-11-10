@@ -1,5 +1,9 @@
+"""Dictionary-first Rohingya-English translation with LLM fallback.
 
-"""Dictionary-first Rohingya-English translation with LLM fallback."""
+Looks up phrases in data/*.json and data/collections/*.json
+(including alternative translations). Falls back to an LLM for
+unsupported inputs and stores those for human review.
+"""
 
 import glob
 import json
@@ -42,7 +46,8 @@ def _load():
     # Each pair: (english, rohingya, source, verification_status)
     pairs = []
 
-    for path in sorted(glob.glob(os.path.join(DATA, "*.json"))):
+    # data/*.json plus domain collections in data/collections/
+    for path in sorted(glob.glob(os.path.join(DATA, "**", "*.json"), recursive=True)):
         # Pending translations are not approved dictionary entries.
         filename = os.path.basename(path)
         if filename == "pending_translations.json":
@@ -55,10 +60,15 @@ def _load():
             ex = e.get("example_sentence") or {}
             source = _entry_source(e, filename)
             verification = _entry_verification(e)
+            alts = [
+                (a.get("english"), a.get("rohingya"))
+                for a in e.get("alternative_translations") or []
+            ]
 
             for en, roh in (
                 (e["english_meaning"]["word"], e.get("rohingya_text")),
-                (ex.get("english"), ex.get("rohingya"))
+                (ex.get("english"), ex.get("rohingya")),
+                *alts,
             ):
                 if en and roh:
                     pairs.append((
