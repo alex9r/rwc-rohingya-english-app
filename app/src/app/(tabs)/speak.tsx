@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useAudioPlayer } from 'expo-audio';
 import { File, Paths } from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { LoadState } from '@/components/LoadState';
 import {
   ActivityIndicator,
@@ -37,6 +37,9 @@ export default function SpeakScreen() {
   const [result, setResult] = useState<TranslateResult | null>(null);
   const [recordingUri, setRecordingUri] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const micLock = useRef(false);
+  const requestGeneration = useRef(0);
+  const [recordingError, setRecordingError] = useState<string | null>(null);
   const [requestError, setRequestError] = useState<string | null>(null);
   const [retryJob, setRetryJob] = useState<(() => Promise<TranslateResult>) | null>(null);
   const { recording, toggle } = useRecorder();
@@ -44,34 +47,65 @@ export default function SpeakScreen() {
   const replay = useAudioPlayer(null);
 
   const speakResult = (r: TranslateResult) => {
-    // Read the English side aloud (TTS fallback until backend audio exists).
+    // Only read English. Do not synthesize a missing translation.
     const english = r.direction === 'rhg-en' ? r.translatedText : r.sourceText;
-    play({ url: r.direction === 'rhg-en' ? r.audioUrl : null, fallbackText: english ?? undefined });
+    if (!english?.trim()) return;
+    play({
+      url: null, // Backend does not identify audio language; use English TTS safely.
+      fallbackText: english,
+      language: 'en-US',
+    });
   };
 
   const run = async (job: () => Promise<TranslateResult>) => {
+    const generation = ++requestGeneration.current;
     setBusy(true);
     setRequestError(null);
     setRetryJob(() => job);
     try {
       const r = await job();
+      if (generation !== requestGeneration.current) return;
       setResult(r);
-      speakResult(r);
-    } catch {
-      setRequestError('Translation failed. Check your connection and try again.');
+      if (r.status === 'translated' && r.translatedText && r.confidence >= LOW_CONFIDENCE) speakResult(r);
+    } catch (error) {
+      if (generation !== requestGeneration.current) return;
+      setResult(null);
+      setRequestError(error instanceof Error ? error.message : 'Speech translation failed. Please try again.');
     } finally {
-      setBusy(false);
+      if (generation === requestGeneration.current) setBusy(false);
     }
   };
 
   const onMic = async () => {
-    const uri = await toggle();
-    if (!uri) return;
-    setRecordingUri(uri);
-    await run(() => api.translateSpeech(uri, direction));
+    if (busy || micLock.current) return;
+    micLock.current = true;
+    try {
+      const wasRecording = recording;
+      const uri = await toggle();
+      if (!wasRecording) {
+        // Do not discard previous work if permission was denied or recording failed.
+        return;
+      }
+      if (!uri) {
+        setRecordingError('Could not save recording. Please try again.');
+        return;
+      }
+      setRecordingError(null);
+      setRecordingUri(uri);
+      setResult(null);
+      setRequestError(null);
+      setRetryJob(null);
+      await run(() => api.translateSpeech(uri, direction));
+    } catch (error) {
+      setRecordingError(error instanceof Error ? error.message : 'Recording failed. Please try again.');
+    } finally {
+      micLock.current = false;
+    }
   };
 
   const onCamera = async () => {
+    setRecordingUri(null);
+    setRecordingError(null);
     let perm = await ImagePicker.getCameraPermissionsAsync();
     if (!perm.granted) {
       if (!perm.canAskAgain) {
@@ -90,8 +124,13 @@ export default function SpeakScreen() {
 
   const onReplay = () => {
     if (!recordingUri) return;
-    replay.replace({ uri: recordingUri });
-    replay.play();
+    try {
+      replay.pause();
+      replay.replace({ uri: recordingUri });
+      replay.play();
+    } catch {
+      Alert.alert('Could not replay recording', 'Please try again.');
+    }
   };
 
   const onSave = () => {
@@ -105,11 +144,19 @@ export default function SpeakScreen() {
   };
 
   const swap = () => {
+    if (busy || recording || micLock.current) return;
+    ++requestGeneration.current;
     setDirection((d) => (d === 'rhg-en' ? 'en-rhg' : 'rhg-en'));
     setResult(null);
+    setRecordingUri(null);
+    setRecordingError(null);
+    setRequestError(null);
+    setRetryJob(null);
   };
 
   const [from, to] = LABELS[direction];
+  const lowConfidence = !!result && result.status === 'translated' && result.confidence < LOW_CONFIDENCE;
+  const needsRetry = !!result && (lowConfidence || result.status !== 'translated');
 
   return (
     <GradientScreen>
@@ -117,20 +164,46 @@ export default function SpeakScreen() {
         style={styles.flex}
         contentContainerStyle={[styles.hero, { paddingTop: insets.top + spacing.xxl }]}
       >
-        {busy ? (
+        {recordingError && !busy && (
+          <Text style={styles.recordingError}>{recordingError}</Text>
+        )}
+        {recording ? (
+          <View style={styles.idle}><Orb active /><Text style={styles.headline}>Listening… tap again to stop</Text></View>
+        ) : busy ? (
           <ActivityIndicator size="large" color="#FFFFFF" />
         ) : requestError ? (
           <LoadState error={requestError} onRetry={retryJob ? () => void run(retryJob) : undefined} />
         ) : result ? (
           <View style={styles.result}>
-            <Text style={styles.source}>{result.sourceText}</Text>
-            <Text style={styles.translated}>{result.translatedText ?? 'No translation yet'}</Text>
-            <ConfidenceBadge value={result.confidence} />
-            {result.confidence < LOW_CONFIDENCE && (
+            <View style={styles.textSection} accessible accessibilityLabel={`You said: ${result.sourceText.trim() || 'Speech not recognized'}`}>
+              <Text style={styles.sectionLabel}>You said</Text>
+              <Text style={styles.source} selectable>{result.sourceText.trim() || 'Speech not recognized'}</Text>
+            </View>
+            <View style={styles.textSection} accessible accessibilityLabel={`Translation: ${result.translatedText?.trim() || 'Not available yet'}`}>
+              <Text style={styles.sectionLabel}>Translation</Text>
+              <Text style={styles.translated} selectable>
+                {result.translatedText?.trim() || (result.status === 'pending_translation'
+                  ? 'Translation is not ready yet. Try again later.'
+                  : 'Translation not available. Try speaking again.')}
+              </Text>
+            </View>
+            {result.status === 'translated' && <ConfidenceBadge value={result.confidence} />}
+            {(result.status !== 'translated' || result.confidence < LOW_CONFIDENCE) && (
               <View style={styles.notSure}>
                 <Ionicons name="alert-circle" size={22} color="#FFFFFF" />
-                <Text style={styles.notSureText}>Not sure. Try again or ask someone to help.</Text>
+                <Text style={styles.notSureText}>Speech may be unclear. Tap the microphone to try again, or ask someone to help.</Text>
               </View>
+            )}
+            {needsRetry && (
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel="Try speaking again"
+                onPress={() => { setResult(null); setRequestError(null); }}
+                style={styles.retryButton}
+              >
+                <Ionicons name="mic" size={26} color={colors.primary} />
+                <Text style={styles.retryText}>Speak again</Text>
+              </Pressable>
             )}
             <View style={styles.actions}>
               <IconButton
@@ -138,6 +211,7 @@ export default function SpeakScreen() {
                 name="volume-high"
                 label="Read aloud"
                 onPress={() => speakResult(result)}
+                disabled={!(result.direction === 'rhg-en' ? result.translatedText : result.sourceText)?.trim()}
               />
               <IconButton
                 variant="glass"
@@ -159,7 +233,7 @@ export default function SpeakScreen() {
           <View style={styles.idle}>
             <Orb active={recording} />
             <Text style={styles.headline}>
-              {recording ? 'Listening…' : 'Tap the mic and speak'}
+              {recording ? 'Listening… tap again to stop' : 'Tap the mic and speak'}
             </Text>
           </View>
         )}
@@ -172,7 +246,9 @@ export default function SpeakScreen() {
             accessibilityRole="button"
             accessibilityLabel={`Swap languages. Now ${from} to ${to}`}
             onPress={swap}
-            style={styles.swap}
+            disabled={busy || recording}
+            accessibilityState={{ disabled: busy || recording }}
+            style={[styles.swap, (busy || recording) && { opacity: 0.5 }]}
           >
             <Ionicons name="swap-horizontal" size={24} color={colors.primary} />
           </Pressable>
@@ -185,7 +261,10 @@ export default function SpeakScreen() {
             onPress={onCamera}
             disabled={busy || recording}
           />
-          <MicButton recording={recording} onPress={onMic} disabled={busy} />
+          <View accessible={false} style={styles.micArea}>
+            <MicButton recording={recording} onPress={onMic} disabled={busy} />
+            <Text style={styles.micCaption}>{recording ? 'Tap to stop' : 'Tap to speak'}</Text>
+          </View>
           <View style={styles.spacer} />
         </View>
       </View>
@@ -202,6 +281,7 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.xl,
   },
   idle: { alignItems: 'center', gap: spacing.xl },
+  recordingError: { color: '#FFFFFF', textAlign: 'center', marginBottom: spacing.md },
   headline: {
     fontSize: fonts.size.xl,
     fontWeight: fonts.weight.bold,
@@ -209,6 +289,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   result: { gap: spacing.lg },
+  textSection: { gap: spacing.xs },
+  sectionLabel: { fontSize: fonts.size.sm, fontWeight: fonts.weight.bold, color: '#FFFFFF', opacity: 0.85 },
   source: {
     fontSize: fonts.size.lg,
     color: '#FFFFFF',
@@ -223,7 +305,11 @@ const styles = StyleSheet.create({
     fontWeight: fonts.weight.bold,
     color: '#FFFFFF',
   },
-  actions: { flexDirection: 'row', gap: spacing.md },
+  actions: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.md },
+  retryButton: { minHeight: 52, borderRadius: radius.lg, paddingHorizontal: spacing.lg, backgroundColor: '#FFFFFF', flexDirection: 'row', gap: spacing.sm, alignItems: 'center', alignSelf: 'flex-start' },
+  retryText: { fontSize: fonts.size.md, fontWeight: fonts.weight.bold, color: colors.primary },
+  micArea: { alignItems: 'center', gap: spacing.xs, minWidth: 100 },
+  micCaption: { fontSize: fonts.size.sm, fontWeight: fonts.weight.bold, color: colors.text },
   card: {
     marginHorizontal: spacing.lg,
     padding: spacing.lg,

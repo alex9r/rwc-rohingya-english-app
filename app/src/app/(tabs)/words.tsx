@@ -40,12 +40,15 @@ export default function WordsScreen() {
   const [fetched, setFetched] = useState<Word[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [voiceBusy, setVoiceBusy] = useState(false);
+  const [voiceError, setVoiceError] = useState<string | null>(null);
   const [retryKey, setRetryKey] = useState(0);
   // Retry is a user event, so resetting request state here is safe under
   // react-hooks/set-state-in-effect and makes the loading indicator visible.
   const retryLoad = () => {
     setLoading(true);
     setLoadError(null);
+    setVoiceError(null);
     setRetryKey((n) => n + 1);
   };
   const [voiceResults, setVoiceResults] = useState<Word[] | null>(null);
@@ -55,22 +58,21 @@ export default function WordsScreen() {
 
   useEffect(() => {
     let live = true;
-    api.getCategories().then((data) => { if (live) setCategories(data); }).catch(() => {
-      if (live) setLoadError('Could not load word categories.');
-    });
-    return () => { live = false; };
-  }, [retryKey]);
-
-  useEffect(() => {
-    let live = true;
-    api
-      .getWords({ categoryId: showSaved ? undefined : filter, query: deferredQuery })
-      .then((w) => { if (live) { setFetched(w); setLoadError(null); } })
-      .catch(() => { if (live) setLoadError('Could not load words.'); })
+    Promise.all([
+      api.getCategories(),
+      api.getWords({ categoryId: showSaved ? undefined : filter, query: deferredQuery }),
+    ])
+      .then(([cats, items]) => {
+        if (!live) return;
+        setCategories(cats);
+        setFetched(items);
+        setLoadError(null);
+      })
+      .catch(() => {
+        if (live) setLoadError('Could not load words. Check your connection and try again.');
+      })
       .finally(() => { if (live) setLoading(false); });
-    return () => {
-      live = false;
-    };
+    return () => { live = false; };
   }, [filter, showSaved, deferredQuery, retryKey]);
 
   const words = useMemo(() => {
@@ -81,6 +83,7 @@ export default function WordsScreen() {
   const setFilter = useCallback(
     (value?: string) => {
       setVoiceResults(null);
+      setVoiceError(null);
       setLoading(true);
       setLoadError(null);
       router.setParams({ category: value });
@@ -89,8 +92,19 @@ export default function WordsScreen() {
   );
 
   const onVoiceSearch = async () => {
-    const uri = await toggleMic();
-    if (uri) setVoiceResults(await api.searchWordByVoice(uri));
+    if (voiceBusy) return;
+    setVoiceError(null);
+    try {
+      const uri = await toggleMic();
+      if (!uri) return;
+      setVoiceResults(null);
+      setVoiceBusy(true);
+      setVoiceResults(await api.searchWordByVoice(uri));
+    } catch {
+      setVoiceError('Voice search failed. Please try again.');
+    } finally {
+      setVoiceBusy(false);
+    }
   };
 
   // Stable callbacks so memoized rows don't re-render when unrelated state changes.
@@ -145,6 +159,7 @@ export default function WordsScreen() {
               value={query}
               onChangeText={(t) => {
                 setVoiceResults(null);
+                setVoiceError(null);
                 setQuery(t);
                 setLoading(true);
                 setLoadError(null);
@@ -162,8 +177,10 @@ export default function WordsScreen() {
             label={recording ? 'Stop voice search' : 'Search by voice'}
             active={recording}
             onPress={onVoiceSearch}
+            disabled={voiceBusy}
           />
         </View>
+        {voiceError && <Text accessibilityRole="alert" style={{ color: "#FFFFFF" }}>{voiceError}</Text>}
         <Segmented options={VIEW_OPTIONS} value={view} onChange={setView} />
       </View>
 

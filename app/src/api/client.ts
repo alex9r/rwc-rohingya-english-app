@@ -1,4 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { transcribeRecording } from './transcription';
+import { translateText } from './translation';
 import { categories, mockOcrText, mockTranslations, scenarios, words } from './mockData';
 import type {
   Category,
@@ -90,22 +92,26 @@ export const api = {
 
   getWord: (id: string): Promise<Word | null> => delay(words.find((x) => x.id === id) ?? null, 100),
 
-  /** Voice search: pretend we transcribed a word and return the best match. */
-  searchWordByVoice: (_audioUri: string): Promise<Word[]> => delay([words[0]], 600),
+  /** Transcribe English speech and search the existing vocabulary. */
+  searchWordByVoice: async (audioUri: string): Promise<Word[]> => {
+    const transcript = await transcribeRecording(audioUri, 'en');
+    const query = transcript.text.trim().toLowerCase();
+    return words.filter((word) =>
+      word.english.toLowerCase().includes(query) ||
+      (word.rohingyalish?.toLowerCase().includes(query) ?? false),
+    );
+  },
 
-  /** Speech translation. `audioUri` is the user's recording. */
-  translateSpeech: (_audioUri: string, direction: Direction): Promise<TranslateResult> =>
-    delay(
-      {
-        sourceText: direction === 'rhg-en' ? '[mock] Rohingya speech' : 'I need a doctor.',
-        translatedText: mockTranslations[direction],
-        direction,
-        confidence: Math.random(),
-        status: 'translated',
-        audioUrl: null,
-      },
-      900,
-    ),
+  /** Record -> transcribe -> translate; reject backend stub transcriptions. */
+  translateSpeech: async (audioUri: string, direction: Direction): Promise<TranslateResult> => {
+    const language = direction === 'rhg-en' ? 'rhg' : 'en';
+    const transcription = await transcribeRecording(audioUri, language);
+    const translation = await translateText(transcription.text, direction);
+    return {
+      ...translation,
+      confidence: Math.min(translation.confidence, transcription.confidence ?? 0),
+    };
+  },
 
   /** Camera/photo translation (OCR mocked). */
   translateImage: (_imageUri: string, direction: Direction): Promise<TranslateResult> =>
