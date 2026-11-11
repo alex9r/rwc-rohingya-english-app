@@ -54,9 +54,10 @@ def main() -> None:
     if not paths:
         sys.exit("no clips found")
 
-    fields = ["file", "status", "text", "confidence", "is_confident",
-              "language", "duration_s", "processing_s", "error"]
+    fields = ["file", "status", "text", "confidence", "confidence_level", "action", "reason",
+              "is_confident", "language", "duration_s", "processing_s", "error"]
     statuses: Counter[str] = Counter()
+    actions: Counter[str] = Counter()
     confs, speeds = [], []
 
     with args.out.open("w", newline="", encoding="utf-8") as f:
@@ -65,19 +66,23 @@ def main() -> None:
         for i, path in enumerate(paths, 1):
             r = transcribe(path, args.language, model_size=args.model)
             statuses[r.status.value] += 1
+            actions[r.action.value] += 1
+            level = r.confidence_level.value if r.confidence_level else ""
             if r.status == Status.OK:
                 confs.append(r.confidence)
             if r.duration_s and r.processing_s:
                 speeds.append(r.processing_s / r.duration_s)
             w.writerow({
                 "file": str(path), "status": r.status.value, "text": r.text,
-                "confidence": r.confidence, "is_confident": r.is_confident, "language": r.language,
+                "confidence": r.confidence, "confidence_level": level, "action": r.action.value,
+                "reason": r.reason or "", "is_confident": r.is_confident, "language": r.language,
                 "duration_s": r.duration_s, "processing_s": r.processing_s, "error": r.error or "",
             })
-            print(f"[{i}/{len(paths)}] {r.status.value:<13} {r.confidence:.2f}  {path.name}  {r.text[:60]}")
+            print(f"[{i}/{len(paths)}] {r.status.value:<13} {r.confidence:.2f} {r.action.value:<11} {path.name}  {r.text[:60]}")
 
     print(f"\n{len(paths)} clips -> {args.out}")
     print("status:", dict(statuses))
+    print("action:", dict(actions))
     if confs:
         print(f"confidence (ok clips): mean {statistics.mean(confs):.2f}, median {statistics.median(confs):.2f}")
     if speeds:

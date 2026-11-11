@@ -5,17 +5,20 @@ One public entry point:
     from ml.speech import transcribe
     result = transcribe("clip.m4a", language="bn")
     result.text, result.confidence, result.status
+    result.confidence_level, result.action, result.reason
 
 Contract
 --------
 * Input: a file path, raw bytes, or a binary file-like object (e.g. FastAPI's
   ``UploadFile.file``). Any format ffmpeg can decode: m4a/AAC (what Expo records),
   wav, mp3, ogg/opus, webm, flac.
-* Output: a ``TranscriptionResult`` with ``text`` and ``confidence`` (0..1).
+* Output: a ``TranscriptionResult`` with ``text``, ``confidence`` (0..1), a
+  ``confidence_level`` (high/medium/low) and an ``action`` saying what the caller
+  should do next: use the text, confirm it, ask the user to repeat, or stop asking.
 * Never raises on bad audio. Empty, corrupt, silent, too-short and too-long audio,
   and model failures, all come back as a result with a non-``ok`` ``status`` and a
   short ``error`` message. Only programmer errors (an unsupported language code,
-  a wrong argument type) raise.
+  a wrong argument type, an attempt below 1) raise.
 
 Rohingya is not one of Whisper's languages, so ``language`` is a proxy setting
 (``"bn"``, ``"ur"``, ``"en"`` or ``None`` for auto-detect). Which one works best on
@@ -49,8 +52,14 @@ MAX_BYTES = 25 * 1024 * 1024  # reject before decoding anything this big
 SILENCE_RMS = 0.003
 FRAME_S = 0.03
 
-# Below this, the app should show its "not sure" state rather than trust the text.
+# Confidence bands for the model in DEFAULT_MODEL. At or above HIGH_CONFIDENCE the text
+# is used as is; below LOW_CONFIDENCE it isn't trusted and the user is asked to repeat;
+# in between the user confirms it. Re-derive with calibrate.py (see the README).
+HIGH_CONFIDENCE = 0.7
 LOW_CONFIDENCE = 0.5
+
+# How many times a user is asked to record in total before the app stops asking.
+MAX_ATTEMPTS = 3
 
 # Whisper flags repetitive (likely hallucinated) output with a high compression ratio.
 HALLUCINATION_COMPRESSION_RATIO = 2.4
@@ -72,6 +81,22 @@ class Status(str, Enum):
     MODEL_ERROR = "model_error"  # model failed to load or run
 
 
+class ConfidenceLevel(str, Enum):
+    HIGH = "high"
+    MEDIUM = "medium"
+    LOW = "low"
+
+
+class Action(str, Enum):
+    """What the caller should do with a result."""
+
+    ACCEPT = "accept"  # high confidence: use the text
+    CONFIRM = "confirm"  # medium confidence: show the text, ask "did you say this?"
+    ASK_REPEAT = "ask_repeat"  # low confidence or unusable audio: ask the user to say it again
+    FALLBACK = "fallback"  # still unusable on the last attempt: stop asking, offer another way
+    RETRY_LATER = "retry_later"  # server failure: the user did nothing wrong, repeating won't help
+
+
 @dataclass
 class Segment:
     start: float
@@ -91,6 +116,7 @@ class TranscriptionResult:
     processing_s: Optional[float] = None
     segments: list[Segment] = field(default_factory=list)
     error: Optional[str] = None
+    attempt: int = 1  # which try this was for the same phrase, starting at 1
 
     @property
     def ok(self) -> bool:
@@ -100,11 +126,47 @@ class TranscriptionResult:
     def is_confident(self) -> bool:
         return self.ok and self.confidence >= LOW_CONFIDENCE
 
+    @property
+    def confidence_level(self) -> Optional[ConfidenceLevel]:
+        """High, medium or low; None when there is no transcription to rate."""
+        if not self.ok:
+            return None
+        weakest = min((s.confidence for s in self.segments), default=None)
+        return classify_confidence(self.confidence, weakest)
+
+    @property
+    def reason(self) -> Optional[str]:
+        """Why the user needs to record again, so the app can say what to do differently.
+
+        "low_confidence" or a failure status such as "no_speech" or "too_short". None
+        when the text is usable, or on a server failure (not something to fix by repeating).
+        """
+        if self.status == Status.MODEL_ERROR:
+            return None
+        if not self.ok:
+            return self.status.value
+        return "low_confidence" if self.confidence_level == ConfidenceLevel.LOW else None
+
+    @property
+    def action(self) -> Action:
+        if self.status == Status.MODEL_ERROR:
+            return Action.RETRY_LATER
+        level = self.confidence_level
+        if level == ConfidenceLevel.HIGH:
+            return Action.ACCEPT
+        if level == ConfidenceLevel.MEDIUM:
+            return Action.CONFIRM
+        return Action.ASK_REPEAT if self.attempt < MAX_ATTEMPTS else Action.FALLBACK
+
     def to_dict(self) -> dict[str, Any]:
         """JSON-ready dict for API responses."""
         d = asdict(self)
         d["status"] = self.status.value
         d["is_confident"] = self.is_confident
+        level = self.confidence_level
+        d["confidence_level"] = level.value if level else None
+        d["action"] = self.action.value
+        d["reason"] = self.reason
         return d
 
 
@@ -277,6 +339,21 @@ def _overall_confidence(segments: list[Segment]) -> float:
     return sum(w * s.confidence for w, s in zip(weights, segments)) / sum(weights)
 
 
+def classify_confidence(confidence: float, weakest_segment: Optional[float] = None) -> ConfidenceLevel:
+    """Sort a clip score into a band.
+
+    The clip score is a mean, so a clear sentence can hide a garbled phrase. One
+    segment below LOW_CONFIDENCE therefore rules out HIGH, and the user gets to check.
+    """
+    if confidence < LOW_CONFIDENCE:
+        return ConfidenceLevel.LOW
+    if confidence < HIGH_CONFIDENCE:
+        return ConfidenceLevel.MEDIUM
+    if weakest_segment is not None and weakest_segment < LOW_CONFIDENCE:
+        return ConfidenceLevel.MEDIUM
+    return ConfidenceLevel.HIGH
+
+
 # --------------------------------------------------------------------------- main
 
 
@@ -288,6 +365,7 @@ def transcribe(
     model: Optional[_Model] = None,
     vad_filter: bool = True,
     beam_size: int = 5,
+    attempt: int = 1,
 ) -> TranscriptionResult:
     """Transcribe one clip. Returns a result instead of raising on bad audio.
 
@@ -301,7 +379,12 @@ def transcribe(
         vad_filter: drop non-speech stretches before decoding; cuts hallucinated
             text on pauses and background noise.
         beam_size: Whisper beam size; 1 is faster, 5 is more accurate.
+        attempt: which try this is for the same phrase, starting at 1. The caller
+            counts (this function keeps no state between clips). On attempt
+            MAX_ATTEMPTS, an unusable result returns FALLBACK instead of ASK_REPEAT.
     """
+    if attempt < 1:
+        raise ValueError(f"attempt starts at 1, got {attempt}")
     if language is not None:
         language = language.lower()
         if language not in supported_languages():
@@ -314,6 +397,7 @@ def transcribe(
 
     def done(result: TranscriptionResult) -> TranscriptionResult:
         result.processing_s = round(time.perf_counter() - started, 3)
+        result.attempt = attempt
         return result
 
     # 1. Decode and validate the audio before touching the model.
