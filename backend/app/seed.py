@@ -17,7 +17,20 @@ REPOSITORY_ROOT = BACKEND_ROOT.parent
 _DEFAULT_DATASET_PATHS = (
     Path("ml/translation/data/rohingya_greetings_40.json"),
     Path("ml/translation/data/rohingya_phrases_38.json"),
+    # Domain phrase collections (employment, everyday, groceries, pharmacy, transportation).
+    *(
+        Path("ml/translation/data/collections") / f"{name}.json"
+        for name in ("employment", "everyday", "groceries", "pharmacy", "transportation")
+    ),
 )
+
+
+# Datasets label the same topic differently. Map them to one category so the app doesn't
+# show duplicate tiles. The source label stays in entry_json (related_topic).
+CATEGORY_ALIASES = {
+    "Groceries / Shopping": "Groceries",  # collections/groceries.json vs phrases_38
+    "Rules / Regulations": "Rules / Help",  # a single phrase (lost passport)
+}
 
 
 def _find_dataset(relative: Path) -> Path:
@@ -63,8 +76,10 @@ def _asset_url(value: Any) -> str | None:
 
 
 def _entry_type(entry: dict[str, Any]) -> str:
-    # Phrase datasets are sentences; word datasets are headwords.
-    return "phrase" if str(entry["id"]).startswith("phrase_") else "word"
+    # Sentences and questions are phrases ("Declarative sentence", "Question"); the rest
+    # ("Noun", "Interjection", ...) are headwords.
+    pos = str(entry.get("part_of_speech") or "").lower()
+    return "phrase" if "sentence" in pos or "question" in pos else "word"
 
 
 def _needs_review(entry: dict[str, Any], reference: dict[str, Any]) -> bool:
@@ -100,6 +115,19 @@ def _child_rows(word_id: str, entry: dict[str, Any]) -> dict[str, list[tuple]]:
              reference.get("origin"), reference.get("confidence_tier"),
              reference.get("confidence"))
         )
+    # Related attested sentence pairs (collections datasets), each with its own score.
+    for alt in entry.get("alternative_translations") or []:
+        alt_ref = alt.get("reference_translation") or {}
+        if alt.get("english"):
+            translations.append(
+                (word_id, "alternative", "en", "latn", alt["english"], alt.get("relation"),
+                 None, None)
+            )
+        if alt.get("rohingya"):
+            translations.append(
+                (word_id, "alternative", "rhg", "latn", alt["rohingya"], alt.get("relation"),
+                 alt_ref.get("confidence_tier"), alt_ref.get("confidence"))
+            )
     for text in alternative.get("latin") or []:
         translations.append((word_id, "variant", "rhg", "latn", text, None, None, None))
 
@@ -125,6 +153,7 @@ def _child_rows(word_id: str, entry: dict[str, Any]) -> dict[str, list[tuple]]:
 
 def _entry_values(dataset: str, entry: dict[str, Any]) -> tuple:
     category_name = str(entry.get("related_topic") or "Uncategorized")
+    category_name = CATEGORY_ALIASES.get(category_name, category_name)
     category_id = _slug(category_name)
     reference = entry.get("reference_translation") or {}
     dataset_key = f"{_slug(dataset)}-{hashlib.sha256(dataset.encode()).hexdigest()[:10]}"
@@ -200,6 +229,11 @@ def seed_datasets(paths: Sequence[str | Path]) -> int:
                     values[:4] + values[5:],
                 )
                 _replace_children(conn, values[0], entry)
+        # Drop categories nothing points to any more (e.g. after an alias was added).
+        conn.execute(
+            "DELETE FROM vocabulary_categories c WHERE NOT EXISTS "
+            "(SELECT 1 FROM vocabulary_words w WHERE w.category_id = c.id)"
+        )
     return sum(len(entries) for _, entries in datasets)
 
 

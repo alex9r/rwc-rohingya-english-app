@@ -125,3 +125,16 @@ def test_seeded_entries_are_served_through_existing_api(monkeypatch):
     assert examples["examples"][0]["english"] == "Hello! How are you?"
     assert forms["examples"] == examples["examples"]
     assert scripts["preferred_script"] == "latn"
+
+
+def test_duplicate_topic_labels_share_one_category():
+    groceries = {"id": "g1", "english_meaning": {"word": "x"},
+                 "related_topic": "Groceries / Shopping"}
+    rules = {"id": "r1", "english_meaning": {"word": "y"},
+             "related_topic": "Rules / Regulations"}
+    assert seed._entry_values("d", groceries)[3:5] == ("groceries", "Groceries")
+    assert seed._entry_values("d", rules)[3:5] == ("rules-help", "Rules / Help")
+    # The source label is kept in the stored JSON.
+    assert json.loads(seed._entry_values("d", groceries)[-1])["related_topic"] == (
+        "Groceries / Shopping"
+    )

@@ -1,6 +1,6 @@
 # AWS architecture: DynamoDB + S3
 
-**Status:** Proposal for team review. Nothing described here is deployed, and no AWS resources have been created.
+**Status:** Proposal for team review. The Terraform for it is in [`infra/`](../infra/README.md) and passes `terraform validate`, but nothing has been deployed and no AWS resources exist. Monthly costs are in [aws-cost-estimate.md](aws-cost-estimate.md).
 
 ## 1. Goals and constraints
 
@@ -42,6 +42,7 @@ Maps from the Postgres tables in `backend/app/db.py`: `vocabulary_words`, `vocab
 | Translation | `ENTRY#<id>` | `TR#<role>#<n>` | `language`, `script`, `text`, `origin`, `verification`, `confidence` |
 | Media | `ENTRY#<id>` | `MEDIA#<kind>#<n>` | `s3_key`, `mime_type`, `verified` |
 | Source | `ENTRY#<id>` | `SRC#<kind>#<n>` | `title`, `url`, `evidence`, `license` |
+| Confidence result | `ENTRY#<id>` | `CONF#<kind>#<timestamp>` | `kind` (reference/translation/pronunciation), `model`, `model_version`, `score` (omitted when unscored), `direction`, `output_text` |
 | Category | `CATEGORY#<id>` | `META` | `name`, `description`, `word_count` |
 
 - **Get one entry with everything:** a single `Query` on `pk = ENTRY#<id>`.
@@ -49,6 +50,7 @@ Maps from the Postgres tables in `backend/app/db.py`: `vocabulary_words`, `vocab
 - **GSI2, review queue:** `gsi2pk = STATUS#<verification_status>`, `gsi2sk = <confidence>#<id>`. Reviewers can list the lowest-confidence entries first.
 - **Search (`?q=`):** DynamoDB can't do `ILIKE`. For ~100 words, the app should keep the lexicon in memory or offline, which suits low-connectivity users anyway. If it grows past a few thousand entries, add OpenSearch Serverless, or ship the lexicon to the device as a versioned JSON snapshot from S3.
 - **Confidence:** a missing `confidence` attribute means "no scored reference translation". Never write 0 or a default. The Postgres schema follows the same rule.
+- **Confidence history:** each pipeline run adds a `CONF#` item instead of overwriting the last one, so we can compare models and see whether scores move after review. Postgres equivalent: `confidence_results`.
 
 ### 3.2 `rwc-progress` (private learner data)
 
@@ -64,17 +66,22 @@ Maps from the Postgres tables in `backend/app/db.py`: `vocabulary_words`, `vocab
 
 ### 3.3 `rwc-review-log` (audit trail)
 
-`pk = ENTRY#<id>`, `sk = <ISO timestamp>#<reviewer>`. It records who changed `verification_status`, from what, to what, and why. This table is append-only (IAM denies `UpdateItem` and `DeleteItem`). It is what lets us say an entry was verified by a native speaker, and when.
+`pk = ENTRY#<id>`, `sk = <ISO timestamp>#<reviewer>`. It records who changed `verification_status`, from what, to what, and why. It is what lets us say an entry was verified by a native speaker, and when.
+
+**Reviewer corrections** go here too (`action = correction_proposed` or `correction_decided`, with `field`, `previous_value`, `proposed_value`, `decision`, `reason`). A correction is a proposal: accepting it records the decision but doesn't change the entry. Whoever applies the fix and marks the entry verified does that as a separate, deliberate step. Postgres equivalent: `reviewer_corrections`.
+
+**Append-only:** a resource policy on the table denies `UpdateItem`, `DeleteItem` and `BatchWriteItem` to every principal, including admins. IAM can't stop a `PutItem` from overwriting an item, so writers must use `ConditionExpression: attribute_not_exists(pk)`.
 
 ## 4. S3
 
-Account-wide **Block Public Access** is on. Every bucket has versioning, default SSE-KMS with a bucket key, and a policy that denies non-TLS requests and unencrypted uploads.
+Account-wide **Block Public Access** is on. Every bucket has default SSE-KMS with a bucket key and a policy that denies non-TLS requests and unencrypted uploads. Every bucket except `rwc-learner-audio` is versioned (see 5.4 for why that one isn't).
 
 | Bucket | Contents | Access | Retention |
 |---|---|---|---|
 | `rwc-media` | Word images, reference audio | CloudFront only (Origin Access Control). Never public. | Versioned. Cross-region replication to ca-west-1. |
 | `rwc-datasets` | Released lexicon JSON snapshots (the files in `ml/translation/data/`) | Pipeline and loader roles | S3 Object Lock (governance mode) on released versions, so a published lexicon can't be silently altered. |
-| `rwc-learner-audio` | Pronunciation recordings, only if the team decides to keep them | Presigned PUT from the app (5-minute expiry, size and content-type limits). Read by the scoring role only. | **Expire after 30 days** (lifecycle rule). Amazon Macie scans it. |
+| `rwc-learner-audio` | Pronunciation recordings, only if the team decides to keep them | Presigned PUT from the app (5-minute expiry, size and content-type limits). Read by the scoring role only. | **Expire after 30 days** (lifecycle rule). **Not versioned**, so a delete really removes the audio. Not replicated. Amazon Macie scans it. |
+| `rwc-research-audio` | Consented Centre recordings for benchmarking and fine-tuning speech models | The data holder uploads them. The SageMaker role reads them (own KMS key, no access to `rwc-learner-audio`). | Kept for the length the consent form states (default 365 days). Versioned, with old versions removed after 7 days. Not replicated. Training uses only recordings with `model_training` consent. |
 | `rwc-logs` | CloudTrail, CloudFront and S3 access logs | Security role, read-only | 1 year, then delete |
 
 Open decision: do we need to store learner audio at all? The safest answer is to **score it and discard it**, storing only the score. The bucket is specified in case we later want recordings to improve Rohingya speech recognition. That use needs explicit, informed consent (see 5.3).
@@ -98,7 +105,20 @@ Media objects are referenced by key (`media/<entry_id>/<kind>/<name>`). The `voc
 - **Residency risk to resolve:** the stack lists OpenAI Whisper, ElevenLabs and Google/Anthropic/OpenAI models. Sending learner audio or text to those APIs sends it outside Canada and to a third party. Options: send only non-identifying lexicon text, self-host Whisper in ca-central-1, or get explicit consent and a data-processing agreement. This needs a team and Centre decision before any real learner audio goes through the pipeline.
 - Review the Centre's obligations (PIPEDA, and provincial rules if they apply) with a privacy lead before launch. This document is a technical design, not legal advice.
 
-### 5.4 Monitoring and incident response
+### 5.4 Deleting recordings on request
+
+The consent form promises that recordings are deleted on request ([pronunciation-recording-collection-plan.md](pronunciation-recording-collection-plan.md)). How that works:
+
+1. The speaker asks the Centre. The Centre knows which pseudonym (for example `S007`) is theirs; the team does not.
+2. The data holder runs `python -m app.recordings delete-speaker S007` to preview, then again with `--yes`.
+3. The script deletes every version of each object in `rwc-learner-audio` and `rwc-research-audio`, then the `recordings` rows, all in one transaction. If the speaker has research recordings and the research bucket isn't configured, it refuses and deletes nothing. If S3 fails part-way, the rows roll back and the command can be rerun.
+4. A row in `recording_deletions` (or a `DELETION#<pseudonym>` item in `rwc-review-log`) records the date and count, with no audio, key names or content.
+
+This is a CLI for the data holder, not an API route, because the API has no authentication yet. An HTTP delete would let anyone who guessed a pseudonym remove someone's data.
+
+**Backup caveat, which the consent text must reflect:** deleted data can survive in backups for a while. Postgres backups and DynamoDB point-in-time recovery keep up to 35 days. S3 recordings go immediately: the deletion removes every version, and neither recording bucket is backed up or replicated. The consent form should say "deleted within 35 days" rather than "deleted immediately", unless we turn PITR off for anything holding learner data.
+
+### 5.5 Monitoring and incident response
 - CloudTrail with S3 and DynamoDB data events, GuardDuty, AWS Config rules (no public buckets, encryption required, PITR enabled), and an alarm on unusual `rwc-progress` read volume.
 - Written breach-response plan: who is told, in what order, within what time. Define it before launch.
 
@@ -112,10 +132,12 @@ Media objects are referenced by key (`media/<entry_id>/<kind>/<name>`). The `voc
 
 ## 7. Migration path from today's code
 
-1. **Done in this branch:** the Postgres schema now stores entry type, confidence, confidence tier, needs-review, translations, media and sources as structured data. The seeder loads both datasets (78 entries) idempotently.
+1. **Done:** the Postgres schema stores entry type, confidence, confidence tier, needs-review, translations, media and sources as structured data. The seeder loads seven datasets (150 entries, including main's five domain collections) idempotently.
+1. **Done:** confidence history (`confidence_results`), reviewer corrections (`reviewer_corrections`), recordings with consent (`recordings`) and a deletion log (`recording_deletions`), plus the delete-on-request command.
+1. **Done:** Terraform for KMS, S3, DynamoDB, CloudFront and IAM in `infra/`. Validated, not applied.
 2. Add an export script that writes the Postgres content to `rwc-datasets` as a versioned JSON snapshot, and a loader that writes it to `rwc-content`.
 3. Add a storage adapter in `backend/app/` so the API can read from DynamoDB when configured and Postgres otherwise, and test it against DynamoDB Local.
-4. Write the infrastructure as code (Terraform or CDK) in an `infra/` directory, applied to a dev account first.
+4. Apply `infra/` to a dev account once it exists (see `infra/README.md`).
 5. Move images and audio into `rwc-media` and populate `vocabulary_media.location` with keys.
 
 Postgres stays the authoring and development store. Whether production also needs it is open: DynamoDB alone is simpler to operate, but Postgres is better for reviewer queries and reporting.
