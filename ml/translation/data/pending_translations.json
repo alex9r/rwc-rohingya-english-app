@@ -1,0 +1,12 @@
+[
+  {
+    "id": "c23b0b2f1182",
+    "input": "I need directions to the library",
+    "translation": "Awaire ḍirékshon library gíre saiyye",
+    "direction": "en->roh",
+    "provider": "gemini",
+    "source": "gemini",
+    "status": "pending_review",
+    "verification_status": "pending_review"
+  }
+]
