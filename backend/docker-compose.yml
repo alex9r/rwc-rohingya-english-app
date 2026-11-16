@@ -19,6 +19,7 @@ services:
       dockerfile: backend/Dockerfile
       args:
         INSTALL_SPEECH: ${INSTALL_SPEECH:-0}
+        RWC_WHISPER_MODEL: ${RWC_WHISPER_MODEL:-small}
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload --reload-dir app --reload-dir ml
     env_file: .env
     environment:
@@ -30,11 +31,19 @@ services:
     volumes:
       - ./app:/app/app
       - ../ml:/app/ml
-      # Whisper downloads its model here on first use
-      - hf_cache:/root/.cache/huggingface
+      # Whisper model cache (HF_HOME in the Dockerfile)
+      - hf_cache:/opt/hf
     depends_on:
       db:
         condition: service_healthy
+
+  # Optional local DynamoDB: docker compose --profile dynamo up -d dynamodb-local
+  dynamodb-local:
+    image: amazon/dynamodb-local:2.5.3
+    profiles: [dynamo]
+    command: -jar DynamoDBLocal.jar -inMemory -sharedDb
+    ports:
+      - "8001:8000"
 
 volumes:
   pgdata:
