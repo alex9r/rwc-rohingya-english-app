@@ -1,0 +1,86 @@
+name: Deploy
+
+# Builds the API image with Whisper baked in, pushes it to ECR and rolls it out on ECS.
+# Every job skips until the AWS account exists and the repo variables are set
+# (see infra/README.md, "First deployment").
+on:
+  push:
+    branches: [main]
+    paths: ["backend/**", "ml/**", ".github/workflows/deploy.yml"]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  id-token: write # OIDC: short-lived AWS credentials, no stored keys
+
+jobs:
+  deploy:
+    if: vars.AWS_ROLE_ARN != ''
+    runs-on: ubuntu-latest
+    environment: production # needs a reviewer; the AWS role only trusts this environment
+    env:
+      AWS_REGION: ca-central-1
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ca-central-1
+
+      - id: ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push the image
+        env:
+          IMAGE: ${{ steps.ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ github.sha }}
+        run: |
+          docker build -f backend/Dockerfile --build-arg INSTALL_SPEECH=1 -t "$IMAGE" .
+          docker push "$IMAGE"
+          echo "IMAGE=$IMAGE" >> "$GITHUB_ENV"
+
+      # Start from the latest task definition so Terraform's settings (env vars, CPU,
+      # memory) carry over; only the image changes.
+      - name: Fetch the current task definition
+        run: |
+          aws ecs describe-task-definition --task-definition "${{ vars.ECS_TASK_FAMILY }}" \
+            --query taskDefinition > task-definition.json
+
+      - id: render
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: api
+          image: ${{ env.IMAGE }}
+
+      # Waits until the new tasks pass the ALB health check. If they never do, the ECS
+      # circuit breaker rolls back to the previous version and this step fails.
+      - uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+        with:
+          task-definition: ${{ steps.render.outputs.task-definition }}
+          cluster: ${{ vars.ECS_CLUSTER }}
+          service: ${{ vars.ECS_SERVICE }}
+          wait-for-service-stability: true
+
+      - name: Smoke test
+        run: |
+          desired=$(aws ecs describe-services --cluster "${{ vars.ECS_CLUSTER }}" \
+            --services "${{ vars.ECS_SERVICE }}" --query 'services[0].desiredCount' --output text)
+          if [ "$desired" = "0" ]; then
+            echo "Service is scaled to 0 (first deployment); skipping the smoke test."
+            exit 0
+          fi
+          curl -fsS --retry 5 --retry-delay 10 --retry-all-errors "${{ vars.API_URL }}/health" > health.json
+          python3 - <<'PY'
+          import json
+          health = json.load(open("health.json"))
+          print(health)
+          assert health["status"] == "ok", "API not ok"
+          assert health["data_source"] == "dynamodb", "not reading DynamoDB (lexicon not loaded?)"
+          assert health["ml"]["transcribe"] == "real", "transcription is in stub mode"
+          assert health["ml"]["pronunciation"] == "real", "pronunciation scoring is in stub mode"
+          PY
