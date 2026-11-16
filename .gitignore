@@ -4,3 +4,4 @@ __pycache__/
 failures.csv
 ml/pronunciation/smoke_clips/
 ml/pronunciation/smoke_clips_cv/
+speech_review/

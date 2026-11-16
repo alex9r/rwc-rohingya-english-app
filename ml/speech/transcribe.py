@@ -52,11 +52,31 @@ MAX_BYTES = 25 * 1024 * 1024  # reject before decoding anything this big
 SILENCE_RMS = 0.003
 FRAME_S = 0.03
 
+
+def _threshold(name: str, default: float) -> float:
+    raw = os.getenv(name)
+    if raw is None or not raw.strip():
+        return default
+    try:
+        value = float(raw)
+    except ValueError:
+        raise ValueError(f"{name} must be a number between 0 and 1, got {raw!r}") from None
+    if not 0.0 <= value <= 1.0:
+        raise ValueError(f"{name} must be between 0 and 1, got {value}")
+    return value
+
+
 # Confidence bands for the model in DEFAULT_MODEL. At or above HIGH_CONFIDENCE the text
 # is used as is; below LOW_CONFIDENCE it isn't trusted and the user is asked to repeat;
-# in between the user confirms it. Re-derive with calibrate.py (see the README).
-HIGH_CONFIDENCE = 0.7
-LOW_CONFIDENCE = 0.5
+# in between the user confirms it. The defaults are provisional: re-derive them with
+# calibrate.py from Luna's evaluation results and set them per deployment through the
+# environment, since they depend on the model and the proxy language (see the README).
+HIGH_CONFIDENCE = _threshold("RWC_HIGH_CONFIDENCE", 0.7)
+LOW_CONFIDENCE = _threshold("RWC_LOW_CONFIDENCE", 0.5)
+if LOW_CONFIDENCE > HIGH_CONFIDENCE:
+    raise ValueError(
+        f"RWC_LOW_CONFIDENCE ({LOW_CONFIDENCE}) is above RWC_HIGH_CONFIDENCE ({HIGH_CONFIDENCE})"
+    )
 
 # How many times a user is asked to record in total before the app stops asking.
 MAX_ATTEMPTS = 3

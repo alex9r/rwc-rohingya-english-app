@@ -21,7 +21,7 @@ from ml.speech import (
     classify_confidence,
     transcribe,
 )
-from ml.speech.calibrate import load_clips, recommend
+from ml.speech.calibrate import CalibrationError, load_clips, recommend
 from ml.speech.transcribe import SAMPLE_RATE, segment_confidence
 
 
@@ -384,5 +384,5 @@ def test_load_clips_skips_failed_rows(tmp_path):
 def test_load_clips_needs_a_wer_column(tmp_path):
     p = tmp_path / "results.csv"
     p.write_text("file,confidence\na.wav,0.9\n", encoding="utf-8")
-    with pytest.raises(SystemExit, match="wer"):
+    with pytest.raises(CalibrationError, match="wer"):
         load_clips(p)
