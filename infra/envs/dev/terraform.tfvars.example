@@ -1,0 +1,10 @@
+# Copy to terraform.tfvars (gitignored) and fill in.
+alert_email              = "team-alerts@example.org"
+github_oidc_provider_arn = "arn:aws:iam::123456789012:oidc-provider/token.actions.githubusercontent.com"
+
+# First apply only: no image exists yet, so start with no tasks (see infra/README.md).
+desired_count = 0
+
+# monthly_budget_usd = 100
+# task_cpu           = 2048
+# task_memory        = 4096
