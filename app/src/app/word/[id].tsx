@@ -10,6 +10,7 @@ import { BackButton } from '@/components/BackButton';
 import { GradientScreen } from '@/components/GradientScreen';
 import { IconButton } from '@/components/IconButton';
 import { MicButton } from '@/components/MicButton';
+import { LoadState } from '@/components/LoadState';
 import { ScoreBadge } from '@/components/ScoreBadge';
 import { usePlayAudio } from '@/hooks/usePlayAudio';
 import { useRecorder } from '@/hooks/useRecorder';
@@ -22,6 +23,16 @@ export default function WordPractice() {
   const insets = useSafeAreaInsets();
   const { saved, toggleSaved, progress, recordWordPractice } = useAppState();
   const [word, setWord] = useState<Word | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [retryKey, setRetryKey] = useState(0);
+  // Retry is a user event, so resetting request state here is safe under
+  // react-hooks/set-state-in-effect and makes the loading indicator visible.
+  const retryLoad = () => {
+    setLoading(true);
+    setLoadError(null);
+    setRetryKey((n) => n + 1);
+  };
   const [result, setResult] = useState<PronunciationResult | null>(null);
   const [recordingUri, setRecordingUri] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -30,8 +41,17 @@ export default function WordPractice() {
   const replay = useAudioPlayer(null);
 
   useEffect(() => {
-    api.getWord(id).then(setWord);
-  }, [id]);
+    let live = true;
+    api.getWord(id)
+      .then((data) => {
+        if (!live) return;
+        if (!data) setLoadError('Word not found.');
+        else { setWord(data); setLoadError(null); }
+      })
+      .catch(() => { if (live) setLoadError('Could not load this word.'); })
+      .finally(() => { if (live) setLoading(false); });
+    return () => { live = false; };
+  }, [id, retryKey]);
 
   const onMic = async () => {
     const uri = await toggle();
@@ -78,9 +98,11 @@ export default function WordPractice() {
           )}
         </View>
 
-        {!word ? (
-          <ActivityIndicator size="large" color="#FFFFFF" style={styles.loading} />
-        ) : (
+        {loading || loadError ? (
+          <View style={styles.loadPanel}>
+            <LoadState loading={loading} error={loadError} onRetry={retryLoad} message="Loading word…" />
+          </View>
+        ) : word ? (
           <>
             <View style={styles.hero}>
               <Text style={styles.english}>{word.english}</Text>
@@ -150,7 +172,7 @@ export default function WordPractice() {
               </View>
             </View>
           </>
-        )}
+        ) : null}
       </ScrollView>
     </GradientScreen>
   );
@@ -160,6 +182,7 @@ const styles = StyleSheet.create({
   scroll: { flexGrow: 1, paddingHorizontal: spacing.xl, gap: spacing.xl },
   topRow: { flexDirection: 'row', justifyContent: 'space-between' },
   loading: { marginVertical: spacing.xl },
+  loadPanel: { backgroundColor: colors.surface, borderRadius: radius.lg },
   hero: { alignItems: 'center', gap: spacing.md, paddingVertical: spacing.lg },
   english: {
     fontSize: fonts.size.xl,

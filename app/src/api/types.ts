@@ -30,10 +30,24 @@ export interface TranslateResult {
   audioUrl: string | null;
 }
 
+/** A line backed by the phrase set (ml/translation/data/rohingya_phrases_*.json). */
+export interface ScenarioLine {
+  english: string;
+  /** null = no sourced translation yet; never fabricate. */
+  rohingya: string | null;
+  phraseId: string | null;
+  /** 0..1 from the phrase's reference_translation; null when there is no Rohingya. */
+  confidence: number | null;
+}
+
 export interface ScenarioTurn {
   id: string;
   role: 'partner' | 'user';
   text: string;
+  /** Rohingya for the partner's line, so the learner can follow it. */
+  support?: ScenarioLine | null;
+  /** Something the learner can say back. */
+  reply?: ScenarioLine;
 }
 
 export interface Scenario {
@@ -41,6 +55,7 @@ export interface Scenario {
   categoryId: string;
   title: string;
   turns: ScenarioTurn[];
+  verification?: VerificationStatus;
 }
 
 export interface ScenarioFeedback {
