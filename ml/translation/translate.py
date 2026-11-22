@@ -37,9 +37,12 @@ def _entry_source(entry, filename):
 
 
 def _entry_verification(entry):
-    """Verification status: approved or pending_review."""
-    # Lexicon / approved files are lookup-trusted; pending stays out of _load().
-    return entry.get("verification_status") or "approved"
+    status = entry.get("verification_status") or entry.get("validation_status", "")
+
+    if status in ("approved", "native_verified", "community_verified"):
+        return "approved"
+
+    return "pending_review"
 
 
 def _load():
@@ -103,7 +106,7 @@ def translate(text, direction):
         s,
         c=0.0,
         source="dictionary",
-        verification_status="approved",
+        verification_status="pending_review",
         needs_review=False,
         alternatives=None,
     ):
@@ -180,7 +183,7 @@ def translate(text, direction):
         pending = get_pending(text, direction)
 
         if pending:
-            provider = pending.get("source") or pending.get("provider") or "llm"
+            provider = pending.get("source") or "llm"
             return out(
                 pending["translation"],
                 "uncertain",

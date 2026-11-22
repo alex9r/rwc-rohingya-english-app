@@ -21,15 +21,18 @@ def load(path, default):
 def get_pending(text, direction):
     from .translate import norm
 
-    for item in load(PENDING, []):
+    items = load(PENDING, [])
+
+    for item in items:
         if (
             norm(item["input"]) == norm(text)
             and item["direction"] == direction
-            and item["status"] == "pending_review"
+            and item.get("verification_status") == "pending_review"
         ):
             return item
 
     return None
+
 def save(path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
     temp = path.with_name(path.name + ".tmp")
@@ -38,15 +41,18 @@ def save(path, data):
     os.replace(temp, path)
 
 
+
 def save_pending(text, translation, direction, provider):
+    from .translate import norm
+
     items = load(PENDING, [])
 
-    # Avoid storing the same suggestion multiple times.
+    # Prevent duplicate requests for the same phrase.
     for item in items:
         if (
-            item["input"] == text
-            and item["translation"] == translation
+            norm(item["input"]) == norm(text)
             and item["direction"] == direction
+            and item.get("verification_status") == "pending_review"
         ):
             return item["id"]
 
@@ -55,10 +61,8 @@ def save_pending(text, translation, direction, provider):
         "input": text,
         "translation": translation,
         "direction": direction,
-        "provider": provider,
         "source": provider,
-        "status": "pending_review",
-        "verification_status": "pending_review",
+        "verification_status": "pending_review"
     }
 
     items.append(item)
