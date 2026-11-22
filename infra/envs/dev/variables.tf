@@ -1,12 +1,23 @@
 variable "region" {
-  description = "ca-central-1 keeps all data in Canada (spec §1)."
+  description = "Must be in Canada (data residency), as in the data stack."
   type        = string
   default     = "ca-central-1"
+
+  validation {
+    condition     = contains(["ca-central-1", "ca-west-1"], var.region)
+    error_message = "Data must stay in Canada: use ca-central-1 or ca-west-1."
+  }
 }
 
 variable "environment" {
-  type    = string
-  default = "dev"
+  description = "Must match the data stack's environment: its resources are looked up by name."
+  type        = string
+  default     = "dev"
+
+  validation {
+    condition     = contains(["dev", "staging", "prod"], var.environment)
+    error_message = "environment must be dev, staging or prod."
+  }
 }
 
 variable "alert_email" {
@@ -15,8 +26,9 @@ variable "alert_email" {
 }
 
 variable "monthly_budget_usd" {
-  type    = number
-  default = 100
+  description = "Default: the funding proposal's $350 hosting line over 8 months."
+  type        = number
+  default     = 45
 }
 
 variable "github_oidc_provider_arn" {
@@ -42,32 +54,27 @@ variable "loader_principal_arns" {
 }
 
 variable "image_tag" {
-  description = "Image for the first apply only. GitHub Actions deploys every later image."
+  description = "Image (git SHA) the function is created with on the full apply. Not needed for the first, targeted apply; GitHub Actions deploys every later image."
   type        = string
-  default     = "bootstrap"
+  default     = ""
 }
 
-variable "task_cpu" {
-  description = "Fargate CPU units per task (2048 = 2 vCPU). A guess for Whisper small; tune it."
-  type        = number
-  default     = 2048
-}
-
-variable "task_memory" {
-  description = "MiB per task. A guess for Whisper small; tune it."
+variable "memory_size" {
+  description = "Lambda MB. CPU scales with it (4096 MB is about 2.3 vCPU). A guess for Whisper small; tune it."
   type        = number
   default     = 4096
 }
 
-variable "desired_count" {
-  description = "Minimum running tasks (2 = one per AZ). Use 0 for the first apply, before an image exists."
+variable "reserved_concurrency" {
+  description = "Cap on concurrent Lambda instances, or null for none. Leave null on new accounts (total limit may be 10)."
   type        = number
-  default     = 2
+  default     = null
 }
 
-variable "max_count" {
-  type    = number
-  default = 4
+variable "provisioned_concurrency" {
+  description = "Always-warm instances (no cold starts, billed hourly). 0 = rely on on-demand plus the canary keeping one warm."
+  type        = number
+  default     = 0
 }
 
 variable "throttle_rate" {
@@ -84,11 +91,6 @@ variable "throttle_burst" {
 variable "log_retention_days" {
   type    = number
   default = 30
-}
-
-variable "alb_deletion_protection" {
-  type    = bool
-  default = true
 }
 
 variable "canary_runtime_version" {

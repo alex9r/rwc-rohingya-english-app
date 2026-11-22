@@ -25,11 +25,14 @@ terraform {
 provider "aws" {
   region = var.region
 
+  # Same tag keys as the data stack, plus budget_line so hosting spend shows separately
+  # in Cost Explorer (docs/aws-cost-estimate.md, "Tracking spend against the lines").
   default_tags {
     tags = {
-      Project     = "rwc"
-      Environment = var.environment
-      ManagedBy   = "terraform"
+      project     = "rwc-rohingya-english-app"
+      environment = var.environment
+      managed_by  = "terraform"
+      budget_line = "hosting"
     }
   }
 }

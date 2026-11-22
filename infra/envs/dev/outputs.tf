@@ -10,19 +10,9 @@ output "ECR_REPOSITORY" {
   value       = module.ecr.repository_name
 }
 
-output "ECS_CLUSTER" {
-  description = "GitHub variable ECS_CLUSTER."
-  value       = module.service.cluster_name
-}
-
-output "ECS_SERVICE" {
-  description = "GitHub variable ECS_SERVICE."
-  value       = module.service.service_name
-}
-
-output "ECS_TASK_FAMILY" {
-  description = "GitHub variable ECS_TASK_FAMILY."
-  value       = module.service.task_family
+output "LAMBDA_FUNCTION" {
+  description = "GitHub variable LAMBDA_FUNCTION."
+  value       = local.function_name
 }
 
 output "API_URL" {
@@ -36,8 +26,8 @@ output "loader_role_arn" {
 }
 
 output "table_name" {
-  description = "VOCAB_TABLE for the loader."
-  value       = module.data.table_name
+  description = "VOCAB_TABLE for the loader (the data stack's content table)."
+  value       = data.aws_dynamodb_table.content.name
 }
 
 output "dashboard_url" {
