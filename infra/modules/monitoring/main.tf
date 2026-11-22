@@ -2,6 +2,8 @@
 # a dashboard and a cost budget. Every alarm emails through the rwc-alerts topic.
 
 terraform {
+  required_version = ">= 1.6"
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -42,24 +44,14 @@ variable "api_url" {
   type = string
 }
 
-variable "alb_arn_suffix" {
-  type = string
+variable "function_name" {
+  description = "The API's Lambda function (metrics are per function, across versions)."
+  type        = string
 }
 
-variable "target_group_arn_suffix" {
-  type = string
-}
-
-variable "cluster_name" {
-  type = string
-}
-
-variable "service_name" {
-  type = string
-}
-
-variable "desired_count" {
-  type = number
+variable "function_timeout" {
+  description = "Seconds; the duration alarm fires at 80% of it."
+  type        = number
 }
 
 variable "app_log_group_name" {
@@ -86,6 +78,9 @@ locals {
 # CloudWatch can't publish to a topic encrypted with the AWS-managed SNS key,
 # so the topic gets its own key that allows CloudWatch.
 data "aws_iam_policy_document" "alerts_key" {
+  #checkov:skip=CKV_AWS_109:A key policy's "*" resource means this key only. The account-root statement is the standard one that lets IAM policies control the key.
+  #checkov:skip=CKV_AWS_111:Same: kms:* on this key for the account root, so IAM (not the key policy) decides who can administer it.
+  #checkov:skip=CKV_AWS_356:Same: in a key policy, resource "*" is the key itself.
   statement {
     sid       = "AccountAdministersKeyThroughIam"
     actions   = ["kms:*"]
@@ -244,15 +239,36 @@ resource "aws_cloudwatch_metric_alarm" "api_latency" {
   ok_actions          = local.alarm_topic
 }
 
-resource "aws_cloudwatch_metric_alarm" "unhealthy_hosts" {
-  alarm_name          = "${var.name}-unhealthy-tasks"
-  alarm_description   = "At least one API task is failing its /health check."
-  namespace           = "AWS/ApplicationELB"
-  metric_name         = "UnHealthyHostCount"
-  dimensions          = { LoadBalancer = var.alb_arn_suffix, TargetGroup = var.target_group_arn_suffix }
-  statistic           = "Maximum"
-  period              = 60
-  evaluation_periods  = 2
+# Lambda replaces the ECS/ALB alarms (healthy hosts, running tasks, CPU, memory):
+# there are no hosts to be unhealthy, so watch failed invocations, throttling and
+# requests running close to the 30 s limit. "API completely down" is caught by the
+# canary alarm below.
+
+resource "aws_cloudwatch_metric_alarm" "lambda_errors" {
+  alarm_name          = "${var.name}-lambda-errors"
+  alarm_description   = "More than 5 failed invocations in 5 minutes (crash, out of memory, init failure or timeout), not app-level 4xx/5xx."
+  namespace           = "AWS/Lambda"
+  metric_name         = "Errors"
+  dimensions          = { FunctionName = var.function_name }
+  statistic           = "Sum"
+  period              = 300
+  evaluation_periods  = 1
+  comparison_operator = "GreaterThanThreshold"
+  threshold           = 5
+  treat_missing_data  = "notBreaching"
+  alarm_actions       = local.alarm_topic
+  ok_actions          = local.alarm_topic
+}
+
+resource "aws_cloudwatch_metric_alarm" "lambda_throttles" {
+  alarm_name          = "${var.name}-lambda-throttles"
+  alarm_description   = "Requests were refused because the function hit its concurrency limit (account or reserved)."
+  namespace           = "AWS/Lambda"
+  metric_name         = "Throttles"
+  dimensions          = { FunctionName = var.function_name }
+  statistic           = "Sum"
+  period              = 300
+  evaluation_periods  = 1
   comparison_operator = "GreaterThanThreshold"
   threshold           = 0
   treat_missing_data  = "notBreaching"
@@ -260,67 +276,17 @@ resource "aws_cloudwatch_metric_alarm" "unhealthy_hosts" {
   ok_actions          = local.alarm_topic
 }
 
-resource "aws_cloudwatch_metric_alarm" "no_healthy_hosts" {
-  alarm_name          = "${var.name}-api-down"
-  alarm_description   = "CRITICAL: no healthy API tasks. The API is down."
-  namespace           = "AWS/ApplicationELB"
-  metric_name         = "HealthyHostCount"
-  dimensions          = { LoadBalancer = var.alb_arn_suffix, TargetGroup = var.target_group_arn_suffix }
-  statistic           = "Minimum"
-  period              = 60
-  evaluation_periods  = 1
-  comparison_operator = "LessThanThreshold"
-  threshold           = 1
-  treat_missing_data  = "breaching"
-  alarm_actions       = local.alarm_topic
-  ok_actions          = local.alarm_topic
-}
-
-resource "aws_cloudwatch_metric_alarm" "running_tasks" {
-  count = var.desired_count > 0 ? 1 : 0
-
-  alarm_name          = "${var.name}-running-tasks"
-  alarm_description   = "Fewer API tasks running than the minimum for 5 minutes."
-  namespace           = "ECS/ContainerInsights"
-  metric_name         = "RunningTaskCount"
-  dimensions          = { ClusterName = var.cluster_name, ServiceName = var.service_name }
-  statistic           = "Minimum"
-  period              = 60
-  evaluation_periods  = 5
-  comparison_operator = "LessThanThreshold"
-  threshold           = var.desired_count
-  treat_missing_data  = "breaching"
-  alarm_actions       = local.alarm_topic
-  ok_actions          = local.alarm_topic
-}
-
-resource "aws_cloudwatch_metric_alarm" "cpu" {
-  alarm_name          = "${var.name}-cpu-high"
-  alarm_description   = "API CPU above 80% for 10 minutes (autoscaling should be adding tasks)."
-  namespace           = "AWS/ECS"
-  metric_name         = "CPUUtilization"
-  dimensions          = { ClusterName = var.cluster_name, ServiceName = var.service_name }
-  statistic           = "Average"
+resource "aws_cloudwatch_metric_alarm" "lambda_duration" {
+  alarm_name          = "${var.name}-lambda-duration-p95"
+  alarm_description   = "p95 invocation time above 80% of the timeout for 15 minutes: requests are close to being cut off (cold starts or slow transcription)."
+  namespace           = "AWS/Lambda"
+  metric_name         = "Duration"
+  dimensions          = { FunctionName = var.function_name }
+  extended_statistic  = "p95"
   period              = 300
-  evaluation_periods  = 2
+  evaluation_periods  = 3
   comparison_operator = "GreaterThanThreshold"
-  threshold           = 80
-  treat_missing_data  = "notBreaching"
-  alarm_actions       = local.alarm_topic
-  ok_actions          = local.alarm_topic
-}
-
-resource "aws_cloudwatch_metric_alarm" "memory" {
-  alarm_name          = "${var.name}-memory-high"
-  alarm_description   = "API memory above 85% for 10 minutes (Whisper may need a bigger task)."
-  namespace           = "AWS/ECS"
-  metric_name         = "MemoryUtilization"
-  dimensions          = { ClusterName = var.cluster_name, ServiceName = var.service_name }
-  statistic           = "Average"
-  period              = 300
-  evaluation_periods  = 2
-  comparison_operator = "GreaterThanThreshold"
-  threshold           = 85
+  threshold           = var.function_timeout * 1000 * 0.8
   treat_missing_data  = "notBreaching"
   alarm_actions       = local.alarm_topic
   ok_actions          = local.alarm_topic
@@ -572,13 +538,14 @@ resource "aws_cloudwatch_dashboard" "main" {
         width  = 12
         height = 6
         properties = {
-          title  = "Healthy API tasks"
+          title  = "Lambda invocations, errors and throttles"
           region = var.region
-          stat   = "Minimum"
-          period = 60
+          stat   = "Sum"
+          period = 300
           metrics = [
-            ["AWS/ApplicationELB", "HealthyHostCount", "TargetGroup", var.target_group_arn_suffix, "LoadBalancer", var.alb_arn_suffix],
-            [".", "UnHealthyHostCount", ".", ".", ".", "."],
+            ["AWS/Lambda", "Invocations", "FunctionName", var.function_name],
+            [".", "Errors", ".", "."],
+            [".", "Throttles", ".", "."],
           ]
         }
       },
@@ -587,13 +554,13 @@ resource "aws_cloudwatch_dashboard" "main" {
         width  = 12
         height = 6
         properties = {
-          title  = "API CPU and memory (%)"
+          title  = "Lambda duration (ms) and concurrency"
           region = var.region
-          stat   = "Average"
           period = 300
           metrics = [
-            ["AWS/ECS", "CPUUtilization", "ClusterName", var.cluster_name, "ServiceName", var.service_name],
-            [".", "MemoryUtilization", ".", ".", ".", "."],
+            ["AWS/Lambda", "Duration", "FunctionName", var.function_name, { stat = "p50" }],
+            ["...", { stat = "p95" }],
+            [".", "ConcurrentExecutions", ".", ".", { stat = "Maximum", yAxis = "right" }],
           ]
         }
       },
