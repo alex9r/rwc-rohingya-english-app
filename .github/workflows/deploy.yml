@@ -1,6 +1,8 @@
 name: Deploy
 
-# Builds the API image with Whisper baked in, pushes it to ECR and rolls it out on ECS.
+# Builds the API image with Whisper baked in, pushes it to ECR, publishes it as a new
+# Lambda version and points the "live" alias (which API Gateway calls) at it. If the
+# smoke test fails, the alias goes back to the previous version.
 # Every job skips until the AWS account exists and the repo variables are set
 # (see infra/README.md, "First deployment").
 on:
@@ -24,6 +26,7 @@ jobs:
     environment: production # needs a reviewer; the AWS role only trusts this environment
     env:
       AWS_REGION: ca-central-1
+      FUNCTION: ${{ vars.LAMBDA_FUNCTION }}
     steps:
       - uses: actions/checkout@v4
 
@@ -35,46 +38,64 @@ jobs:
       - id: ecr
         uses: aws-actions/amazon-ecr-login@v2
 
+      # linux/amd64 to match the function's architecture. --provenance=false: buildx
+      # otherwise adds an attestation manifest, and Lambda rejects multi-manifest images.
       - name: Build and push the image
         env:
           IMAGE: ${{ steps.ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ github.sha }}
         run: |
-          docker build -f backend/Dockerfile --build-arg INSTALL_SPEECH=1 -t "$IMAGE" .
+          docker build -f backend/Dockerfile --platform linux/amd64 --provenance=false \
+            --build-arg INSTALL_SPEECH=1 -t "$IMAGE" .
           docker push "$IMAGE"
           echo "IMAGE=$IMAGE" >> "$GITHUB_ENV"
 
-      # Start from the latest task definition so Terraform's settings (env vars, CPU,
-      # memory) carry over; only the image changes.
-      - name: Fetch the current task definition
+      # First deployment: Terraform can't create the function until an image exists, so
+      # this run only pushes it. Then run the full terraform apply with image_tag = this SHA.
+      - id: exists
+        name: Check the function exists
         run: |
-          aws ecs describe-task-definition --task-definition "${{ vars.ECS_TASK_FAMILY }}" \
-            --query taskDefinition > task-definition.json
-
-      - id: render
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: task-definition.json
-          container-name: api
-          image: ${{ env.IMAGE }}
-
-      # Waits until the new tasks pass the ALB health check. If they never do, the ECS
-      # circuit breaker rolls back to the previous version and this step fails.
-      - uses: aws-actions/amazon-ecs-deploy-task-definition@v2
-        with:
-          task-definition: ${{ steps.render.outputs.task-definition }}
-          cluster: ${{ vars.ECS_CLUSTER }}
-          service: ${{ vars.ECS_SERVICE }}
-          wait-for-service-stability: true
-
-      - name: Smoke test
-        run: |
-          desired=$(aws ecs describe-services --cluster "${{ vars.ECS_CLUSTER }}" \
-            --services "${{ vars.ECS_SERVICE }}" --query 'services[0].desiredCount' --output text)
-          if [ "$desired" = "0" ]; then
-            echo "Service is scaled to 0 (first deployment); skipping the smoke test."
-            exit 0
+          if aws lambda get-function --function-name "$FUNCTION" > /dev/null 2>&1; then
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::Function $FUNCTION doesn't exist yet. Image pushed as ${{ github.sha }}; set image_tag to it and run the full terraform apply (infra/README.md step 5)."
+            echo "deploy=false" >> "$GITHUB_OUTPUT"
           fi
-          curl -fsS --retry 5 --retry-delay 10 --retry-all-errors "${{ vars.API_URL }}/health" > health.json
+
+      - id: deploy
+        name: Publish a new version and move the live alias
+        if: steps.exists.outputs.deploy == 'true'
+        run: |
+          previous=$(aws lambda get-alias --function-name "$FUNCTION" --name live \
+            --query FunctionVersion --output text)
+          echo "previous=$previous" >> "$GITHUB_OUTPUT"
+          echo "live is version $previous"
+
+          aws lambda update-function-code --function-name "$FUNCTION" \
+            --image-uri "$IMAGE" > /dev/null
+          aws lambda wait function-updated --function-name "$FUNCTION"
+
+          # The new version also picks up any configuration Terraform changed.
+          version=$(aws lambda publish-version --function-name "$FUNCTION" \
+            --description "${{ github.sha }}" --query Version --output text)
+          for _ in $(seq 1 60); do
+            state=$(aws lambda get-function-configuration --function-name "$FUNCTION" \
+              --qualifier "$version" --query State --output text)
+            [ "$state" = "Active" ] && break
+            [ "$state" = "Failed" ] && { echo "::error::Version $version failed to become active"; exit 1; }
+            sleep 5
+          done
+          [ "$state" = "Active" ] || { echo "::error::Version $version still $state"; exit 1; }
+
+          aws lambda update-alias --function-name "$FUNCTION" --name live \
+            --function-version "$version" > /dev/null
+          echo "live is now version $version"
+
+      # Retries absorb the cold start (image load plus Whisper) on the new version.
+      - name: Smoke test
+        if: steps.exists.outputs.deploy == 'true'
+        run: |
+          curl -fsS --max-time 35 --retry 6 --retry-delay 15 --retry-all-errors \
+            "${{ vars.API_URL }}/health" > health.json
           python3 - <<'PY'
           import json
           health = json.load(open("health.json"))
@@ -84,3 +105,11 @@ jobs:
           assert health["ml"]["transcribe"] == "real", "transcription is in stub mode"
           assert health["ml"]["pronunciation"] == "real", "pronunciation scoring is in stub mode"
           PY
+
+      # Replaces the ECS circuit breaker: traffic goes back to the last good version.
+      - name: Roll back the live alias
+        if: failure() && steps.deploy.outputs.previous != ''
+        run: |
+          aws lambda update-alias --function-name "$FUNCTION" --name live \
+            --function-version "${{ steps.deploy.outputs.previous }}" > /dev/null
+          echo "::error::Deploy failed; live rolled back to version ${{ steps.deploy.outputs.previous }}"

@@ -14,13 +14,31 @@ Design rule: **the lexicon is public content, and learner activity is private da
 
 | Decision | Choice | Why |
 |---|---|---|
-| Compute | **ECS Fargate**, 2 tasks across 2 AZs, autoscaling to 4 on CPU | Whisper settles it: a ~460 MB model, ~1.5 s of CPU per clip and ~2 GB of RAM. On Lambda every cold start would reload the model, and API Gateway's ~30 s integration timeout is a hard ceiling. Fargate keeps the model loaded and runs the Docker image we already have. |
-| Entry point | **API Gateway HTTP API → VPC Link → internal ALB** | HTTPS, throttling and access logs at the edge; tasks stay in private subnets with no public IPs. |
-| Lexicon store | **DynamoDB in AWS, Postgres locally**, chosen by `VOCAB_BACKEND` | Implements §7 step 3. Postgres stays the authoring store. |
-| Whisper | Self-hosted in ca-central-1, model **baked into the image** | Answers the residency risk in §5.3 for transcription: audio never leaves our account. Tasks need no internet access. |
-| Network | Private subnets only, **no NAT**; VPC endpoints for ECR, S3, CloudWatch Logs and DynamoDB | Matches §5.2. Interface endpoints cost about as much as a NAT gateway, but there's no internet egress at all. |
+| Compute | **AWS Lambda** running the backend's container image (FastAPI + Whisper) through the AWS Lambda Web Adapter. Replaces ECS Fargate; see "Compute: Lambda instead of Fargate" below. | Cost: the funding proposal's hosting line is $350 for 8 months, and Fargate as designed cost a fixed ~$180–230 a month. Lambda is close to free at pilot scale (~25 learners, starting around month 7). The same image runs locally and on Lambda. |
+| Entry point | **API Gateway HTTP API → Lambda `live` alias** | HTTPS, throttling and access logs at the edge. Nothing can reach the function except through API Gateway. |
+| Infrastructure layout | **Two Terraform stacks.** The data stack (`infra/*.tf`: keys, buckets, tables, CloudFront, data-access policies) is the source of truth for data. The compute stack (`infra/envs/dev`) looks those resources up by name and never changes them. | Keeps data decisions in one place, with their author. The compute stack only adds the two permissions the API needed (see §5.2). |
+| Lexicon store | **DynamoDB in AWS, Postgres locally**, chosen by `VOCAB_BACKEND` | Implements §7 step 3. Postgres stays the authoring store. Reviewers correct content in DynamoDB through the data stack's `reviewer` policy, and the loader is insert-only so it never undoes them. |
+| Whisper | Self-hosted in ca-central-1, model **baked into the image** | Answers the residency risk in §5.3 for transcription: audio never leaves our account. The function needs no internet access to load the model. |
+| Network | **No VPC.** The function reaches DynamoDB, S3 and CloudWatch on their public AWS endpoints over TLS, authorised by IAM. | A deliberate deviation from §5.2's VPC gateway endpoints: a VPC would bring back NAT or interface-endpoint costs. Traffic still stays inside AWS, is encrypted, and needs the function's IAM role. |
 | Deployment | **GitHub Actions with OIDC**; Terraform applied by the account owner, not CI | See §7a. |
 | Uptime monitoring | CloudWatch alarms, an outside-in canary, a dashboard and a budget | Not covered by §5.4 (security monitoring). See §5.5. |
+
+### Compute: Lambda instead of Fargate
+
+The first implementation ran the API on ECS Fargate: two always-on tasks (2 vCPU, 4 GB each) behind an internal load balancer, in private subnets with VPC endpoints. It was replaced with Lambda because its fixed cost didn't fit the funding request ([aws-cost-estimate.md](aws-cost-estimate.md) recommends Lambda for the same reason). The Fargate Terraform is in git history at commit `351c6a9` (`infra/modules/network`, `service` and `data`) if traffic ever justifies it.
+
+| | Fargate (removed) | Lambda (now) |
+|---|---|---|
+| Cost at pilot scale | Fixed, roughly $180–230 a month as configured (tasks, load balancer, VPC endpoints) | Mostly within the free tier; fits the $350 hosting line |
+| First request after idle | Always warm | **Cold start:** loading the image and the Whisper model can take 10–30 s or more. The canary's 5-minute check keeps one instance warm, the app should retry, and `provisioned_concurrency` removes cold starts at an hourly cost. |
+| Request timeout | 30 s (API Gateway) | 30 s (same) |
+| Largest upload | 10 MB | **4 MB.** Lambda accepts a 6 MB request, and binary uploads arrive base64-encoded (a third larger). Short voice clips are well under this. |
+| Concurrency | One task serves many requests at once | One request per instance, and each new instance loads its own copy of Whisper. New AWS accounts can be limited to 10 concurrent instances in total. |
+| Network | Private subnets, VPC endpoints, no internet route | No VPC: public AWS endpoints over TLS with IAM. No inbound path except API Gateway. |
+| Deploy and rollback | ECS deployment circuit breaker rolls back automatically | Each deploy publishes a version and moves the `live` alias; if the smoke test fails, the workflow moves it back |
+| Startup | Model loaded before the task takes traffic | Model loads in a background thread (`RWC_WARMUP=background`), because Lambda allows about 10 s for startup; a request that arrives first waits for it |
+| Size ceiling | Up to 16 vCPU / 120 GB | Up to 6 vCPU / 10 GB: enough for Whisper small or medium, not large-v3 (research runs use SageMaker) |
+| Monitoring | Healthy-host, running-task, CPU and memory alarms | Errors, throttles and duration alarms (§5.5) |
 
 ## 2. Overview
 
@@ -40,15 +58,14 @@ Authoring: Postgres (backend/) ──export job──► S3 datasets bucket ─�
 **[Implemented]** The path being built first (the media bucket, CloudFront, the private tables and the export job come later):
 
 ```
-Expo app ──HTTPS──► API Gateway HTTP API (throttled) ──VPC Link──► internal ALB
-                                                                      │
-                     private subnets, 2 AZs, no internet route        ▼
-                                                     ECS Fargate (FastAPI + Whisper)
-                                                        ├─► DynamoDB rwc-<env>-content   (gateway endpoint)
-                                                        ├─► ECR, CloudWatch Logs         (interface endpoints)
-                                                        └─► S3                           (gateway endpoint, image layers)
+Expo app ──HTTPS──► API Gateway HTTP API (throttled) ──► Lambda "live" alias
+                                                         (container image: FastAPI + Whisper, Lambda Web Adapter)
+                                                            ├─► DynamoDB rwc-<env>-content   (data stack; TLS + IAM, no VPC)
+                                                            ├─► S3 learner-audio             (data stack; uploads only)
+                                                            └─► CloudWatch Logs              (JSON logs -> metric filters)
 
-Authoring: ml/translation/data/*.json ──python -m app.dynamo_load (loader role)──► rwc-<env>-content
+Authoring: ml/translation/data/*.json ──python -m app.dynamo_load (loader role, insert-only)──► rwc-<env>-content
+Corrections: reviewers ──UpdateItem (data stack's reviewer policy)──► rwc-<env>-content
 ```
 
 Regions: **ca-central-1 (Montréal)** primary, **ca-west-1 (Calgary)** replica. Both are in Canada, so DR doesn't break residency.
@@ -76,8 +93,9 @@ Maps from the Postgres tables in `backend/app/db.py`: `vocabulary_words`, `vocab
 - **Search (`?q=`):** DynamoDB can't do `ILIKE`. For ~100 words, the app should keep the lexicon in memory or offline, which suits low-connectivity users anyway. If it grows past a few thousand entries, add OpenSearch Serverless, or ship the lexicon to the device as a versioned JSON snapshot from S3.
 - **Confidence:** a missing `confidence` attribute means "no scored reference translation". Never write 0 or a default. The Postgres schema follows the same rule.
 
-**[Implemented]** in `infra/modules/data`, `backend/app/vocabulary_dynamo.py` and `backend/app/dynamo_load.py`:
-- The table is `rwc-<env>-content` (for example `rwc-dev-content`), so environments can share an account. It has on-demand capacity, PITR, deletion protection, a customer-managed KMS key, and GSI1 and GSI2 exactly as above.
+**[Implemented]** The table is defined by the data stack (`infra/dynamodb.tf`); the API reads it through `backend/app/vocabulary_dynamo.py` and the loader is `backend/app/dynamo_load.py`:
+- The table is `rwc-<env>-content` (for example `rwc-dev-content`). It has on-demand capacity, PITR, deletion protection, a customer-managed KMS key, and the two indexes above as `gsi1-category` and `gsi2-review`. The loader's `--create-table` (DynamoDB Local and tests only) creates the same indexes.
+- **Corrections and re-loads:** reviewers correct entries in place (`UpdateItem`, through the data stack's `reviewer` policy). The loader is **insert-only** by default: it adds new entries and leaves existing ones alone, so a re-load never undoes a correction. `--overwrite` replaces existing entries on purpose. Category items are always rewritten, because their word counts are derived.
 - **Only Entry `META` and `CATEGORY` items are written so far.** Translation, Media and Source child items are deferred, because the API doesn't read them yet. Their data is still in `entry_json`.
 - `entry_json` holds the full source entry as a **JSON string**, because the API returns it verbatim as `source_entry`.
 - **How the API reads:** it scans the whole table into memory and re-scans every `VOCAB_CACHE_TTL_S` (300 s). Category browsing, `?q=` search (a case-insensitive substring match, like Postgres `ILIKE`) and paging run in Python, as the search bullet above recommends for a small lexicon. If DynamoDB fails after a good load, the last copy keeps being served. If it never loaded, the API serves mock data and `/health` reports `data_source: "mock"`, which fails the canary.
@@ -137,21 +155,21 @@ Media objects are referenced by key (`media/<entry_id>/<kind>/<name>`). The `voc
 - Reviewer access (community language experts) via Cognito groups. MFA required for anyone who can change `verification_status`.
 - DynamoDB and S3 reached through **VPC gateway endpoints** from the compute layer, so traffic doesn't leave the AWS network.
 
-**[Implemented]** IAM roles in `infra/modules/iam` and `infra/modules/monitoring`:
+**[Implemented]** The data stack (`infra/iam.tf`) defines what each kind of user may do with data: the `api`, `reviewer`, `recording-deleter`, `research-uploader` and `research-reader` policies, and the append-only review log. The compute stack (`infra/modules/iam`, `infra/modules/monitoring`) creates the roles and attaches those policies unchanged:
 
 | Role | Trusted by | Can do |
 |---|---|---|
-| API task execution | `ecs-tasks.amazonaws.com` (same account only) | Pull the API image from its one ECR repo; write to the API's one log group |
-| API task (the app) | `ecs-tasks.amazonaws.com` (same account only) | **Read-only** on the lexicon table and its indexes (`GetItem`, `Query`, `Scan`); `kms:Decrypt` on the content key, only via DynamoDB |
-| Lexicon loader | People in the account explicitly granted `sts:AssumeRole` on it | `PutItem` and `BatchWriteItem` on the lexicon table; encrypt with the content key via DynamoDB |
-| GitHub deploy | GitHub OIDC, **only** jobs in the `production` environment of `alex9r/rwc-rohingya-english-app` | Push to the API's ECR repo; register task definitions; update the API service; pass only the two task roles, only to ECS |
+| API (Lambda function) | `lambda.amazonaws.com` (same account only) | The data stack's **`api` policy**, attached as is (read content, write learner progress, upload recordings). Plus an `api-supplement` policy: write its own log group; `dynamodb:Scan` on the content table only (the lexicon cache loads with one scan; the api policy has no Scan); and a **Deny** on the data keys unless DynamoDB or S3 makes the call (see below). |
+| Lexicon loader | People in the account explicitly granted `sts:AssumeRole` on it | `PutItem` on the content table (insert-only by default); encrypt with the content key, only via DynamoDB. The data stack has no role that can create content items; reviewers only update them. |
+| GitHub deploy | GitHub OIDC, **only** jobs in the `production` environment of `alex9r/rwc-rohingya-english-app` | Push to the API's ECR repo; update the function's code, publish versions and move its `live` alias. No `iam:PassRole`. |
 | Canary | `lambda.amazonaws.com` | Write its artifacts bucket and its own logs; publish metrics in the `CloudWatchSynthetics` namespace only |
 
-The only `*` resources are actions AWS doesn't allow to be scoped: `ecr:GetAuthorizationToken`, `ecs:RegisterTaskDefinition`, `ecs:DescribeTaskDefinition`, `s3:ListAllMyBuckets` (Synthetics) and `cloudwatch:PutMetricData`, which is limited by a namespace condition. Each is commented in the code.
+**Keys only through DynamoDB or S3.** The `api` policy grants `kms:Decrypt` and `kms:GenerateDataKey` on the `content`, `learner-data` and `learner-audio` keys with no condition, so the API's credentials could call KMS directly. If they leaked, someone could decrypt data protected by those keys without going through the table or bucket. The supplement adds an explicit **Deny** on those keys unless `kms:ViaService` is DynamoDB or S3 in the region. In IAM an explicit Deny always beats an Allow, so this narrows the data stack's policy without editing it. Reads and uploads still work, because those services call KMS on the API's behalf. A direct `kms:Decrypt` carries no `kms:ViaService` value, and the "not equals" test is true when the value is missing, so it's refused. The data stack's four keys and their key policies are unchanged.
+
+The only `*` resources are actions AWS doesn't allow to be scoped: `ecr:GetAuthorizationToken`, `s3:ListAllMyBuckets` (Synthetics) and `cloudwatch:PutMetricData`, which is limited by a namespace condition. Each is commented in the code.
 
 Not yet done from this section:
-- The `learner-data` and `learner-audio` keys (those tables and buckets don't exist yet).
-- Cognito reviewer access.
+- Cognito reviewer access, and a role for reviewers to assume (the `reviewer` policy exists in the data stack).
 - An MFA condition on the loader role. That depends on how the account's users are set up.
 
 ### 5.3 Consent, residency and third parties
@@ -186,15 +204,14 @@ In `infra/modules/monitoring`. Every alarm emails through an SNS topic, on both 
 |---|---|
 | API 5xx rate | More than 5% of requests return a 5xx over 5 minutes |
 | API latency | p95 above 10 s for 15 minutes. This is loose, because transcription is slow. |
-| Unhealthy tasks | Any task failing its `/health` check for 2 minutes |
-| API down | No healthy tasks (critical) |
-| Running tasks | Fewer tasks than the minimum for 5 minutes |
-| CPU / memory | Above 80% / 85% for 10 minutes |
-| Canary | The outside-in check fails twice in a row |
+| Lambda errors | More than 5 failed invocations in 5 minutes (crash, out of memory, init failure, timeout) |
+| Lambda throttles | Any request refused because the function hit its concurrency limit |
+| Lambda duration | p95 above 80% of the 30 s timeout for 15 minutes (cold starts or slow transcription) |
+| Canary | The outside-in check fails twice in a row. This is also the "API completely down" alarm. |
 | Whisper model errors | More than 5 `model_error` results in 5 minutes (a server fault, not bad audio) |
 | Transcription stub | Production served any stub transcription, meaning the image was built without Whisper |
 
-- **Canary:** a CloudWatch Synthetics canary calls the public API every 5 minutes. It checks that `/health` returns `status: ok`, `data_source: dynamodb` and `ml.transcribe: real`, and that `/api/categories` is non-empty.
+- **Canary:** a CloudWatch Synthetics canary calls the public API every 5 minutes. It checks that `/health` returns `status: ok`, `data_source: dynamodb`, `ml.transcribe: real` and `ml.pronunciation: real`, and that `/api/categories` is non-empty. Calling every 5 minutes also keeps one Lambda instance warm.
 - **App metrics:** the app writes one JSON log line per ML call (`event: ml_request`, with service, status and latency; see `backend/app/observability.py`). Log metric filters turn those lines into the `RWC/API` metrics.
 - **No learner input in logs:**
   - App logs record the route template, status and duration only, with no query strings, bodies, transcripts or translations. A test checks this.
@@ -207,9 +224,8 @@ In `infra/modules/monitoring`. Every alarm emails through an SNS topic, on both 
 
 - DynamoDB and S3 are multi-AZ by default. `rwc-content` and `rwc-progress` use **global tables** between ca-central-1 and ca-west-1, and `rwc-media` uses cross-region replication.
 - Compute runs in 2+ AZs (Lambda is inherently multi-AZ, or Fargate with 2+ tasks behind an ALB).
-  - **[Implemented]** Fargate runs at least 2 tasks, one per AZ, and autoscales to 4.
-  - ECS replaces any task that fails the ALB health check.
-  - A deploy whose new tasks never become healthy is rolled back automatically by the ECS deployment circuit breaker.
+  - **[Implemented]** Lambda, which runs across the region's AZs by itself and starts new instances as requests arrive. There are no servers to replace.
+  - A deploy whose new version fails the smoke test is rolled back by the deploy workflow, which moves the `live` alias back to the previous version.
   - The app also keeps serving its cached lexicon if DynamoDB fails.
   - **Deferred:** global tables and replication to ca-west-1. Today a regional outage means downtime until a rebuild.
 - PITR gives 35-day restore. Test a restore once before launch.
@@ -240,11 +256,11 @@ Postgres stays the authoring and development store. Whether production also need
 | Workflow | When | What |
 |---|---|---|
 | `ci.yml` | Every PR | Lint and tests for the backend and `ml/`, plus a Docker build |
-| `infra.yml` | PRs touching `infra/` | `terraform fmt`, `validate`, `tflint`, `checkov`. No AWS access. |
-| `deploy.yml` | Merge to `main` (backend or ml changes), or run by hand | After a reviewer approves in the `production` environment, it assumes the deploy role through OIDC, builds the image with Whisper baked in, pushes it to ECR, rolls it out on ECS, waits for the tasks to be healthy, and smoke-tests `/health`. It skips until the account exists. |
+| `infra.yml` | PRs touching `infra/` | `terraform fmt`, `validate` (data stack, compute stack and bootstrap), `tflint`, `checkov`. No AWS access. |
+| `deploy.yml` | Merge to `main` (backend or ml changes), or run by hand | After a reviewer approves in the `production` environment, it assumes the deploy role through OIDC, builds the image with Whisper baked in, pushes it to ECR, publishes it as a new Lambda version, moves the `live` alias to it and smoke-tests `/health`. If the smoke test fails, it moves the alias back. It skips until the account exists. |
 
 - **Terraform applies:** run by the account owner from their own machine, not by CI. A CI role that can apply would need near-admin rights.
-- **First apply:** the bootstrap root creates the state bucket and the GitHub OIDC provider, and the environment starts with zero tasks until the first image exists. The full steps are in `infra/README.md`.
+- **Apply order:** bootstrap (state bucket, GitHub OIDC), then the data stack, then the compute stack. The function can't be created before an image exists, so the first compute apply creates only ECR and the roles, the Deploy workflow pushes the image, and a second apply creates the function. The full steps are in `infra/README.md`.
 
 ## 8. Open questions for the team
 
@@ -260,7 +276,9 @@ Added with the Terraform implementation:
 7. **Whose AWS account** do we deploy to, and who holds admin access to it?
 8. **The API is open** to anyone with the URL until learner sign-in exists (Q2); only API Gateway throttling protects it. HTTP APIs can't attach AWS WAF, so per-IP rate limits would need CloudFront in front or a switch to a REST API.
 9. **No custom domain.** The app uses the default `execute-api` URL, which changes if the API is ever recreated.
-10. **TLS ends at API Gateway.** Traffic from the VPC Link to the ALB to the tasks is plain HTTP inside the private VPC. Is that acceptable, or do we need end-to-end TLS?
-11. **Lexicon sync:** who re-runs the loader when reviewers change the data, and should that become automatic (the export job in §7 step 2)?
-12. **Logs** use AWS-managed encryption and 30-day retention, and VPC flow logs and ALB access logs are off to save cost. Acceptable for launch?
+10. **No VPC for the function.** It reaches DynamoDB, S3 and CloudWatch on public AWS endpoints over TLS with IAM, instead of §5.2's VPC gateway endpoints. Acceptable, given the cost of NAT or interface endpoints? (With Lambda there's no plain-HTTP hop: API Gateway invokes the function through AWS's own API.)
+11. **Lexicon sync:** reviewers now correct content in DynamoDB, and the loader only adds new entries. Who applies accepted corrections from the Postgres review workflow (`reviewer_corrections`) to DynamoDB, and with what tool?
+12. **Logs** use AWS-managed encryption and 30-day retention. Acceptable for launch?
 13. **When do we build `rwc-progress`**, now that the content side exists?
+14. **Cold starts:** is an occasional slow first request acceptable for the pilot, or do we pay for `provisioned_concurrency = 1` (always one warm instance)?
+15. **Account concurrency limit:** new AWS accounts can be capped at 10 concurrent Lambda instances. Request an increase before the pilot if the account is new.
