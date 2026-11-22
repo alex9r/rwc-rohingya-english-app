@@ -1,7 +1,14 @@
 # One role per job, scoped to specific resource ARNs (docs/aws-architecture.md §5.2).
 # The only "*" resources are actions AWS doesn't allow to be scoped; each is marked.
+#
+# What the API may do with data is decided by the data stack (infra/iam.tf, the
+# rwc-<env>-api policy). This module attaches that policy unchanged and adds only:
+#   - dynamodb:Scan on the content table (the API's lexicon cache reads it in one scan)
+#   - a Deny that limits the data keys to use through DynamoDB or S3 (kms:ViaService)
 
 terraform {
+  required_version = ">= 1.6"
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -18,24 +25,33 @@ variable "region" {
   type = string
 }
 
+variable "function_name" {
+  description = "The API's Lambda function. ARNs are built from it so the roles can exist before the function does (first deploy)."
+  type        = string
+}
+
 variable "ecr_repository_arn" {
   type = string
 }
 
-variable "log_group_arn" {
-  type = string
+variable "api_policy_arn" {
+  description = "The data stack's rwc-<env>-api policy (infra/iam.tf), attached as is."
+  type        = string
 }
 
-variable "table_arn" {
-  type = string
+variable "content_table_arn" {
+  description = "The data stack's content table."
+  type        = string
 }
 
-variable "kms_key_arn" {
-  type = string
+variable "content_key_arn" {
+  description = "The data stack's content KMS key (encrypts the content table)."
+  type        = string
 }
 
-variable "ecs_service_arn" {
-  type = string
+variable "data_key_arns" {
+  description = "Every data-stack key the api policy grants (content, learner-data, learner-audio). The ViaService Deny covers these."
+  type        = list(string)
 }
 
 variable "github_oidc_provider_arn" {
@@ -63,20 +79,24 @@ data "aws_caller_identity" "current" {}
 data "aws_partition" "current" {}
 
 locals {
-  account_id = data.aws_caller_identity.current.account_id
-  partition  = data.aws_partition.current.partition
+  account_id    = data.aws_caller_identity.current.account_id
+  partition     = data.aws_partition.current.partition
+  function_arn  = "arn:${local.partition}:lambda:${var.region}:${local.account_id}:function:${var.function_name}"
+  log_group_arn = "arn:${local.partition}:logs:${var.region}:${local.account_id}:log-group:/aws/lambda/${var.function_name}"
 
-  # KMS use only through DynamoDB, never directly.
   via_dynamodb = "dynamodb.${var.region}.amazonaws.com"
+  via_s3       = "s3.${var.region}.amazonaws.com"
 }
 
-data "aws_iam_policy_document" "ecs_tasks_trust" {
+# ------------------------------------------------ the API's Lambda function
+
+data "aws_iam_policy_document" "lambda_trust" {
   statement {
     actions = ["sts:AssumeRole"]
 
     principals {
       type        = "Service"
-      identifiers = ["ecs-tasks.amazonaws.com"]
+      identifiers = ["lambda.amazonaws.com"]
     }
 
     condition {
@@ -87,74 +107,63 @@ data "aws_iam_policy_document" "ecs_tasks_trust" {
   }
 }
 
-# ----------------------------------------- task execution: start the container
-
-resource "aws_iam_role" "execution" {
-  name               = "${var.name}-api-execution"
-  assume_role_policy = data.aws_iam_policy_document.ecs_tasks_trust.json
+resource "aws_iam_role" "api" {
+  name               = "${var.name}-api"
+  assume_role_policy = data.aws_iam_policy_document.lambda_trust.json
 }
 
-data "aws_iam_policy_document" "execution" {
-  statement {
-    sid       = "EcrLogin"
-    actions   = ["ecr:GetAuthorizationToken"]
-    resources = ["*"] # GetAuthorizationToken can't be scoped to a resource.
-  }
+# The data stack's decision about what the API may touch (content read, learner
+# progress, recording uploads), unchanged.
+resource "aws_iam_role_policy_attachment" "api_data" {
+  role       = aws_iam_role.api.name
+  policy_arn = var.api_policy_arn
+}
 
+data "aws_iam_policy_document" "api_supplement" {
   statement {
-    sid       = "PullApiImage"
-    actions   = ["ecr:BatchCheckLayerAvailability", "ecr:BatchGetImage", "ecr:GetDownloadUrlForLayer"]
-    resources = [var.ecr_repository_arn]
-  }
-
-  statement {
-    sid       = "WriteApiLogs"
+    sid       = "WriteOwnLogs"
     actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
-    resources = ["${var.log_group_arn}:*"]
-  }
-}
-
-resource "aws_iam_role_policy" "execution" {
-  name   = "execution"
-  role   = aws_iam_role.execution.id
-  policy = data.aws_iam_policy_document.execution.json
-}
-
-# ------------------------------------------------- task: what the app can do
-
-resource "aws_iam_role" "task" {
-  name               = "${var.name}-api-task"
-  assume_role_policy = data.aws_iam_policy_document.ecs_tasks_trust.json
-}
-
-# Read-only: the API never writes the lexicon.
-data "aws_iam_policy_document" "task" {
-  statement {
-    sid       = "ReadLexicon"
-    actions   = ["dynamodb:GetItem", "dynamodb:Query", "dynamodb:Scan"]
-    resources = [var.table_arn, "${var.table_arn}/index/*"]
+    resources = ["${local.log_group_arn}:*"]
   }
 
+  # app.vocabulary_dynamo loads the whole lexicon (~100 entries) with one Scan and
+  # caches it. The api policy above allows GetItem/Query/BatchGetItem but not Scan.
+  # The content is public, and the API can already read every item, so Scan exposes
+  # nothing new; it's limited to the content table (not progress or the review log).
   statement {
-    sid       = "DecryptLexicon"
-    actions   = ["kms:Decrypt", "kms:DescribeKey"]
-    resources = [var.kms_key_arn]
+    sid       = "ScanContent"
+    actions   = ["dynamodb:Scan"]
+    resources = [var.content_table_arn]
+  }
+
+  # The api policy grants kms:Decrypt/GenerateDataKey on the data keys with no
+  # condition, so the API's credentials could call KMS directly. This Deny allows key
+  # use only when DynamoDB or S3 makes the call on the API's behalf. An explicit Deny
+  # overrides the Allow without editing the data stack. A direct call carries no
+  # kms:ViaService, and StringNotEquals is true for a missing key, so it is denied.
+  statement {
+    sid       = "DataKeysOnlyViaDynamoDbOrS3"
+    effect    = "Deny"
+    actions   = ["kms:Decrypt", "kms:GenerateDataKey*"]
+    resources = var.data_key_arns
 
     condition {
-      test     = "StringEquals"
+      test     = "StringNotEquals"
       variable = "kms:ViaService"
-      values   = [local.via_dynamodb]
+      values   = [local.via_dynamodb, local.via_s3]
     }
   }
 }
 
-resource "aws_iam_role_policy" "task" {
-  name   = "read-lexicon"
-  role   = aws_iam_role.task.id
-  policy = data.aws_iam_policy_document.task.json
+resource "aws_iam_role_policy" "api_supplement" {
+  name   = "api-supplement"
+  role   = aws_iam_role.api.id
+  policy = data.aws_iam_policy_document.api_supplement.json
 }
 
 # --------------------------------- loader: python -m app.dynamo_load, by a person
+# The data stack has no role that can create content items (reviewers can only update
+# existing ones), so the initial load and new dataset entries go through this role.
 
 data "aws_iam_policy_document" "loader_trust" {
   statement {
@@ -177,16 +186,18 @@ resource "aws_iam_role" "loader" {
 }
 
 data "aws_iam_policy_document" "loader" {
+  # PutItem only: the loader writes one item at a time, insert-only by default so it
+  # never overwrites a reviewer's correction (--overwrite is a deliberate choice).
   statement {
     sid       = "WriteLexicon"
-    actions   = ["dynamodb:BatchWriteItem", "dynamodb:PutItem"]
-    resources = [var.table_arn]
+    actions   = ["dynamodb:PutItem"]
+    resources = [var.content_table_arn]
   }
 
   statement {
     sid       = "EncryptLexicon"
     actions   = ["kms:Decrypt", "kms:DescribeKey", "kms:Encrypt", "kms:GenerateDataKey"]
-    resources = [var.kms_key_arn]
+    resources = [var.content_key_arn]
 
     condition {
       test     = "StringEquals"
@@ -240,12 +251,15 @@ data "aws_iam_policy_document" "github_deploy" {
     resources = ["*"] # Can't be scoped to a resource.
   }
 
+  # Push, plus the two read actions Lambda checks on the caller when the function's
+  # code is pointed at a new image.
   statement {
     sid = "PushApiImage"
     actions = [
       "ecr:BatchCheckLayerAvailability",
       "ecr:BatchGetImage",
       "ecr:CompleteLayerUpload",
+      "ecr:GetDownloadUrlForLayer",
       "ecr:InitiateLayerUpload",
       "ecr:PutImage",
       "ecr:UploadLayerPart",
@@ -253,28 +267,19 @@ data "aws_iam_policy_document" "github_deploy" {
     resources = [var.ecr_repository_arn]
   }
 
+  # New image -> new published version -> move the "live" alias (and back, on a
+  # failed smoke test). No iam:PassRole: updating code doesn't change the role.
   statement {
-    sid       = "TaskDefinitions"
-    actions   = ["ecs:DescribeTaskDefinition", "ecs:RegisterTaskDefinition"]
-    resources = ["*"] # Neither action supports resource-level permissions.
-  }
-
-  statement {
-    sid       = "DeployApiService"
-    actions   = ["ecs:DescribeServices", "ecs:UpdateService"]
-    resources = [var.ecs_service_arn]
-  }
-
-  statement {
-    sid       = "PassTaskRoles"
-    actions   = ["iam:PassRole"]
-    resources = [aws_iam_role.execution.arn, aws_iam_role.task.arn]
-
-    condition {
-      test     = "StringEquals"
-      variable = "iam:PassedToService"
-      values   = ["ecs-tasks.amazonaws.com"]
-    }
+    sid = "DeployApiFunction"
+    actions = [
+      "lambda:GetAlias",
+      "lambda:GetFunction",
+      "lambda:GetFunctionConfiguration",
+      "lambda:PublishVersion",
+      "lambda:UpdateAlias",
+      "lambda:UpdateFunctionCode",
+    ]
+    resources = [local.function_arn, "${local.function_arn}:*"]
   }
 }
 
@@ -284,12 +289,8 @@ resource "aws_iam_role_policy" "github_deploy" {
   policy = data.aws_iam_policy_document.github_deploy.json
 }
 
-output "execution_role_arn" {
-  value = aws_iam_role.execution.arn
-}
-
-output "task_role_arn" {
-  value = aws_iam_role.task.arn
+output "api_role_arn" {
+  value = aws_iam_role.api.arn
 }
 
 output "loader_role_arn" {
