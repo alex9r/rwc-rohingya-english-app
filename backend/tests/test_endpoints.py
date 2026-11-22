@@ -35,6 +35,55 @@ def test_categories_and_word(client):
     assert client.get("/api/words/nope").status_code == 404
 
 
+# --------------------------------------------------------------- warmup
+
+
+def test_warmup_sync_loads_before_returning(monkeypatch):
+    calls = []
+    monkeypatch.setattr(ml_adapters, "_warmup", lambda: calls.append("loaded"))
+    assert ml_adapters.warmup("sync") is None
+    assert calls == ["loaded"]
+
+
+def test_warmup_background_does_not_block(monkeypatch):
+    import threading
+
+    release = threading.Event()
+    calls = []
+
+    def slow_load():
+        release.wait(5)  # a model load that hasn't finished yet
+        calls.append("loaded")
+
+    monkeypatch.setattr(ml_adapters, "_warmup", slow_load)
+    thread = ml_adapters.warmup("background")
+    assert thread is not None and calls == []  # returned while the load is still running
+    release.set()
+    thread.join(5)
+    assert calls == ["loaded"]
+
+
+def test_warmup_off_and_env_default(monkeypatch):
+    calls = []
+    monkeypatch.setattr(ml_adapters, "_warmup", lambda: calls.append("loaded"))
+    ml_adapters.warmup("off")
+    assert calls == []
+    monkeypatch.setenv("RWC_WARMUP", "off")
+    ml_adapters.warmup()
+    assert calls == []
+    monkeypatch.setenv("RWC_WARMUP", "nonsense")  # unknown falls back to sync
+    ml_adapters.warmup()
+    assert calls == ["loaded"]
+
+
+def test_warmup_failure_is_logged_not_raised(monkeypatch):
+    def broken():
+        raise RuntimeError("no model")
+
+    monkeypatch.setattr(ml_adapters, "_warmup", broken)
+    ml_adapters.warmup("sync")  # must not raise: the first request loads instead
+
+
 # ------------------------------------------------------------ transcribe
 
 

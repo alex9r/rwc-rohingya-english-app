@@ -47,17 +47,69 @@ def _entries(table):
 
 
 def test_loader_writes_entries_and_categories(dynamo):
-    assert dynamo_load.load([GREETINGS], dynamo) == 40
+    result = dynamo_load.load([GREETINGS], dynamo)
+    assert (result.written, result.skipped) == (40, 0)
     items = dynamo.scan()["Items"]
     assert len(_entries(dynamo)) == 40
     categories = [i for i in items if i["pk"].startswith("CATEGORY#")]
     assert categories and sum(int(c["word_count"]) for c in categories) == 40
+    assert result.categories == len(categories)
 
 
 def test_loader_is_idempotent(dynamo):
     dynamo_load.load([GREETINGS], dynamo)
-    dynamo_load.load([GREETINGS], dynamo)
+    second = dynamo_load.load([GREETINGS], dynamo)
+    assert (second.written, second.skipped) == (0, 40)
     assert len(_entries(dynamo)) == 40
+
+
+def _correct(table, word_id, text):
+    """What a reviewer does with the data stack's reviewer policy: UpdateItem."""
+    table.update_item(
+        Key={"pk": f"ENTRY#{word_id}", "sk": "META"},
+        UpdateExpression="SET rohingya_text = :t, verification_status = :s",
+        ExpressionAttributeValues={":t": text, ":s": "verified"},
+    )
+
+
+def test_reload_keeps_reviewer_corrections(dynamo):
+    dynamo_load.load([GREETINGS], dynamo)
+    word_id = _entries(dynamo)[0]["id"]
+    _correct(dynamo, word_id, "corrected by a reviewer")
+    dynamo_load.load([GREETINGS], dynamo)
+    item = dynamo.get_item(Key={"pk": f"ENTRY#{word_id}", "sk": "META"})["Item"]
+    assert item["rohingya_text"] == "corrected by a reviewer"
+    assert item["verification_status"] == "verified"
+
+
+def test_overwrite_replaces_corrections(dynamo):
+    dynamo_load.load([GREETINGS], dynamo)
+    word_id = _entries(dynamo)[0]["id"]
+    _correct(dynamo, word_id, "corrected by a reviewer")
+    result = dynamo_load.load([GREETINGS], dynamo, overwrite=True)
+    assert result.written == 40 and result.skipped == 0
+    item = dynamo.get_item(Key={"pk": f"ENTRY#{word_id}", "sk": "META"})["Item"]
+    assert item["rohingya_text"] != "corrected by a reviewer"
+
+
+def test_category_counts_refresh_on_reload(dynamo):
+    dynamo_load.load([GREETINGS], dynamo)
+    category = next(i for i in dynamo.scan()["Items"] if i["pk"].startswith("CATEGORY#"))
+    dynamo.update_item(
+        Key={"pk": category["pk"], "sk": "META"},
+        UpdateExpression="SET word_count = :n",
+        ExpressionAttributeValues={":n": 999},
+    )
+    dynamo_load.load([GREETINGS], dynamo)
+    refreshed = dynamo.get_item(Key={"pk": category["pk"], "sk": "META"})["Item"]
+    assert refreshed["word_count"] == category["word_count"]
+
+
+def test_local_table_matches_the_data_stack_indexes(dynamo):
+    """Index names and projections as in infra/dynamodb.tf (the data stack)."""
+    indexes = {i["IndexName"]: i["Projection"]["ProjectionType"]
+               for i in dynamo.global_secondary_indexes}
+    assert indexes == {"gsi1-category": "ALL", "gsi2-review": "KEYS_ONLY"}
 
 
 def test_loader_omits_missing_confidence():

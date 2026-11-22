@@ -45,6 +45,27 @@ def test_unsafe_incoming_request_id_is_replaced(client):
     assert "\n" not in r.headers["x-request-id"]
 
 
+def _lambda_context(request_id):
+    """The header the Lambda Web Adapter adds: API Gateway's requestContext as JSON."""
+    return {"x-amzn-request-context": json.dumps({"requestId": request_id, "stage": "$default"})}
+
+
+def test_api_gateway_request_id_is_used_on_lambda(client):
+    r = client.get("/health", headers=_lambda_context("Jbc0VjQKoAMEbBQ="))
+    assert r.headers["x-request-id"] == "Jbc0VjQKoAMEbBQ="
+
+
+def test_explicit_request_id_wins_over_lambda_context(client):
+    headers = {"X-Request-ID": "trace-123", **_lambda_context("Jbc0VjQKoAMEbBQ=")}
+    assert client.get("/health", headers=headers).headers["x-request-id"] == "trace-123"
+
+
+@pytest.mark.parametrize("context", ["not json", "[1, 2]", json.dumps({"requestId": "a b\nc"})])
+def test_bad_lambda_context_gets_a_fresh_id(client, context):
+    r = client.get("/health", headers={"x-amzn-request-context": context})
+    assert len(r.headers["x-request-id"]) == 32  # a new uuid, nothing from the header
+
+
 def test_access_log_line_uses_route_template_and_request_id(client, json_logs):
     r = client.get("/api/words/word_001?q=secret-search")
     access = [line for line in json_logs() if line.get("event") == "request"]
