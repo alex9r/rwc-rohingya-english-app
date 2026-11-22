@@ -1,0 +1,1381 @@
+{
+  "dataset": "Rohingya Greetings Lexicon",
+  "schema_version": "draft-1",
+  "entry_count": 40,
+  "source_priority": "https://www.rohingyalanguage.com/download",
+  "notes": [
+    "All 40 English example sentences have been added.",
+    "Existing Rohingya example sentences are marked (not verified); new entries with no verified Rohingya example use null and pending_translation.",
+    "Some examples are reproduced/adapted from learning resources; other Rohingya sentences are AI drafts and may be incorrect.",
+    "The Rohingya Language Foundation dictionary is the priority for headwords; supplementary learning sites were used for attested sentences.",
+    "Do not treat these examples as validated training or evaluation gold data before native-speaker review.",
+    "2026-10-28 expansion: entries greeting_031–040 are dictionary-attested English–Rohingya pairs, not independently native-speaker-verified translations.",
+    "Existing missing headwords for Goodbye, No, Okay, Nice, and Well were filled from published dictionaries / learning resources; Greet is still pending a direct credible source.",
+    "New English example sentences are content drafts; new Rohingya example_sentence.rohingya values remain null pending translation and native-speaker review.",
+    "Source-attested and dictionary-attested mean published in a named reference, not gold-standard verified for language-model training or user-facing high-stakes translation."
+  ],
+  "entries": [
+    {
+      "id": "greeting_001",
+      "rohingya_text": "sólam",
+      "english_meaning": {
+        "word": "Hello",
+        "definition": "A greeting used when meeting someone.",
+        "explanation": "Beginner vocabulary for greetings and introductions: hello."
+      },
+      "part_of_speech": "Interjection",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/Dic-A2Z",
+        "lookup_term": "Hello",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "Hello! How are you?",
+        "rohingya": "Salaam alaikum! Bala aso ne? (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "adapted_from_source",
+        "example_source_url": "https://learnrohingya.com/lessons/lesson-01/",
+        "review_note": "Rohingya sentence is unverified; AI-drafted entries may have grammatical or dialect errors. Source-attested means published, not native-reviewed."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [
+          "hélou",
+          "assolamu aláikum"
+        ],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_002",
+      "rohingya_text": "Khoda hafiz",
+      "english_meaning": {
+        "word": "Goodbye",
+        "definition": "A farewell when leaving someone.",
+        "explanation": "Beginner vocabulary for greetings and introductions: goodbye."
+      },
+      "part_of_speech": "Interjection",
+      "source_reference": {
+        "title": "Rohingya.co — Learn Rohingya: Greetings",
+        "url": "https://rohingya.co/education",
+        "lookup_term": "Goodbye",
+        "evidence": "published_learning_resource"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "Goodbye! See you again.",
+        "rohingya": "Abar deha oibo! (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "source_attested_partial",
+        "example_source_url": "https://learnrohingya.com/lessons/lesson-01/",
+        "review_note": "Goodbye/Khoda hafiz is directly paired in the published greetings table; spelling is copied from that source. The example sentence remains separately unverified and must not be treated as reviewed translation data."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "source_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_003",
+      "rohingya_text": "mórhaba",
+      "english_meaning": {
+        "word": "Welcome",
+        "definition": "A greeting to receive a visitor.",
+        "explanation": "Beginner vocabulary for greetings and introductions: welcome."
+      },
+      "part_of_speech": "Interjection / Verb",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/Dic-A2Z",
+        "lookup_term": "Welcome",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "Welcome to our home.",
+        "rohingya": "Mórhaba, añár gór ot. (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "ai_draft",
+        "example_source_url": null,
+        "review_note": "Rohingya sentence is unverified; AI-drafted entries may have grammatical or dialect errors. Source-attested means published, not native-reviewed."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [
+          "súagot",
+          "estekbal"
+        ],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_004",
+      "rohingya_text": "cúkuria",
+      "english_meaning": {
+        "word": "Thanks",
+        "definition": "An expression of gratitude.",
+        "explanation": "Beginner vocabulary for greetings and introductions: thanks."
+      },
+      "part_of_speech": "Interjection",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/Dic-A2Z",
+        "lookup_term": "Thanks",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "Thank you for your help.",
+        "rohingya": "Tuáñr modotor la cúkuria. (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "ai_draft",
+        "example_source_url": null,
+        "review_note": "Rohingya sentence is unverified; AI-drafted entries may have grammatical or dialect errors. Source-attested means published, not native-reviewed."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_005",
+      "rohingya_text": "meérbanigorí",
+      "english_meaning": {
+        "word": "Please",
+        "definition": "A polite word used when making a request.",
+        "explanation": "Beginner vocabulary for greetings and introductions: please."
+      },
+      "part_of_speech": "Politeness marker",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/Dic-A2Z",
+        "lookup_term": "Please",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "Please speak slowly.",
+        "rohingya": "Aste khota hoo. (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "source_attested",
+        "example_source_url": "https://rohingya.co/education",
+        "review_note": "Rohingya sentence is unverified; AI-drafted entries may have grammatical or dialect errors. Source-attested means published, not native-reviewed."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_006",
+      "rohingya_text": "afsús",
+      "english_meaning": {
+        "word": "Sorry",
+        "definition": "An apology or expression of regret.",
+        "explanation": "Beginner vocabulary for greetings and introductions: sorry."
+      },
+      "part_of_speech": "Interjection / Adjective",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/Dic-A2Z",
+        "lookup_term": "Sorry",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "I am sorry.",
+        "rohingya": "Añi afsús gorí. (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "ai_draft",
+        "example_source_url": null,
+        "review_note": "Rohingya sentence is unverified; AI-drafted entries may have grammatical or dialect errors. Source-attested means published, not native-reviewed."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_007",
+      "rohingya_text": "ói",
+      "english_meaning": {
+        "word": "Yes",
+        "definition": "An affirmative response.",
+        "explanation": "Beginner vocabulary for greetings and introductions: yes."
+      },
+      "part_of_speech": "Interjection",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/Dic-A2Z",
+        "lookup_term": "Yes",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "Yes, I am fine.",
+        "rohingya": "Oi, ãi bala asi. (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "source_attested",
+        "example_source_url": "https://learnrohingya.com/lessons/lesson-01/",
+        "review_note": "Rohingya sentence is unverified; AI-drafted entries may have grammatical or dialect errors. Source-attested means published, not native-reviewed."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [
+          "óo",
+          "háñsa"
+        ],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_008",
+      "rohingya_text": "noó",
+      "english_meaning": {
+        "word": "No",
+        "definition": "A negative response.",
+        "explanation": "Beginner vocabulary for greetings and introductions: no."
+      },
+      "part_of_speech": "Interjection",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/wp-content/uploads/2017/12/English-Rohingya-28-Dec-2017.pdf#page=81",
+        "lookup_term": "No",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "No, I am not fine.",
+        "rohingya": "Ãi bala nai. (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "source_attested_partial",
+        "example_source_url": "https://learnrohingya.com/lessons/lesson-01/",
+        "review_note": "The dictionary directly lists noó as a translation of No; this does not imply every negative construction uses noó. The example sentence remains separately unverified and must not be treated as reviewed translation data."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_009",
+      "rohingya_text": "aiccá",
+      "english_meaning": {
+        "word": "Okay",
+        "definition": "An expression of agreement or acceptance.",
+        "explanation": "Beginner vocabulary for greetings and introductions: okay."
+      },
+      "part_of_speech": "Interjection",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — Rohingya-to-English Dictionary",
+        "url": "https://rohingyalanguage.com/wp-content/uploads/2018/06/Rohingya-to-English-Dictionary5000plus-words-A2-v6.00-scrap-05.pdf#page=3",
+        "lookup_term": "aiccá",
+        "evidence": "reverse_dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "Okay, I understand.",
+        "rohingya": "Aiccá, añi buzí. (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "ai_draft",
+        "example_source_url": null,
+        "review_note": "Reverse dictionary directly glosses aiccá as ok/fine/that is ok/that is good. The example sentence remains separately unverified and must not be treated as reviewed translation data."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_010",
+      "rohingya_text": "gom",
+      "english_meaning": {
+        "word": "Good",
+        "definition": "Positive or satisfactory.",
+        "explanation": "Beginner vocabulary for greetings and introductions: good."
+      },
+      "part_of_speech": "Adjective",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/Dic-A2Z",
+        "lookup_term": "Good",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "I am good today.",
+        "rohingya": "Añi aijja gom asi. (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "ai_draft",
+        "example_source_url": null,
+        "review_note": "Rohingya sentence is unverified; AI-drafted entries may have grammatical or dialect errors. Source-attested means published, not native-reviewed."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [
+          "bála",
+          "aiccá"
+        ],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_011",
+      "rohingya_text": "gom",
+      "english_meaning": {
+        "word": "Fine",
+        "definition": "In a satisfactory condition, especially in response to a greeting.",
+        "explanation": "Beginner vocabulary for greetings and introductions: fine."
+      },
+      "part_of_speech": "Adjective",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/Dic-A2Z",
+        "lookup_term": "Fine",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "I am fine.",
+        "rohingya": "Ãi bala asi. (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "source_attested",
+        "example_source_url": "https://learnrohingya.com/lessons/lesson-01/",
+        "review_note": "Rohingya sentence is unverified; AI-drafted entries may have grammatical or dialect errors. Source-attested means published, not native-reviewed."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [
+          "thík",
+          "bála"
+        ],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_012",
+      "rohingya_text": "kúci",
+      "english_meaning": {
+        "word": "Happy",
+        "definition": "Feeling joy or pleasure.",
+        "explanation": "Beginner vocabulary for greetings and introductions: happy."
+      },
+      "part_of_speech": "Adjective",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/Dic-A2Z",
+        "lookup_term": "Happy",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "I am happy today.",
+        "rohingya": "Añi aijja kúci asi. (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "ai_draft",
+        "example_source_url": null,
+        "review_note": "Rohingya sentence is unverified; AI-drafted entries may have grammatical or dialect errors. Source-attested means published, not native-reviewed."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [
+          "húci",
+          "anondo"
+        ],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_013",
+      "rohingya_text": "cúndor",
+      "english_meaning": {
+        "word": "Nice",
+        "definition": "Pleasant, kind, or agreeable.",
+        "explanation": "Beginner vocabulary for greetings and introductions: nice."
+      },
+      "part_of_speech": "Adjective",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/wp-content/uploads/2017/12/English-Rohingya-28-Dec-2017.pdf#page=81",
+        "lookup_term": "Nice",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "It is nice to meet you.",
+        "rohingya": "Tuáñr loge mulakot gorí kúci oilam. (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "ai_draft",
+        "example_source_url": null,
+        "review_note": "The dictionary lists cúndor as an adjectival equivalent of nice. The example sentence remains separately unverified and must not be treated as reviewed translation data."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_014",
+      "rohingya_text": "bála",
+      "english_meaning": {
+        "word": "Well",
+        "definition": "In a satisfactory manner or state.",
+        "explanation": "Beginner vocabulary for greetings and introductions: well."
+      },
+      "part_of_speech": "Adverb",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/wp-content/uploads/2017/12/English-Rohingya-28-Dec-2017.pdf#page=133",
+        "lookup_term": "Well (good/healthy sense)",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "I am doing well.",
+        "rohingya": "Ãi bala gorir. (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "source_attested",
+        "example_source_url": "https://learnrohingya.com/lessons/lesson-01/",
+        "review_note": "The Foundation dictionary lists bála under Well, and Learn Rohingya Lesson 1 separately glosses bala as good/well in greetings. This entry is limited to feeling/being well, not a water well. The example sentence remains separately unverified and must not be treated as reviewed translation data."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_015",
+      "rohingya_text": "nam",
+      "english_meaning": {
+        "word": "Name",
+        "definition": "The word by which a person is known.",
+        "explanation": "Beginner vocabulary for greetings and introductions: name."
+      },
+      "part_of_speech": "Noun",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/Dic-A2Z",
+        "lookup_term": "Name",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "What is your name?",
+        "rohingya": "Tuañr nam ki? (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "source_attested",
+        "example_source_url": "https://rohingya.co/education",
+        "review_note": "Rohingya sentence is unverified; AI-drafted entries may have grammatical or dialect errors. Source-attested means published, not native-reviewed."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_016",
+      "rohingya_text": "dustó",
+      "english_meaning": {
+        "word": "Friend",
+        "definition": "A person with whom one has a bond of friendship.",
+        "explanation": "Beginner vocabulary for greetings and introductions: friend."
+      },
+      "part_of_speech": "Noun",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/Dic-A2Z",
+        "lookup_term": "Friend",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "My friend is here.",
+        "rohingya": "Añár dustó iyánot ase. (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "ai_draft",
+        "example_source_url": null,
+        "review_note": "Rohingya sentence is unverified; AI-drafted entries may have grammatical or dialect errors. Source-attested means published, not native-reviewed."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [
+          "bondú",
+          "frén"
+        ],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_017",
+      "rohingya_text": "fémli",
+      "english_meaning": {
+        "word": "Family",
+        "definition": "People related by kinship or close household ties.",
+        "explanation": "Beginner vocabulary for greetings and introductions: family."
+      },
+      "part_of_speech": "Noun",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/Dic-A2Z",
+        "lookup_term": "Family",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "How is your family?",
+        "rohingya": "Tũwar góror manuš ken ase? (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "source_attested",
+        "example_source_url": "https://learnrohingya.com/lessons/lesson-01/",
+        "review_note": "Rohingya sentence is unverified; AI-drafted entries may have grammatical or dialect errors. Source-attested means published, not native-reviewed."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [
+          "guccí",
+          "górguccí"
+        ],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_018",
+      "rohingya_text": "meéman",
+      "english_meaning": {
+        "word": "Guest",
+        "definition": "A person invited or welcomed to visit.",
+        "explanation": "Beginner vocabulary for greetings and introductions: guest."
+      },
+      "part_of_speech": "Noun",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/Dic-A2Z",
+        "lookup_term": "Guest",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "Our guest is here.",
+        "rohingya": "Añárar meéman iyánot ase. (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "ai_draft",
+        "example_source_url": null,
+        "review_note": "Rohingya sentence is unverified; AI-drafted entries may have grammatical or dialect errors. Source-attested means published, not native-reviewed."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [
+          "gorba"
+        ],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_019",
+      "rohingya_text": "mulakot goré",
+      "english_meaning": {
+        "word": "Meet",
+        "definition": "To encounter or come together with someone.",
+        "explanation": "Beginner vocabulary for greetings and introductions: meet."
+      },
+      "part_of_speech": "Verb",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/Dic-A2Z",
+        "lookup_term": "Meet",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "I want to meet you.",
+        "rohingya": "Añi tuáñr loge mulakot goríto sai. (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "ai_draft",
+        "example_source_url": null,
+        "review_note": "Rohingya sentence is unverified; AI-drafted entries may have grammatical or dialect errors. Source-attested means published, not native-reviewed."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [
+          "dola ó",
+          "mile"
+        ],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_020",
+      "rohingya_text": null,
+      "english_meaning": {
+        "word": "Greet",
+        "definition": "To acknowledge someone with a greeting.",
+        "explanation": "Beginner vocabulary for greetings and introductions: greet."
+      },
+      "part_of_speech": "Verb",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/Dic-A2Z",
+        "lookup_term": "Greet",
+        "evidence": "not_yet_confirmed"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "I greet my friend.",
+        "rohingya": "Añi añár dustóre sólam di. (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "ai_draft",
+        "example_source_url": null,
+        "review_note": "Rohingya sentence is unverified; AI-drafted entries may have grammatical or dialect errors. Source-attested means published, not native-reviewed."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "translation_pending_source_verification"
+    },
+    {
+      "id": "greeting_021",
+      "rohingya_text": "sinno do",
+      "english_meaning": {
+        "word": "Introduce",
+        "definition": "To present someone or oneself to another person.",
+        "explanation": "Beginner vocabulary for greetings and introductions: introduce."
+      },
+      "part_of_speech": "Verb",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/Dic-A2Z",
+        "lookup_term": "Introduce",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "Let me introduce myself.",
+        "rohingya": "Añi nizore sinno di. (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "ai_draft",
+        "example_source_url": null,
+        "review_note": "Rohingya sentence is unverified; AI-drafted entries may have grammatical or dialect errors. Source-attested means published, not native-reviewed."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [
+          "foriso do"
+        ],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_022",
+      "rohingya_text": "cúkuria gor",
+      "english_meaning": {
+        "word": "Thank",
+        "definition": "To express gratitude to someone.",
+        "explanation": "Beginner vocabulary for greetings and introductions: thank."
+      },
+      "part_of_speech": "Verb",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/Dic-A2Z",
+        "lookup_term": "Thank",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "I thank my friend.",
+        "rohingya": "Añi añár dustóre cúkuria gorí. (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "ai_draft",
+        "example_source_url": null,
+        "review_note": "Rohingya sentence is unverified; AI-drafted entries may have grammatical or dialect errors. Source-attested means published, not native-reviewed."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_023",
+      "rohingya_text": "modotgor",
+      "english_meaning": {
+        "word": "Help",
+        "definition": "To assist someone.",
+        "explanation": "Beginner vocabulary for greetings and introductions: help."
+      },
+      "part_of_speech": "Verb",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/Dic-A2Z",
+        "lookup_term": "Help",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "Please help me.",
+        "rohingya": "Meérbani gori añáre modot goró. (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "ai_draft",
+        "example_source_url": null,
+        "review_note": "Rohingya sentence is unverified; AI-drafted entries may have grammatical or dialect errors. Source-attested means published, not native-reviewed."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [
+          "modotde"
+        ],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_024",
+      "rohingya_text": "hotáhoó",
+      "english_meaning": {
+        "word": "Speak",
+        "definition": "To communicate by talking.",
+        "explanation": "Beginner vocabulary for greetings and introductions: speak."
+      },
+      "part_of_speech": "Verb",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/Dic-A2Z",
+        "lookup_term": "Speak",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "Please speak slowly.",
+        "rohingya": "Aste khota hoo. (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "source_attested",
+        "example_source_url": "https://rohingya.co/education",
+        "review_note": "Rohingya sentence is unverified; AI-drafted entries may have grammatical or dialect errors. Source-attested means published, not native-reviewed."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_025",
+      "rohingya_text": "fún",
+      "english_meaning": {
+        "word": "Listen",
+        "definition": "To pay attention to sounds or speech.",
+        "explanation": "Beginner vocabulary for greetings and introductions: listen."
+      },
+      "part_of_speech": "Verb",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/Dic-A2Z",
+        "lookup_term": "Listen",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "Listen to me, please.",
+        "rohingya": "Meérbani gori añár hotá fúnó. (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "ai_draft",
+        "example_source_url": null,
+        "review_note": "Rohingya sentence is unverified; AI-drafted entries may have grammatical or dialect errors. Source-attested means published, not native-reviewed."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [
+          "fúnilo"
+        ],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_026",
+      "rohingya_text": "buzí",
+      "english_meaning": {
+        "word": "Understand",
+        "definition": "To comprehend meaning.",
+        "explanation": "Beginner vocabulary for greetings and introductions: understand."
+      },
+      "part_of_speech": "Verb",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/Dic-A2Z",
+        "lookup_term": "Understand",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "I do not understand.",
+        "rohingya": "Añi no furi. (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "source_attested",
+        "example_source_url": "https://rohingya.co/education",
+        "review_note": "Rohingya sentence is unverified; AI-drafted entries may have grammatical or dialect errors. Source-attested means published, not native-reviewed."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [
+          "buz",
+          "buzó"
+        ],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_027",
+      "rohingya_text": "aijja",
+      "english_meaning": {
+        "word": "Today",
+        "definition": "The present day.",
+        "explanation": "Beginner vocabulary for greetings and introductions: today."
+      },
+      "part_of_speech": "Noun / Adverb",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/Dic-A2Z",
+        "lookup_term": "Today",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "How are you today?",
+        "rohingya": "Tuñi aijja kene aso? (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "ai_draft",
+        "example_source_url": null,
+        "review_note": "Rohingya sentence is unverified; AI-drafted entries may have grammatical or dialect errors. Source-attested means published, not native-reviewed."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_028",
+      "rohingya_text": "hailla",
+      "english_meaning": {
+        "word": "Tomorrow",
+        "definition": "The day after today.",
+        "explanation": "Beginner vocabulary for greetings and introductions: tomorrow."
+      },
+      "part_of_speech": "Noun / Adverb",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/Dic-A2Z",
+        "lookup_term": "Tomorrow",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "See you tomorrow.",
+        "rohingya": "Hailla deha oibo. (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "ai_draft",
+        "example_source_url": null,
+        "review_note": "Rohingya sentence is unverified; AI-drafted entries may have grammatical or dialect errors. Source-attested means published, not native-reviewed."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [
+          "aiyérde hailla"
+        ],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_029",
+      "rohingya_text": "beéinna",
+      "english_meaning": {
+        "word": "Morning",
+        "definition": "The early part of the day.",
+        "explanation": "Beginner vocabulary for greetings and introductions: morning."
+      },
+      "part_of_speech": "Noun",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/Dic-A2Z",
+        "lookup_term": "Morning",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "Good morning!",
+        "rohingya": "Bála beéinna! (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "ai_draft",
+        "example_source_url": null,
+        "review_note": "Rohingya sentence is unverified; AI-drafted entries may have grammatical or dialect errors. Source-attested means published, not native-reviewed."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_030",
+      "rohingya_text": "házinná",
+      "english_meaning": {
+        "word": "Evening",
+        "definition": "The latter part of the day.",
+        "explanation": "Beginner vocabulary for greetings and introductions: evening."
+      },
+      "part_of_speech": "Noun",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/Dic-A2Z",
+        "lookup_term": "Evening",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "Good evening!",
+        "rohingya": "Bála házinná! (not verified)",
+        "translation_verification": "not_verified",
+        "example_origin": "ai_draft",
+        "example_source_url": null,
+        "review_note": "Rohingya sentence is unverified; AI-drafted entries may have grammatical or dialect errors. Source-attested means published, not native-reviewed."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [
+          "ázinna"
+        ],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_031",
+      "rohingya_text": "ekkená gorí",
+      "english_meaning": {
+        "word": "Excuse me",
+        "definition": "A polite expression used to get attention or apologize for interrupting.",
+        "explanation": "Vocabulary useful in greetings, introductions, and polite social interaction: excuse me."
+      },
+      "part_of_speech": "Phrase",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/wp-content/uploads/2017/12/English-Rohingya-28-Dec-2017.pdf#page=44",
+        "lookup_term": "Excuse me",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "Excuse me, could you help me?",
+        "rohingya": null,
+        "translation_verification": "pending_translation",
+        "example_origin": "english_authored",
+        "example_source_url": null,
+        "review_note": "English example authored for vocabulary practice. No Rohingya example translation is claimed or supplied; requires bilingual translation and native-speaker review."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_032",
+      "rohingya_text": "cóibbotá",
+      "english_meaning": {
+        "word": "Polite",
+        "definition": "Showing good manners and consideration for other people.",
+        "explanation": "Vocabulary useful in greetings, introductions, and polite social interaction: polite."
+      },
+      "part_of_speech": "Adjective",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/wp-content/uploads/2017/12/English-Rohingya-28-Dec-2017.pdf#page=91",
+        "lookup_term": "Polite",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "Please use polite language when meeting someone.",
+        "rohingya": null,
+        "translation_verification": "pending_translation",
+        "example_origin": "english_authored",
+        "example_source_url": null,
+        "review_note": "English example authored for vocabulary practice. No Rohingya example translation is claimed or supplied; requires bilingual translation and native-speaker review."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_033",
+      "rohingya_text": "izzot",
+      "english_meaning": {
+        "word": "Respect",
+        "definition": "Consideration and regard for another person.",
+        "explanation": "Vocabulary useful in greetings, introductions, and polite social interaction: respect."
+      },
+      "part_of_speech": "Noun",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/wp-content/uploads/2017/12/English-Rohingya-28-Dec-2017.pdf#page=103",
+        "lookup_term": "Respect",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "We should treat visitors with respect.",
+        "rohingya": null,
+        "translation_verification": "pending_translation",
+        "example_origin": "english_authored",
+        "example_source_url": null,
+        "review_note": "English example authored for vocabulary practice. No Rohingya example translation is claimed or supplied; requires bilingual translation and native-speaker review."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_034",
+      "rohingya_text": "noromdil ola",
+      "english_meaning": {
+        "word": "Kind",
+        "definition": "Caring and considerate toward other people.",
+        "explanation": "Vocabulary useful in greetings, introductions, and polite social interaction: kind."
+      },
+      "part_of_speech": "Adjective",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/wp-content/uploads/2017/12/English-Rohingya-28-Dec-2017.pdf#page=68",
+        "lookup_term": "Kind",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "Thank you for being kind.",
+        "rohingya": null,
+        "translation_verification": "pending_translation",
+        "example_origin": "english_authored",
+        "example_source_url": null,
+        "review_note": "English example authored for vocabulary practice. No Rohingya example translation is claimed or supplied; requires bilingual translation and native-speaker review."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_035",
+      "rohingya_text": "taarif",
+      "english_meaning": {
+        "word": "Introduction",
+        "definition": "An initial presentation of yourself or another person.",
+        "explanation": "Vocabulary useful in greetings, introductions, and polite social interaction: introduction."
+      },
+      "part_of_speech": "Noun",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/wp-content/uploads/2017/12/English-Rohingya-28-Dec-2017.pdf#page=65",
+        "lookup_term": "Introduction",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "Let me begin with an introduction.",
+        "rohingya": null,
+        "translation_verification": "pending_translation",
+        "example_origin": "english_authored",
+        "example_source_url": null,
+        "review_note": "English example authored for vocabulary practice. No Rohingya example translation is claimed or supplied; requires bilingual translation and native-speaker review."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_036",
+      "rohingya_text": "hotá báttra",
+      "english_meaning": {
+        "word": "Conversation",
+        "definition": "An exchange of speech between two or more people.",
+        "explanation": "Vocabulary useful in greetings, introductions, and polite social interaction: conversation."
+      },
+      "part_of_speech": "Noun",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/wp-content/uploads/2017/12/English-Rohingya-28-Dec-2017.pdf#page=29",
+        "lookup_term": "Conversation",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "We had a friendly conversation.",
+        "rohingya": null,
+        "translation_verification": "pending_translation",
+        "example_origin": "english_authored",
+        "example_source_url": null,
+        "review_note": "English example authored for vocabulary practice. No Rohingya example translation is claimed or supplied; requires bilingual translation and native-speaker review."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_037",
+      "rohingya_text": "dawot",
+      "english_meaning": {
+        "word": "Invitation",
+        "definition": "A request asking someone to attend or join an event.",
+        "explanation": "Vocabulary useful in greetings, introductions, and polite social interaction: invitation."
+      },
+      "part_of_speech": "Noun",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/wp-content/uploads/2017/12/English-Rohingya-28-Dec-2017.pdf#page=65",
+        "lookup_term": "Invitation",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "Thank you for the invitation.",
+        "rohingya": null,
+        "translation_verification": "pending_translation",
+        "example_origin": "english_authored",
+        "example_source_url": null,
+        "review_note": "English example authored for vocabulary practice. No Rohingya example translation is claimed or supplied; requires bilingual translation and native-speaker review."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_038",
+      "rohingya_text": "ziyarot goróya",
+      "english_meaning": {
+        "word": "Visitor",
+        "definition": "Someone who comes to see a person or place.",
+        "explanation": "Vocabulary useful in greetings, introductions, and polite social interaction: visitor."
+      },
+      "part_of_speech": "Noun",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/wp-content/uploads/2017/12/English-Rohingya-28-Dec-2017.pdf#page=132",
+        "lookup_term": "Visitor",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "A visitor arrived this morning.",
+        "rohingya": null,
+        "translation_verification": "pending_translation",
+        "example_origin": "english_authored",
+        "example_source_url": null,
+        "review_note": "English example authored for vocabulary practice. No Rohingya example translation is claimed or supplied; requires bilingual translation and native-speaker review."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_039",
+      "rohingya_text": "cúkurguzar",
+      "english_meaning": {
+        "word": "Grateful",
+        "definition": "Feeling or expressing appreciation for help or kindness.",
+        "explanation": "Vocabulary useful in greetings, introductions, and polite social interaction: grateful."
+      },
+      "part_of_speech": "Adjective",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/wp-content/uploads/2017/12/English-Rohingya-28-Dec-2017.pdf#page=54",
+        "lookup_term": "Grateful",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "I am grateful for your help.",
+        "rohingya": null,
+        "translation_verification": "pending_translation",
+        "example_origin": "english_authored",
+        "example_source_url": null,
+        "review_note": "English example authored for vocabulary practice. No Rohingya example translation is claimed or supplied; requires bilingual translation and native-speaker review."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    },
+    {
+      "id": "greeting_040",
+      "rohingya_text": "cánti",
+      "english_meaning": {
+        "word": "Peace",
+        "definition": "A state of calm, harmony, or freedom from conflict.",
+        "explanation": "Vocabulary useful in greetings, introductions, and polite social interaction: peace."
+      },
+      "part_of_speech": "Noun",
+      "source_reference": {
+        "title": "Rohingya Language Foundation — English–Rohingya Dictionary",
+        "url": "https://rohingyalanguage.com/wp-content/uploads/2017/12/English-Rohingya-28-Dec-2017.pdf#page=88",
+        "lookup_term": "Peace",
+        "evidence": "dictionary_entry"
+      },
+      "related_topic": "Greetings",
+      "example_sentence": {
+        "english": "I wish you peace.",
+        "rohingya": null,
+        "translation_verification": "pending_translation",
+        "example_origin": "english_authored",
+        "example_source_url": null,
+        "review_note": "English example authored for vocabulary practice. No Rohingya example translation is claimed or supplied; requires bilingual translation and native-speaker review."
+      },
+      "alternative_spellings_scripts": {
+        "latin": [],
+        "other_scripts": null
+      },
+      "audio_pronunciation": null,
+      "image": null,
+      "different_forms": [],
+      "validation_status": "dictionary_attested_pending_native_review"
+    }
+  ]
+}

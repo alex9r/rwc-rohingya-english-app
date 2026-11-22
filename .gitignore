@@ -5,3 +5,4 @@ __pycache__/
 ml/pronunciation/smoke_clips_cv/
 .venv/
 failures.csv
+.env

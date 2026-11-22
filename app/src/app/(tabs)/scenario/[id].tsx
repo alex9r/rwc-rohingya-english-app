@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useAudioPlayer } from 'expo-audio';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
@@ -10,6 +11,7 @@ import { ConfidenceBadge } from '@/components/ConfidenceBadge';
 import { GradientScreen } from '@/components/GradientScreen';
 import { IconButton } from '@/components/IconButton';
 import { MicButton } from '@/components/MicButton';
+import { LoadState } from '@/components/LoadState';
 import { Sheet } from '@/components/Sheet';
 import { usePlayAudio } from '@/hooks/usePlayAudio';
 import { useRecorder } from '@/hooks/useRecorder';
@@ -18,6 +20,7 @@ import { colors, fonts, radius, shadow, spacing, TAB_BAR_SPACE } from '@/theme';
 
 type Item =
   | ScenarioTurn
+  | { id: string; role: 'user'; text: string; recordingUri: string }
   | { id: string; role: 'feedback'; feedback: ScenarioFeedback }
   | { id: string; role: 'complete' };
 
@@ -27,17 +30,45 @@ export default function ScenarioChat() {
   const router = useRouter();
   const { recordScenarioComplete } = useAppState();
   const [scenario, setScenario] = useState<Scenario | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [retryKey, setRetryKey] = useState(0);
+  // Retry is a user event, so resetting request state here is safe under
+  // react-hooks/set-state-in-effect and makes the loading indicator visible.
+  const retryLoad = () => {
+    setLoading(true);
+    setLoadError(null);
+    setRetryKey((n) => n + 1);
+  };
   const [items, setItems] = useState<Item[]>([]);
   const list = useRef<FlatList<Item>>(null);
   const { recording, toggle } = useRecorder();
   const play = usePlayAudio();
+  const replay = useAudioPlayer(null);
+  const [busy, setBusy] = useState(false);
+
+  const onReplay = useCallback((uri: string) => {
+    try {
+      replay.pause();
+      replay.replace({ uri });
+      replay.play();
+    } catch {
+      Alert.alert('Could not replay recording', 'Please try again.');
+    }
+  }, [replay]);
 
   useEffect(() => {
-    api.getScenario(id).then((s) => {
-      setScenario(s);
-      if (s) setItems([s.turns[0]]);
-    });
-  }, [id]);
+    let live = true;
+    api.getScenario(id)
+      .then((s) => {
+        if (!live) return;
+        if (!s || !s.turns.length) setLoadError('Scenario not found.');
+        else { setScenario(s); setItems([s.turns[0]]); setLoadError(null); }
+      })
+      .catch(() => { if (live) setLoadError('Could not load this scenario.'); })
+      .finally(() => { if (live) setLoading(false); });
+    return () => { live = false; };
+  }, [id, retryKey]);
 
   const complete = !!items.find((i) => i.role === 'complete');
   // Current step = how many partner prompts have been shown so far.
@@ -45,19 +76,22 @@ export default function ScenarioChat() {
 
   const onMic = async () => {
     const uri = await toggle();
-    if (!uri || !scenario) return;
+    if (!uri || !scenario || busy) return;
+    setBusy(true);
     try {
       const feedback = await api.getScenarioFeedback(uri);
       const next = scenario.turns[step];
       setItems((prev) => [
         ...prev,
-        { id: `u${prev.length}`, role: 'user', text: '[mock] your spoken answer' },
+        { id: `u${prev.length}`, role: 'user', text: 'Your recording', recordingUri: uri },
         { id: `f${prev.length}`, role: 'feedback', feedback },
         next ?? { id: 'complete', role: 'complete' },
       ]);
       if (!next) await recordScenarioComplete(scenario.id);
     } catch {
       Alert.alert('Could not get feedback', 'Please try again.');
+    } finally {
+      setBusy(false);
     }
   };
 
@@ -96,6 +130,14 @@ export default function ScenarioChat() {
       return (
         <View style={[styles.bubble, user ? styles.user : styles.partner]}>
           <Text style={[styles.bubbleText, user && styles.userText]}>{item.text}</Text>
+          {user && 'recordingUri' in item && (
+            <IconButton
+              name="play"
+              label="Replay my recording"
+              size={20}
+              onPress={() => onReplay(item.recordingUri)}
+            />
+          )}
           {!user && (
             <IconButton
               name="volume-high"
@@ -107,7 +149,7 @@ export default function ScenarioChat() {
         </View>
       );
     },
-    [play, router],
+    [onReplay, play, router],
   );
 
   return (
@@ -122,6 +164,10 @@ export default function ScenarioChat() {
         )}
       </View>
       <Sheet>
+        {loading || loadError ? (
+          <LoadState loading={loading} error={loadError} onRetry={retryLoad} message="Loading scenario…" />
+        ) : (
+        <>
         <FlatList
           ref={list}
           style={styles.flex}
@@ -132,8 +178,10 @@ export default function ScenarioChat() {
           contentContainerStyle={styles.list}
         />
         <View style={[styles.micBar, { paddingBottom: insets.bottom + TAB_BAR_SPACE }]}>
-          <MicButton recording={recording} onPress={onMic} disabled={complete} />
+          <MicButton recording={recording} onPress={onMic} disabled={complete || busy} />
         </View>
+        </>
+        )}
       </Sheet>
     </GradientScreen>
   );

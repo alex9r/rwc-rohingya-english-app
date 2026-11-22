@@ -1,6 +1,7 @@
 """Second-source review + confidence scores for the phrase set.
 
   python -m ml.translation.review_phrases --gamayun kit5k.tsv --iom db.json
+  python -m ml.translation.review_phrases --gamayun kit5k.tsv --iom db.json --file data/collections/groceries.json
 
 Downloads (not committed, check each licence before redistributing):
   Gamayun kit5k (source 3, CC BY 4.0):
@@ -18,12 +19,15 @@ Confidence:
   0.95  multi_source    Gamayun sentence + IOM word check agree
   0.70  single_source   Gamayun sentence only
   0.40  model_fallback  no sentence source, drafted from attested vocabulary
-A phrase in FLAGS is capped at 0.50 until a native speaker resolves it.
+A phrase in FLAGS (by entry id) or LINE_FLAGS (by kit5k line) is capped at 0.50 until a
+native speaker resolves it. Alternative translations are reviewed the same way; in FLAGS
+they are keyed "<entry id>/alt<n>".
 """
-import argparse, csv, html, json, math, re, unicodedata
+import argparse, csv, glob, html, json, math, os, re, unicodedata
 from difflib import SequenceMatcher
 
-FILE = __file__.replace("review_phrases.py", "data/rohingya_phrases_38.json")
+DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
+FILES = [os.path.join(DATA, "rohingya_phrases_38.json")] + sorted(glob.glob(os.path.join(DATA, "collections", "*.json")))
 CONF = {"multi_source": 0.95, "single_source": 0.70, "model_fallback": 0.40}
 FLAG_CAP = 0.50
 
@@ -32,6 +36,14 @@ FLAGS = {
     "phrase_014": "IOM glosses 'dami' as 'expensive, costly; precious' and 'beshi' means 'very', so "
                   "'Iyan beshi dami' reads as 'This is very expensive', not Gamayun's 'It really is a "
                   "good price'. Ask a native speaker which meaning is right before using it.",
+}
+
+# Same idea, keyed by Gamayun kit5k line, so it follows the sentence into any file
+# (collections, alternative translations) whatever id it gets there.
+LINE_FLAGS = {
+    1585: "The Rohingya starts 'Aa*ra baaf' (aa*ra = we/our), so it reads 'Our father works in a "
+          "factory', not 'My father'. 'Aa*r baaf' would be 'my father'. Check with a native "
+          "speaker whether 'our father' is the normal way to say it.",
 }
 
 STOP = set("""a an the i me my you your he him his she her it its we our they them their this that
@@ -70,15 +82,23 @@ def en_words(s):
 SUFFIXES = ("otu", "tu", "ore", "ola", "la", "loi", "re", "ot", "or", "at", "ar", "e", "r")
 
 
+# Pronouns never confirm a meaning word: with tone marks folded away "aa*ra" (we) looks
+# like IOM "ára" (lose), so "We're not lost" was passing on the pronoun.
+PRONOUNS = {skel(w) for w in """aa*i aa*ra aa*r aa*rar aa*ttu aa*ttun aa*re aa*rare aa*rattu
+aa*rattun tu*i tu*ra tua*r tua*ra tua*re tua*ttu tua*ttun hite hitar hitare hitattu hitattun
+hiba hibar hibare hibattu hitara hitarar hitarare""".split()}
+
+
 def roh_tokens(s):
-    """Skeleton tokens, each also with one case/postposition suffix stripped."""
+    """Skeleton tokens, each also with one case/postposition suffix stripped. Pronouns are
+    kept (so two-word spans stay aligned) but get no forms, so they never match."""
     out = []
     for w in re.findall(r"[a-z*'’\-]+", s.lower()):
         k = skel(w)
         if len(k) < 2:
             continue
         forms = {k} | {k[: -len(x)] for x in SUFFIXES if k.endswith(x) and len(k) - len(x) >= 3}
-        out.append((w, forms))
+        out.append((w, set() if k in PRONOUNS else forms))
     return out
 
 
@@ -143,59 +163,92 @@ def iom_review(english, rohingya, index):
     }
 
 
+def load_gamayun(path):
+    """English sentence -> (line number, Rohingya). Line 1 is the header."""
+    with open(path, encoding="utf-8") as f:
+        rows = list(csv.reader(f, delimiter="\t"))[1:]
+    out = {}
+    for n, (en, roh) in enumerate(rows, start=2):
+        out.setdefault(en.strip(), (n, roh.strip()))
+    return out
+
+
+def review_pair(key, en, roh, gamayun, index, corpus_en=None, can_attest=True):
+    """Gamayun + IOM check for one English/Rohingya pair.
+    Returns (sources_checked, second_review, reference_translation).
+    corpus_en: the corpus English to look up, when `en` is a shortened form of it.
+    can_attest=False: the phrase is adapted from the corpus line, so it can't count as it."""
+    hit = gamayun.get((corpus_en or en).strip())
+    attested = can_attest and bool(hit) and hit[1] == roh
+    g = {"source": "CLEAR Global Gamayun kit5k (source 3)",
+         "result": "sentence_attested" if attested else "not_found"}
+    if attested:
+        g["line"] = hit[0]
+    elif hit:
+        g["note"] = f"Phrase is adapted from line {hit[0]}, not a corpus sentence itself: {hit[1]}"
+    iom = iom_review(en, roh, index)
+
+    tier = ("multi_source" if iom["result"] == "corroborated" else "single_source") if attested \
+        else "model_fallback"
+    conf = CONF[tier]
+    flag = FLAGS.get(key) or (LINE_FLAGS.get(hit[0]) if attested else None)
+    if flag:
+        conf = min(conf, FLAG_CAP)
+        iom["result"], iom["note"] = "conflict", flag
+    ref = {
+        "english": en,
+        "rohingya": roh,
+        "origin": f"Gamayun kit5k line {hit[0]}" if attested else "model_fallback",
+        "confidence": conf,
+        "confidence_tier": tier,
+        "needs_review": bool(flag) or tier == "model_fallback",
+    }
+    return [g, SOURCE_2], iom, ref
+
+
+def review_entry(e, gamayun, index):
+    """Fill sources_checked / second_review / reference_translation on an entry, and the
+    same three fields on each of its alternative_translations."""
+    ex, roh = e["example_sentence"], e["rohingya_text"].strip()
+    # The example sentence is the full corpus pair when it matches the phrase itself.
+    same = ex["rohingya"].replace("(not verified)", "").strip() == roh
+    en = (ex["english"] if same else e["english_meaning"]["word"]).strip()
+    e["sources_checked"], e["second_review"], e["reference_translation"] = review_pair(
+        e["id"], en, roh, gamayun, index, corpus_en=ex["english"], can_attest=same)
+    for i, alt in enumerate(e.get("alternative_translations") or [], start=1):
+        alt["sources_checked"], alt["second_review"], alt["reference_translation"] = review_pair(
+            f'{e["id"]}/alt{i}', alt["english"].strip(), alt["rohingya"].strip(), gamayun, index)
+    return e
+
+
+def summary(e):
+    r = e["reference_translation"]
+    alts = e.get("alternative_translations") or []
+    tail = f"  (+{len(alts)} alt)" if alts else ""
+    return (f'{e["id"]:16} {r["confidence"]:.2f} {r["confidence_tier"]:15} '
+            f'IOM {e["second_review"]["result"]:17} {e["second_review"]["key_words_covered"]:>5}  '
+            f'{r["english"]}{tail}')
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--gamayun", required=True)
     ap.add_argument("--iom", required=True)
-    ap.add_argument("--file", default=FILE)
+    ap.add_argument("--file", nargs="+", default=FILES,
+                    help="phrase files to review in place (default: the 38-phrase set and every collection)")
     args = ap.parse_args()
 
-    with open(args.gamayun, encoding="utf-8") as f:
-        rows = list(csv.reader(f, delimiter="\t"))[1:]
-    gamayun = {}
-    for n, (en, roh) in enumerate(rows, start=2):  # line 1 is the header
-        gamayun.setdefault(en.strip(), (n, roh.strip()))
+    gamayun = load_gamayun(args.gamayun)
     index = load_iom(args.iom)
-
-    with open(args.file, encoding="utf-8") as f:
-        data = json.load(f)
-    for e in data["entries"]:
-        ex, roh = e["example_sentence"], e["rohingya_text"].strip()
-        # The example sentence is the full corpus pair when it matches the phrase itself.
-        same = ex["rohingya"].replace("(not verified)", "").strip() == roh
-        en = (ex["english"] if same else e["english_meaning"]["word"]).strip()
-        hit = gamayun.get(ex["english"].strip())
-        attested = same and bool(hit) and hit[1] == roh
-        g = {"source": "CLEAR Global Gamayun kit5k (source 3)",
-             "result": "sentence_attested" if attested else "not_found"}
-        if attested:
-            g["line"] = hit[0]
-        elif hit:
-            g["note"] = f"Phrase is adapted from line {hit[0]}, not a corpus sentence itself: {hit[1]}"
-        iom = iom_review(en, roh, index)
-
-        tier = ("multi_source" if iom["result"] == "corroborated" else "single_source") if attested \
-            else "model_fallback"
-        conf = CONF[tier]
-        if e["id"] in FLAGS:
-            conf = min(conf, FLAG_CAP)
-            iom["result"], iom["note"] = "conflict", FLAGS[e["id"]]
-
-        e["sources_checked"] = [g, SOURCE_2]
-        e["second_review"] = iom
-        e["reference_translation"] = {
-            "english": en,
-            "rohingya": roh,
-            "origin": f"Gamayun kit5k line {hit[0]}" if attested else "model_fallback",
-            "confidence": conf,
-            "confidence_tier": tier,
-            "needs_review": e["id"] in FLAGS or tier == "model_fallback",
-        }
-        print(f'{e["id"]}  {conf:.2f} {tier:15} IOM {iom["result"]:17} {iom["key_words_covered"]:>5}  {en}')
-
-    with open(args.file, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-        f.write("\n")
+    for path in args.file:
+        with open(path, encoding="utf-8") as f:
+            data = json.load(f)
+        print(f"== {os.path.relpath(path)}")
+        for e in data["entries"]:
+            print(summary(review_entry(e, gamayun, index)))
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+            f.write("\n")
 
 
 if __name__ == "__main__":
