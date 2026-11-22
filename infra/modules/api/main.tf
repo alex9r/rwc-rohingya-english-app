@@ -1,6 +1,8 @@
-# Public HTTPS entry point: API Gateway HTTP API -> VPC Link -> internal ALB.
+# Public HTTPS entry point: API Gateway HTTP API -> the API's Lambda function ("live" alias).
 
 terraform {
+  required_version = ">= 1.6"
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -13,19 +15,16 @@ variable "name" {
   type = string
 }
 
-variable "vpc_id" {
+variable "function_name" {
   type = string
 }
 
-variable "subnet_ids" {
-  type = list(string)
+variable "alias_name" {
+  description = "API Gateway calls this alias; the deploy workflow moves it between versions."
+  type        = string
 }
 
-variable "alb_listener_arn" {
-  type = string
-}
-
-variable "alb_security_group_id" {
+variable "alias_invoke_arn" {
   type = string
 }
 
@@ -42,63 +41,37 @@ variable "log_retention_days" {
   type = number
 }
 
-resource "aws_security_group" "vpc_link" {
-  name        = "${var.name}-vpc-link"
-  description = "API Gateway VPC Link: HTTP out to the internal ALB only"
-  vpc_id      = var.vpc_id
-
-  egress {
-    description     = "HTTP to the internal ALB"
-    from_port       = 80
-    to_port         = 80
-    protocol        = "tcp"
-    security_groups = [var.alb_security_group_id]
-  }
-}
-
-resource "aws_security_group_rule" "alb_from_vpc_link" {
-  description              = "HTTP from the API Gateway VPC Link"
-  type                     = "ingress"
-  security_group_id        = var.alb_security_group_id
-  source_security_group_id = aws_security_group.vpc_link.id
-  protocol                 = "tcp"
-  from_port                = 80
-  to_port                  = 80
-}
-
-resource "aws_apigatewayv2_vpc_link" "this" {
-  name               = var.name
-  subnet_ids         = var.subnet_ids
-  security_group_ids = [aws_security_group.vpc_link.id]
-}
-
 resource "aws_apigatewayv2_api" "this" {
   name          = var.name
   protocol_type = "HTTP"
   description   = "RWC Rohingya-English learning app API"
 }
 
-resource "aws_apigatewayv2_integration" "alb" {
+# Payload 2.0: the Lambda Web Adapter in the image turns these events back into plain
+# HTTP requests for uvicorn, and passes requestContext (with API Gateway's request ID)
+# in the x-amzn-request-context header, which app.observability logs.
+resource "aws_apigatewayv2_integration" "lambda" {
   api_id                 = aws_apigatewayv2_api.this.id
-  integration_type       = "HTTP_PROXY"
-  integration_method     = "ANY"
-  integration_uri        = var.alb_listener_arn
-  connection_type        = "VPC_LINK"
-  connection_id          = aws_apigatewayv2_vpc_link.this.id
-  payload_format_version = "1.0"
-  timeout_milliseconds   = 30000
-
-  # The app logs this as its request ID, so API Gateway and app logs line up.
-  request_parameters = {
-    "overwrite:header.X-Request-ID" = "$context.requestId"
-  }
+  integration_type       = "AWS_PROXY"
+  integration_uri        = var.alias_invoke_arn
+  payload_format_version = "2.0"
+  timeout_milliseconds   = 30000 # HTTP API maximum
 }
 
 resource "aws_apigatewayv2_route" "default" {
   #checkov:skip=CKV_AWS_309:No learner auth yet (spec §8 Q2); throttling is the only protection.
   api_id    = aws_apigatewayv2_api.this.id
   route_key = "$default"
-  target    = "integrations/${aws_apigatewayv2_integration.alb.id}"
+  target    = "integrations/${aws_apigatewayv2_integration.lambda.id}"
+}
+
+resource "aws_lambda_permission" "api_gateway" {
+  statement_id  = "AllowApiGatewayInvoke"
+  action        = "lambda:InvokeFunction"
+  function_name = var.function_name
+  qualifier     = var.alias_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.this.execution_arn}/*"
 }
 
 resource "aws_cloudwatch_log_group" "access" {
@@ -130,6 +103,7 @@ resource "aws_apigatewayv2_stage" "default" {
       latencyMs          = "$context.responseLatency"
       integrationStatus  = "$context.integration.status"
       integrationLatency = "$context.integration.latency"
+      integrationError   = "$context.integration.error"
       responseLength     = "$context.responseLength"
     })
   }
