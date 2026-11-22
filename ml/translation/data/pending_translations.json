@@ -1,31 +1,5 @@
 [
   {
-    "id": "c23b0b2f1182",
-    "input": "I need directions to the library",
-    "translation": "Awaire ḍirékshon library gíre saiyye",
-    "direction": "en->roh",
-    "provider": "gemini",
-    "source": "gemini",
-    "status": "pending_review",
-    "verification_status": "pending_review"
-  },
-  {
-    "id": "a7d043e13e75",
-    "input": "Where can I buy fresh vegetables?",
-    "translation": "Fura shobji kotu kinte parim?",
-    "direction": "en->roh",
-    "source": "gemini",
-    "verification_status": "pending_review"
-  },
-  {
-    "id": "a9542183b476",
-    "input": "Do you sell halal chicken?",
-    "translation": "Tumi halal murgi besro ki?",
-    "direction": "en->roh",
-    "source": "gemini",
-    "verification_status": "pending_review"
-  },
-  {
     "id": "65ff2385a98a",
     "input": "Can I pay using my debit card?",
     "translation": "Mui debit card diyi foin farim?",
@@ -373,6 +347,14 @@
     "id": "c191c40bdbba",
     "input": "I need help creating an email account",
     "translation": "Imail aiyek khulor lailla moror sahajja darkar",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "a9542183b476",
+    "input": "Do you sell halal chicken?",
+    "translation": "Tumi halal murgi besro ki?",
     "direction": "en->roh",
     "source": "gemini",
     "verification_status": "pending_review"
