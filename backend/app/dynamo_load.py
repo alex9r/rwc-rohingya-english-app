@@ -1,13 +1,20 @@
 """Load the JSON vocabulary datasets into DynamoDB (rwc-content).
 
-    python -m app.dynamo_load [datasets...] [--dry-run] [--create-table]
+    python -m app.dynamo_load [datasets...] [--dry-run] [--overwrite] [--create-table]
 
 Uses the same IDs and fields as the Postgres seeder (app.seed), so both stores
-serve identical entries. Idempotent: re-running overwrites items with the same
-keys. Entries removed from a dataset are NOT deleted from the table.
+serve identical entries.
 
-In AWS, run it with the rwc-content-loader role (the API's own role is read-only).
---create-table is for DynamoDB Local; in AWS, Terraform owns the table.
+Insert-only by default: an entry already in the table is skipped, because reviewers
+correct content directly in DynamoDB (the data stack's ``reviewer`` policy) and a
+re-load must never undo their work. ``--overwrite`` replaces existing entries with
+the dataset version, corrections included, so use it deliberately. Category items
+are always rewritten (their word counts are derived). Entries removed from a dataset
+are NOT deleted from the table.
+
+In AWS, run it with the content-loader role (the API's own role can't write content).
+--create-table is for DynamoDB Local; in AWS, the data stack (infra/dynamodb.tf) owns
+the table.
 """
 
 from __future__ import annotations
@@ -15,6 +22,7 @@ from __future__ import annotations
 import argparse
 import json
 from collections import Counter
+from dataclasses import dataclass
 from decimal import Decimal
 from pathlib import Path
 from typing import Sequence
@@ -74,8 +82,12 @@ def build_items(paths: Sequence[str | Path]) -> list[dict]:
     return items
 
 
+# Index names and projections as defined in the data stack (infra/dynamodb.tf).
+INDEXES = (("gsi1-category", "gsi1", "ALL"), ("gsi2-review", "gsi2", "KEYS_ONLY"))
+
+
 def create_table(resource, name: str = vocabulary_dynamo.TABLE):
-    """Same keys and indexes as infra/modules/data. For DynamoDB Local and tests."""
+    """Same keys and indexes as infra/dynamodb.tf. For DynamoDB Local and tests only."""
     attributes = ["pk", "sk", "gsi1pk", "gsi1sk", "gsi2pk", "gsi2sk"]
     return resource.create_table(
         TableName=name,
@@ -89,22 +101,44 @@ def create_table(resource, name: str = vocabulary_dynamo.TABLE):
             {
                 "IndexName": index,
                 "KeySchema": [
-                    {"AttributeName": f"{index.lower()}pk", "KeyType": "HASH"},
-                    {"AttributeName": f"{index.lower()}sk", "KeyType": "RANGE"},
+                    {"AttributeName": f"{prefix}pk", "KeyType": "HASH"},
+                    {"AttributeName": f"{prefix}sk", "KeyType": "RANGE"},
                 ],
-                "Projection": {"ProjectionType": "ALL"},
+                "Projection": {"ProjectionType": projection},
             }
-            for index in ("GSI1", "GSI2")
+            for index, prefix, projection in INDEXES
         ],
     )
 
 
-def load(paths: Sequence[str | Path], table) -> int:
-    items = build_items(paths)
-    with table.batch_writer(overwrite_by_pkeys=["pk", "sk"]) as batch:
-        for item in items:
-            batch.put_item(Item=item)
-    return sum(1 for item in items if item["pk"].startswith("ENTRY#"))
+@dataclass
+class LoadResult:
+    written: int  # entries written (new, or replaced with --overwrite)
+    skipped: int  # entries already in the table and left alone
+    categories: int  # category items written
+
+
+def load(paths: Sequence[str | Path], table, overwrite: bool = False) -> LoadResult:
+    from botocore.exceptions import ClientError
+
+    result = LoadResult(written=0, skipped=0, categories=0)
+    for item in build_items(paths):
+        if not item["pk"].startswith("ENTRY#"):
+            table.put_item(Item=item)  # category counts are derived: always refresh
+            result.categories += 1
+            continue
+        if overwrite:
+            table.put_item(Item=item)
+            result.written += 1
+            continue
+        try:
+            table.put_item(Item=item, ConditionExpression="attribute_not_exists(pk)")
+            result.written += 1
+        except ClientError as exc:
+            if exc.response["Error"]["Code"] != "ConditionalCheckFailedException":
+                raise
+            result.skipped += 1  # already there, possibly corrected by a reviewer
+    return result
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -112,6 +146,8 @@ def main(argv: Sequence[str] | None = None) -> int:
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("datasets", nargs="*", type=Path, help="JSON datasets to load")
     parser.add_argument("--dry-run", action="store_true", help="print items, write nothing")
+    parser.add_argument("--overwrite", action="store_true",
+                        help="replace existing entries (undoes reviewer corrections)")
     parser.add_argument("--create-table", action="store_true",
                         help="create the table first (DynamoDB Local only)")
     args = parser.parse_args(argv)
@@ -122,12 +158,17 @@ def main(argv: Sequence[str] | None = None) -> int:
             print(json.dumps(item, ensure_ascii=False, default=str))
         return 0
 
+    if args.overwrite:
+        print("WARNING: --overwrite replaces existing entries, including reviewer corrections.")
     dynamodb = vocabulary_dynamo.resource()
     if args.create_table:
         create_table(dynamodb).wait_until_exists()
     table = dynamodb.Table(vocabulary_dynamo.TABLE)
-    count = load(paths, table)
-    print(f"Loaded {count} entries from {len(paths)} dataset(s) into {table.name}")
+    result = load(paths, table, overwrite=args.overwrite)
+    print(
+        f"{table.name}: {result.written} entries written, {result.skipped} already present "
+        f"(left as is), {result.categories} categories refreshed, from {len(paths)} dataset(s)"
+    )
     return 0
 
 

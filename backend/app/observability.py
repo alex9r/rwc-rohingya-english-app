@@ -26,8 +26,26 @@ access_log = logging.getLogger("app.access")
 ml_log = logging.getLogger("app.ml")
 
 # Accept a caller's request ID only if it can't inject anything into the logs.
-# API Gateway sets it to its own request ID (base64-like, may end in "=").
+# API Gateway's request IDs are base64-like and may end in "=".
 _SAFE_REQUEST_ID = re.compile(r"^[A-Za-z0-9._=-]{1,64}$")
+
+
+def _request_id(headers: dict[bytes, bytes]) -> str:
+    """X-Request-ID if safe; else API Gateway's ID from the Lambda Web Adapter; else new."""
+    incoming = headers.get(b"x-request-id", b"").decode("latin-1")
+    if _SAFE_REQUEST_ID.match(incoming):
+        return incoming
+    # On Lambda, the Web Adapter passes API Gateway's requestContext as JSON in this
+    # header, so access logs and app logs share API Gateway's request ID.
+    context = headers.get(b"x-amzn-request-context")
+    if context:
+        try:
+            gateway_id = json.loads(context).get("requestId")
+        except (ValueError, AttributeError):
+            gateway_id = None
+        if isinstance(gateway_id, str) and _SAFE_REQUEST_ID.match(gateway_id):
+            return gateway_id
+    return uuid.uuid4().hex
 
 
 class _RequestIdFilter(logging.Filter):
@@ -87,8 +105,7 @@ class RequestContextMiddleware:
             await self.app(scope, receive, send)
             return
 
-        incoming = dict(scope["headers"]).get(b"x-request-id", b"").decode("latin-1")
-        request_id = incoming if _SAFE_REQUEST_ID.match(incoming) else uuid.uuid4().hex
+        request_id = _request_id(dict(scope["headers"]))
         token = request_id_var.set(request_id)
         started = time.perf_counter()
         status = 500

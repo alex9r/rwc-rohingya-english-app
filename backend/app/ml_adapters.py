@@ -10,6 +10,8 @@ import functools
 import importlib
 import importlib.util
 import logging
+import os
+import threading
 import time
 from typing import Any, BinaryIO, Callable
 
@@ -73,13 +75,39 @@ def _measured(service: str, status_of: Callable[[dict], str]):
     return wrap
 
 
-def warmup() -> None:
-    """Load the Whisper model now so the first request isn't slow."""
-    if _warmup:
-        try:
-            _warmup()
-        except Exception:
-            log.exception("Whisper warmup failed; first request will load the model")
+WARMUP_MODES = ("sync", "background", "off")
+
+
+def _load_model() -> None:
+    try:
+        _warmup()
+    except Exception:
+        log.exception("Whisper warmup failed; first request will load the model")
+
+
+def warmup(mode: str | None = None) -> threading.Thread | None:
+    """Load the Whisper model ahead of the first request.
+
+    ``mode`` (default: the RWC_WARMUP env var, else "sync"):
+      sync        block startup until the model is loaded (containers, local)
+      background  load in a thread and start serving at once (Lambda: its init phase
+                  is limited to about 10 s; a request arriving mid-load waits on
+                  ml.speech's model lock rather than loading a second copy)
+      off         load on the first request
+    Returns the thread in background mode (for tests), otherwise None.
+    """
+    mode = (mode or os.getenv("RWC_WARMUP", "sync")).lower()
+    if mode not in WARMUP_MODES:
+        log.warning("Unknown RWC_WARMUP %r; using sync", mode)
+        mode = "sync"
+    if not _warmup or mode == "off":
+        return None
+    if mode == "background":
+        thread = threading.Thread(target=_load_model, name="whisper-warmup", daemon=True)
+        thread.start()
+        return thread
+    _load_model()
+    return None
 
 
 @_measured("transcribe", lambda r: r["status"])
