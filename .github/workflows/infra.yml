@@ -24,9 +24,11 @@ jobs:
           terraform_version: "1.10.5" # >= 1.10 for S3 state locking without DynamoDB
       - name: Format
         run: terraform fmt -check -recursive -diff
+      # Three separate stacks: "." is the data stack (tables, buckets, keys, data
+      # policies), envs/dev is compute/API/monitoring (Lambda), bootstrap is state + OIDC.
       - name: Validate
         run: |
-          for dir in envs/dev bootstrap; do
+          for dir in . envs/dev bootstrap; do
             terraform -chdir="$dir" init -backend=false -input=false
             terraform -chdir="$dir" validate
           done
@@ -43,3 +45,5 @@ jobs:
           directory: infra
           framework: terraform
           quiet: true
+          # Accepted findings for the data stack, kept out of its .tf files.
+          config_file: infra/.checkov.yaml
