@@ -2,7 +2,6 @@
 download is needed. Run: python -m pytest ml/tts -q"""
 
 import datetime as dt
-import io
 import json
 
 import av

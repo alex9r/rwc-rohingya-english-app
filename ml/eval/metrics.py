@@ -12,7 +12,7 @@ from collections import Counter, defaultdict
 from dataclasses import asdict, dataclass, field
 from typing import Any, Callable, Iterable, Optional
 
-from .text import Op, align, detect_script, edit_distance, normalize
+from .text import align, detect_script, edit_distance, normalize
 
 # Phrase-level verdicts
 CORRECT = "correct"
