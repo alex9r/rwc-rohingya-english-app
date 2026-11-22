@@ -1,0 +1,96 @@
+direction,input,expected,verification_status,category,lexicon_got,lexicon_status,lexicon_confidence,lexicon_needs_review,lexicon_result,hybrid_got,hybrid_status,hybrid_confidence,hybrid_needs_review,hybrid_result,gemini_got,gemini_status,gemini_confidence,gemini_needs_review,gemini_result
+en->roh,Take your pills.,Tua*r bori lo.,unverified,,Tua*r bori lo.,ok,1.0,True,exact_match,Tua*r bori lo.,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+roh->en,Tua*r bori lo.,Take your pills.,unverified,,Take your pills,ok,1.0,True,exact_match,Take your pills,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,She stopped taking her medicine.,Hibaye hibare dabai haba bondo goijjil.,unverified,,Hibaye hibare dabai haba bondo goijjil.,ok,1.0,True,exact_match,Hibaye hibare dabai haba bondo goijjil.,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+roh->en,Hibaye hibare dabai haba bondo goijjil.,She stopped taking her medicine.,unverified,,She stopped taking her medicine,ok,1.0,True,exact_match,She stopped taking her medicine,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,"At times of poor health, getting plenty of sleep is the best medicine.","Horaf aramiyotor oktot, beshi gori gum zonnan oilde behetor dabai.",unverified,,"Horaf aramiyotor oktot, beshi gori gum zonnan oilde behetor dabai.",ok,1.0,True,exact_match,"Horaf aramiyotor oktot, beshi gori gum zonnan oilde behetor dabai.",ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+roh->en,"Horaf aramiyotor oktot, beshi gori gum zonnan oilde behetor dabai.","At times of poor health, getting plenty of sleep is the best medicine.",unverified,,"At times of poor health, getting plenty of sleep is the best medicine",ok,1.0,True,exact_match,"At times of poor health, getting plenty of sleep is the best medicine",ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,I need to go to the hospital.,Aa*ttu dhath'tha-hanat zaito zoruri.,unverified,,Aa*ttu dhath'tha-hanat zaito zoruri.,ok,1.0,True,exact_match,Aa*ttu dhath'tha-hanat zaito zoruri.,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+roh->en,Aa*ttu dhath'tha-hanat zaito zoruri.,I need to go to the hospital.,unverified,,I need to go to the hospital,ok,1.0,True,exact_match,I need to go to the hospital,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Perhaps the illness is cured through medical treatment.,Dath'tha-hanttu dabai gori biaram gom oit fare.,unverified,,Dath'tha-hanttu dabai gori biaram gom oit fare.,ok,1.0,True,exact_match,Dath'tha-hanttu dabai gori biaram gom oit fare.,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+roh->en,Dath'tha-hanttu dabai gori biaram gom oit fare.,Perhaps the illness is cured through medical treatment.,unverified,,Perhaps the illness is cured through medical treatment,ok,1.0,True,exact_match,Perhaps the illness is cured through medical treatment,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Does this bus go to the train station?,Bas iyan ki relor estheshonot za niki?,unverified,,Bas iyan ki relor estheshonot za niki?,ok,1.0,True,exact_match,Bas iyan ki relor estheshonot za niki?,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+roh->en,Bas iyan ki relor estheshonot za niki?,Does this bus go to the train station?,unverified,,Does this bus go to the train station?,ok,1.0,True,exact_match,Does this bus go to the train station?,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Can I have a one-day ticket?,Aa*i ekkan ek-dinna thiket faiyum ne?,unverified,,Aa*i ekkan ek-dinna thiket faiyum ne?,ok,1.0,True,exact_match,Aa*i ekkan ek-dinna thiket faiyum ne?,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+roh->en,Aa*i ekkan ek-dinna thiket faiyum ne?,Can I have a one-day ticket?,unverified,,Can I have a one-day ticket?,ok,1.0,True,exact_match,Can I have a one-day ticket?,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,How long does it take from here to the station?,Iyontu estheshenot zaite hotun lage?,unverified,,Iyontu estheshenot zaite hotun lage?,ok,1.0,True,exact_match,Iyontu estheshenot zaite hotun lage?,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+roh->en,Iyontu estheshenot zaite hotun lage?,How long does it take from here to the station?,unverified,,How long does it take from here to the station?,ok,1.0,True,exact_match,How long does it take from here to the station?,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,I don't have a ticket yet.,Aa*ttun aijjo ekkan thiketh nai.,unverified,,Aa*ttun aijjo ekkan thiketh nai.,ok,1.0,True,exact_match,Aa*ttun aijjo ekkan thiketh nai.,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+roh->en,Aa*ttun aijjo ekkan thiketh nai.,I don't have a ticket yet.,unverified,,I don't have a ticket yet,ok,1.0,True,exact_match,I don't have a ticket yet,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,She asked if I need a taxi.,Hiba fusar loiye aa*ttu hono theksi zorurot ne.,unverified,,Hiba fusar loiye aa*ttu hono theksi zorurot ne.,ok,1.0,True,exact_match,Hiba fusar loiye aa*ttu hono theksi zorurot ne.,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+roh->en,Hiba fusar loiye aa*ttu hono theksi zorurot ne.,She asked if I need a taxi.,unverified,,She asked if I need a taxi.,ok,1.0,True,exact_match,She asked if I need a taxi.,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,"Fish, please.",Maherbani-gori Mas do.,unverified,,Maherbani-gori Mas do.,ok,1.0,True,exact_match,Maherbani-gori Mas do.,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+roh->en,Maherbani-gori Mas do.,"Fish, please.",unverified,,"Fish, please",ok,1.0,True,exact_match,"Fish, please",ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,How can I pick out fresh fish?,Aa*i kengori tortaza mas basi loi fariyum?,unverified,,Aa*i kengori tortaza mas basi loi fariyum?,ok,1.0,True,exact_match,Aa*i kengori tortaza mas basi loi fariyum?,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+roh->en,Aa*i kengori tortaza mas basi loi fariyum?,How can I pick out fresh fish?,unverified,,How can I pick out fresh fish?,ok,1.0,True,exact_match,How can I pick out fresh fish?,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Would you like some fruit?,Tu*i kissu gula-gala haiba ne?,unverified,,Tu*i kissu gula-gala haiba ne?,ok,1.0,True,exact_match,Tu*i kissu gula-gala haiba ne?,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+roh->en,Tu*i kissu gula-gala haiba ne?,Would you like some fruit?,unverified,,Would you like some fruit?,ok,1.0,True,exact_match,Would you like some fruit?,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,It really is a good price.,Iyan beshi dami.,unverified,,Iyan beshi dami.,ok,1.0,True,exact_match,Iyan beshi dami.,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+roh->en,Iyan beshi dami.,It really is a good price.,unverified,,It really is a good price,ok,1.0,True,exact_match,It really is a good price,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,I need someone to talk to.,Aa*ttu hota hoibolla honikkare lagibo.,unverified,,Aa*ttu hota hoibolla honikkare lagibo.,ok,1.0,True,exact_match,Aa*ttu hota hoibolla honikkare lagibo.,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+roh->en,Aa*ttu hota hoibolla honikkare lagibo.,I need someone to talk to.,unverified,,I need someone to talk to,ok,1.0,True,exact_match,I need someone to talk to,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Please let me know about it.,Meherbani-gori aa*re iiyaanor babute zano.,unverified,,Meherbani-gori aa*re iiyaanor babute zano.,ok,1.0,True,exact_match,Meherbani-gori aa*re iiyaanor babute zano.,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+roh->en,Meherbani-gori aa*re iiyaanor babute zano.,Please let me know about it.,unverified,,Please let me know about it,ok,1.0,True,exact_match,Please let me know about it,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,It was unfortunate that he lost his passport.,Hite hitar faskuth a*zai felaiyede iiyan ekkan fushkara ham.,unverified,,Hite hitar faskuth a*zai felaiyede iiyan ekkan fushkara ham.,ok,1.0,True,exact_match,Hite hitar faskuth a*zai felaiyede iiyan ekkan fushkara ham.,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+roh->en,Hite hitar faskuth a*zai felaiyede iiyan ekkan fushkara ham.,It was unfortunate that he lost his passport.,unverified,,It was unfortunate that he lost his passport,ok,1.0,True,exact_match,It was unfortunate that he lost his passport,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Please wait a minute.,Ek minith entezar goro.,unverified,,Ek minith entezar goro.,ok,1.0,True,exact_match,Ek minith entezar goro.,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+roh->en,Ek minith entezar goro.,Please wait a minute.,unverified,,Please wait a minute,ok,1.0,True,exact_match,Please wait a minute,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Can I get a one day ticket?,Aa*i ekkan ek-dinna thiket faiyum ne?,unverified,,Aa*i ekkan ek-dinna thiket faiyum ne?,ok,0.91,True,exact_match,Aa*i ekkan ek-dinna thiket faiyum ne?,ok,0.91,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Take your pills please,,unverified,,,uncertain,0.0,False,correct_abstain,,uncertain,0.0,False,correct_abstain,,uncertain,0.0,False,correct_abstain
+en->roh,Take your pills with water.,,unverified,,,uncertain,0.0,False,correct_abstain,,uncertain,0.0,False,correct_abstain,,uncertain,0.0,False,correct_abstain
+en->roh,I have a ticket.,,unverified,,,uncertain,0.0,False,correct_abstain,,uncertain,0.0,False,correct_abstain,,uncertain,0.0,False,correct_abstain
+en->roh,Where is the library?,,unverified,,,uncertain,0.0,False,correct_abstain,,uncertain,0.0,False,correct_abstain,,uncertain,0.0,False,correct_abstain
+en->roh,Do you like football?,,unverified,,,uncertain,0.0,False,correct_abstain,,uncertain,0.0,False,correct_abstain,,uncertain,0.0,False,correct_abstain
+en->roh,Take your pill.,Tua*r bori lo.,unverified,,Tua*r bori lo.,ok,0.97,True,exact_match,Tua*r bori lo.,ok,0.97,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Does this bus go to the station?,Bas iyan ki relor estheshonot za niki?,unverified,,Bas iyan ki relor estheshonot za niki?,ok,0.91,True,exact_match,Bas iyan ki relor estheshonot za niki?,ok,0.91,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Can I get a one-day ticket?,Aa*i ekkan ek-dinna thiket faiyum ne?,unverified,,Aa*i ekkan ek-dinna thiket faiyum ne?,ok,0.91,True,exact_match,Aa*i ekkan ek-dinna thiket faiyum ne?,ok,0.91,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,I do not have a ticket yet.,Aa*ttun aijjo ekkan thiketh nai.,unverified,,Aa*ttun aijjo ekkan thiketh nai.,ok,0.96,True,exact_match,Aa*ttun aijjo ekkan thiketh nai.,ok,0.96,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Please wait one minute.,Ek minith entezar goro.,unverified,,Ek minith entezar goro.,ok,0.9,True,exact_match,Ek minith entezar goro.,ok,0.9,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Fish please,Maherbani-gori Mas do.,unverified,,Maherbani-gori Mas do.,ok,1.0,True,exact_match,Maherbani-gori Mas do.,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Would you like fruit?,Tu*i kissu gula-gala haiba ne?,unverified,,Tu*i kissu gula-gala haiba ne?,ok,0.89,True,exact_match,Tu*i kissu gula-gala haiba ne?,ok,0.89,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,I need to go to a hospital.,Aa*ttu dhath'tha-hanat zaito zoruri.,unverified,,Aa*ttu dhath'tha-hanat zaito zoruri.,ok,0.93,True,exact_match,Aa*ttu dhath'tha-hanat zaito zoruri.,ok,0.93,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,I do not need a taxi.,,unverified,,,uncertain,0.0,False,correct_abstain,,uncertain,0.0,False,correct_abstain,,uncertain,0.0,False,correct_abstain
+en->roh,Where is the pharmacy?,,unverified,,,uncertain,0.0,False,correct_abstain,,uncertain,0.0,False,correct_abstain,,uncertain,0.0,False,correct_abstain
+en->roh,How much does this cost?,,unverified,,,uncertain,0.0,False,correct_abstain,,uncertain,0.0,False,correct_abstain,,uncertain,0.0,False,correct_abstain
+en->roh,I need a doctor.,,unverified,,,uncertain,0.0,False,correct_abstain,,uncertain,0.0,False,correct_abstain,,uncertain,0.0,False,correct_abstain
+en->roh,Where is the bathroom?,,unverified,,,uncertain,0.0,False,correct_abstain,,uncertain,0.0,False,correct_abstain,,uncertain,0.0,False,correct_abstain
+en->roh,Take your pills three times a day.,,unverified,,,uncertain,0.0,False,correct_abstain,,uncertain,0.0,False,correct_abstain,,uncertain,0.0,False,correct_abstain
+en->roh,Hello,sólam,unverified,,sólam,ok,1.0,True,exact_match,sólam,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Goodbye,Khoda hafiz,unverified,,,uncertain,1.0,True,abstained,,uncertain,1.0,True,abstained,,uncertain,0.0,False,abstained
+en->roh,Welcome,mórhaba,unverified,,mórhaba,ok,1.0,True,exact_match,mórhaba,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Thanks,cúkuria,unverified,,cúkuria,ok,1.0,True,exact_match,cúkuria,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Please,meérbanigorí,unverified,,meérbanigorí,ok,1.0,True,exact_match,meérbanigorí,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Sorry,afsús,unverified,,afsús,ok,1.0,True,exact_match,afsús,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Yes,ói,unverified,,ói,ok,1.0,True,exact_match,ói,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,No,noó,unverified,,noó,ok,1.0,True,exact_match,noó,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Okay,aiccá,unverified,,aiccá,ok,1.0,True,exact_match,aiccá,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Good,gom,unverified,,gom,ok,1.0,True,exact_match,gom,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Fine,gom,unverified,,gom,ok,1.0,True,exact_match,gom,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Happy,kúci,unverified,,kúci,ok,1.0,True,exact_match,kúci,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Nice,cúndor,unverified,,cúndor,ok,1.0,True,exact_match,cúndor,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Well,bála,unverified,,bála,ok,1.0,True,exact_match,bála,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Name,nam,unverified,,nam,ok,1.0,True,exact_match,nam,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Friend,dustó,unverified,,dustó,ok,1.0,True,exact_match,dustó,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Family,fémli,unverified,,fémli,ok,1.0,True,exact_match,fémli,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Guest,meéman,unverified,,meéman,ok,1.0,True,exact_match,meéman,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Meet,mulakot goré,unverified,,mulakot goré,ok,1.0,True,exact_match,mulakot goré,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Introduce,sinno do,unverified,,sinno do,ok,1.0,True,exact_match,sinno do,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Thank,cúkuria gor,unverified,,cúkuria gor,ok,1.0,True,exact_match,cúkuria gor,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Help,modotgor,unverified,,modotgor,ok,1.0,True,exact_match,modotgor,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Speak,hotáhoó,unverified,,hotáhoó,ok,1.0,True,exact_match,hotáhoó,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Listen,fún,unverified,,fún,ok,1.0,True,exact_match,fún,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Understand,buzí,unverified,,buzí,ok,1.0,True,exact_match,buzí,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Today,aijja,unverified,,aijja,ok,1.0,True,exact_match,aijja,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Tomorrow,hailla,unverified,,hailla,ok,1.0,True,exact_match,hailla,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Morning,beéinna,unverified,,beéinna,ok,1.0,True,exact_match,beéinna,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Evening,házinná,unverified,,házinná,ok,1.0,True,exact_match,házinná,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Excuse me,ekkená gorí,unverified,,ekkená gorí,ok,1.0,True,exact_match,ekkená gorí,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Polite,cóibbotá,unverified,,cóibbotá,ok,1.0,True,exact_match,cóibbotá,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Respect,izzot,unverified,,izzot,ok,1.0,True,exact_match,izzot,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Kind,noromdil ola,unverified,,noromdil ola,ok,1.0,True,exact_match,noromdil ola,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Introduction,taarif,unverified,,taarif,ok,1.0,True,exact_match,taarif,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Conversation,hotá báttra,unverified,,hotá báttra,ok,1.0,True,exact_match,hotá báttra,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Invitation,dawot,unverified,,dawot,ok,1.0,True,exact_match,dawot,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Visitor,ziyarot goróya,unverified,,ziyarot goróya,ok,1.0,True,exact_match,ziyarot goróya,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Grateful,cúkurguzar,unverified,,cúkurguzar,ok,1.0,True,exact_match,cúkurguzar,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained
+en->roh,Peace,cánti,unverified,,cánti,ok,1.0,True,exact_match,cánti,ok,1.0,True,exact_match,,uncertain,0.0,False,abstained

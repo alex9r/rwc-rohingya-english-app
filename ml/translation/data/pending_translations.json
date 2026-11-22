@@ -1,0 +1,362 @@
+[
+  {
+    "id": "65ff2385a98a",
+    "input": "Can I pay using my debit card?",
+    "translation": "Mui debit card diyi foin farim?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "b997742a21d5",
+    "input": "Is there a cheaper option?",
+    "translation": "Ar ki sasta option ase?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "3e755d95101a",
+    "input": "Can you help me find rice?",
+    "translation": "Bhaat goli diba fariro?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "8c568037257d",
+    "input": "What time does this grocery store close?",
+    "translation": "Idukon dokan kuita baaje bondho oiye?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "ccc8e56f61e6",
+    "input": "Do you have any fresh fish today?",
+    "translation": "Ajjoni taza mas aseni?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "0f30d7bfdc36",
+    "input": "Can I return this item tomorrow?",
+    "translation": "Aami ki e jinish-tu kaile firaite fairam?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "5ddb233ab039",
+    "input": "Where can I find the cooking oil?",
+    "translation": "Rannar tel gote kunja faimu?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "6090e7e192cc",
+    "input": "Can you give me a receipt?",
+    "translation": "Ami eki raxid foita farmari?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "332ff0c168ee",
+    "input": "Is this product on sale?",
+    "translation": "E fôror-or biroi bikri aséne?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "1ae9753c2b10",
+    "input": "Can I have two kilograms of potatoes?",
+    "translation": "Aloo duikilo foñor fari?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "8b22791d8a36",
+    "input": "Which bus should I take to the hospital?",
+    "translation": "Hospital jaibare koir bus tuwa laibo?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "a583c15934d9",
+    "input": "Where can I recharge my transit card?",
+    "translation": "Mubail gariola card kiwa recharge gorone jaibo?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "e4740a8cc36b",
+    "input": "Is this the correct platform?",
+    "translation": "Ey platform saikha noki?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "d6056e609549",
+    "input": "How much does a monthly bus pass cost?",
+    "translation": "Mahina bus pass ki rom dam foórtte?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "22570695ea28",
+    "input": "Can you tell me when to get off?",
+    "translation": "Aarare koinno ki somoy namon?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "79cf941cc241",
+    "input": "Where is the nearest bus shelter?",
+    "translation": "Súbae fán saibba bas gor zíá asse?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "f78749107daf",
+    "input": "Is the train running late today?",
+    "translation": "Aj train derry oijje naki?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "0d6c71036e6d",
+    "input": "I am looking for a part-time job",
+    "translation": "Ami ekhanu part-time job biddiyartheci",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "36b9f5975c6f",
+    "input": "Where should I report on my first day?",
+    "translation": "Fohilla dinu muijjo kuwaot zaitu hoibo?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "115fcc38016e",
+    "input": "Can you explain my job responsibilities?",
+    "translation": "Aamiar kam-kaajor zimmadaari ki, gari di-babaar foarbaani?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "3fca2ac2c805",
+    "input": "How do I request a day off?",
+    "translation": "A din sutti kemne la'i?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "5562fbd9953c",
+    "input": "Can I change my working hours?",
+    "translation": "Aamni ki āmār kāmra somoi bodolā pāribam?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "af98c787c31f",
+    "input": "I would like to book a doctor's appointment",
+    "translation": "Āi ḍaktaror asmanat ekṭā ṭākiibot fuyares toliir",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "28ded56dda0d",
+    "input": "Where can I find a walk-in clinic?",
+    "translation": "Āi kuntu ghurratu unna hāsil goritu fārim?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "7238280db443",
+    "input": "Can I speak with an interpreter?",
+    "translation": "Mui ekjon dhabashi-or loge kotha koite parium?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "6bcd5399ed15",
+    "input": "I need help filling out this medical form",
+    "translation": "A'i furiot dorcar ei ocuci form tula gori ditte",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "699ce835c2e9",
+    "input": "What documents should I bring to the clinic?",
+    "translation": "Clinic-ot ki kagoj-patro loi jaite hoibo?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "67203c164b76",
+    "input": "Can I reschedule my appointment?",
+    "translation": "Foyar tarikh bodoli pairam ki?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "31418e839150",
+    "input": "Where is the nearest pharmacy?",
+    "translation": "Sabot'ot ki doan kointa ase?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "930496832420",
+    "input": "Can you explain these instructions more slowly?",
+    "translation": "Ai hiddaat gura arau ahista bujhaye arifaba?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "3f38ad437d54",
+    "input": "I have an appointment with the dentist",
+    "translation": "Mui datar loiya eba appointment ase",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "e6720d044ae4",
+    "input": "Can you write down the appointment time?",
+    "translation": "Bela somoy likhi rakhi pariba?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "bfcabb5ef8b1",
+    "input": "Is there someone who speaks my language?",
+    "translation": "Āra bāśāt gōmboijjá ëjjūn óse?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "f2609a8dbf69",
+    "input": "How can I contact the clinic?",
+    "translation": "Kliniik otte kiiba raaptha goron fariyam?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "e5237d76ab96",
+    "input": "I am still learning to speak English",
+    "translation": "Ami ekhono Ilishi koa xikhi roram.",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "20dc6a810d73",
+    "input": "Could you please repeat that more slowly?",
+    "translation": "Ona sa aroi arii saittare foibo?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "a0c75d10bb67",
+    "input": "Can you help me fill out this application?",
+    "translation": "Tuwaá faaró añaró a’isár eibouhán foiyó?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "1f1fd14444da",
+    "input": "I recently moved to this neighbourhood",
+    "translation": "Aami samane eyi mahalla-ot baso gelaari.",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "4b976c3aaefb",
+    "input": "How can I open a bank account?",
+    "translation": "Fiyol beŋk akawnt kiwane fula zoiyye?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "ea02d2b972af",
+    "input": "Where can I get a library card?",
+    "translation": "Library card ki'fabe banam?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "75fcebfee879",
+    "input": "How can I contact the settlement worker?",
+    "translation": "Settlement worker re loge kihaifare guriye faimu?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "920ceaf7f7cf",
+    "input": "What time does the English class begin?",
+    "translation": "Inrezi class kiwta shuru foje?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "a40277766d51",
+    "input": "Can you show me how to use this machine?",
+    "translation": "Āni aréi yé mósīn ki-rúm bébohar gáritá óibo?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "c191c40bdbba",
+    "input": "I need help creating an email account",
+    "translation": "Imail aiyek khulor lailla moror sahajja darkar",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  },
+  {
+    "id": "a9542183b476",
+    "input": "Do you sell halal chicken?",
+    "translation": "Tumi halal murgi besro ki?",
+    "direction": "en->roh",
+    "source": "gemini",
+    "verification_status": "pending_review"
+  }
+]
