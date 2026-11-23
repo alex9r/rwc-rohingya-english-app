@@ -135,7 +135,7 @@ Account-wide **Block Public Access** is on. Every bucket has default SSE-KMS wit
 |---|---|---|---|
 | `rwc-media` | Word images, reference audio | CloudFront only (Origin Access Control). Never public. | Versioned. Cross-region replication to ca-west-1. |
 | `rwc-datasets` | Released lexicon JSON snapshots (the files in `ml/translation/data/`) | Pipeline and loader roles | S3 Object Lock (governance mode) on released versions, so a published lexicon can't be silently altered. |
-| `rwc-learner-audio` | Pronunciation recordings, only if the team decides to keep them | Presigned PUT from the app (5-minute expiry, size and content-type limits). Read by the scoring role only. | **Expire after 30 days** (lifecycle rule). **Not versioned**, so a delete really removes the audio. Not replicated. Amazon Macie scans it. |
+| `rwc-learner-audio` | Pronunciation recordings, only if the team decides to keep them | Presigned PUT from the app (5-minute expiry, size and content-type limits). Read by the scoring role only. | **Expire after 30 days** (lifecycle rule). **Not versioned**, so a delete really removes the audio. Not replicated. Every read and write is logged by CloudTrail data events (Macie was planned here, but it can't read audio; see [security-monitoring.md](security-monitoring.md)). |
 | `rwc-research-audio` | Consented Centre recordings for benchmarking and fine-tuning speech models | The data holder uploads them. The SageMaker role reads them (own KMS key, no access to `rwc-learner-audio`). | Kept for the length the consent form states (default 365 days). Versioned, with old versions removed after 7 days. Not replicated. Training uses only recordings with `model_training` consent. |
 | `rwc-logs` | CloudTrail, CloudFront and S3 access logs | Security role, read-only | 1 year, then delete |
 
@@ -194,7 +194,7 @@ This is a CLI for the data holder, not an API route, because the API has no auth
 - CloudTrail with S3 and DynamoDB data events, GuardDuty, AWS Config rules (no public buckets, encryption required, PITR enabled), and an alarm on unusual `rwc-progress` read volume.
 - Written breach-response plan: who is told, in what order, within what time. Define it before launch.
 
-**[Not yet built]** in Terraform: CloudTrail data events, GuardDuty, AWS Config.
+**[Implemented, not yet applied]** in [`infra/security/`](../infra/security/main.tf), a separate account-baseline stack applied before the data stack. It covers CloudTrail (data events on recordings and the private tables), GuardDuty, eight AWS Config rules, IAM Access Analyzer, account-wide S3 Block Public Access, and email alarms for tampering and root use. A draft breach-response plan is in [security-monitoring.md](security-monitoring.md); it needs named people and the Centre's sign-off. Changes from the list above: Macie is dropped (it can't read audio), and the `rwc-progress` read-volume alarm waits until that table is built.
 
 ### 5.5 Uptime monitoring **[Implemented]**
 

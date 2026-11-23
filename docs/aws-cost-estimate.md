@@ -17,7 +17,7 @@ All AWS figures are in **USD**. They are estimates from AWS list prices for ca-c
 
 ### Backend hosting, database, API and monitoring ($350)
 
-This line covers everything in `infra/` plus the API: DynamoDB, CloudFront, API Gateway, Lambda, the encryption keys and the security monitoring (GuardDuty, AWS Config, Macie, CloudTrail). During the project the users are the frontend team and community partners, so "pilot" scale (about 50 people) is the right assumption. It's budgeted for all 8 months, which is cautious.
+This line covers everything in `infra/` plus the API: DynamoDB, CloudFront, API Gateway, Lambda, the encryption keys and the security monitoring (GuardDuty, AWS Config, CloudTrail; see [security-monitoring.md](security-monitoring.md)). During the project the users are the frontend team and community partners, so "pilot" scale (about 50 people) is the right assumption. It's budgeted for all 8 months, which is cautious.
 
 | Hosting setup (pilot scale) | Monthly | 8 months | vs $350 line |
 |---|---:|---:|---|
@@ -38,8 +38,8 @@ Monthly breakdown by scale, in case the app is used more widely after the projec
 |---|---:|---:|---:|
 | KMS keys (4) | $4.00 | $4.00 | $4.00 |
 | GuardDuty (threat detection) | $5.00 | $5.00 | $5.00 |
-| AWS Config (5 rules) | $5.00 | $5.00 | $5.00 |
-| Macie (scan learner-audio) | $1.00 | $1.00 | $1.00 |
+| AWS Config (8 rules) | $5.00 | $5.00 | $5.00 |
+| KMS key for security logs (replaces Macie, which can't read audio) | $1.00 | $1.00 | $1.00 |
 | CloudTrail data events | $1.00 | $1.00 | $1.00 |
 | Secrets Manager (2 secrets) | $0.80 | $0.80 | $0.80 |
 | DynamoDB requests | $0.01 | $0.12 | $1.22 |

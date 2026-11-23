@@ -8,13 +8,14 @@ Expo app ─HTTPS─► API Gateway (HTTP API, throttled) ─► Lambda "live" a
 CloudWatch alarms + canary + dashboard ─► SNS ─► email            Budget ─► email
 ```
 
-## Three stacks, applied in this order
+## Four stacks, applied in this order
 
 | Stack | Directory | Owns | State |
 |---|---|---|---|
 | 1. Bootstrap | `bootstrap/` | Terraform state bucket, GitHub OIDC login | local, once |
-| 2. **Data stack** | `infra/` root (`*.tf`) | KMS keys, S3 buckets, DynamoDB tables, CloudFront, data-access IAM policies. **Source of truth for data; see [its own guide](#data-stack-infra-root) below.** | local (its README) |
-| 3. Compute stack | `envs/dev/` + `modules/` | Lambda, API Gateway, IAM roles, ECR, monitoring | S3 (from bootstrap) |
+| 2. Security baseline | `security/` | CloudTrail, GuardDuty, AWS Config rules, Access Analyzer, account-wide Block Public Access, security alert emails ([docs/security-monitoring.md](../docs/security-monitoring.md)) | local |
+| 3. **Data stack** | `infra/` root (`*.tf`) | KMS keys, S3 buckets, DynamoDB tables, CloudFront, data-access IAM policies. **Source of truth for data; see [its own guide](#data-stack-infra-root) below.** | local (its README) |
+| 4. Compute stack | `envs/dev/` + `modules/` | Lambda, API Gateway, IAM roles, ECR, monitoring | S3 (from bootstrap) |
 
 The compute stack never creates or changes data resources. It looks up the data stack's content table, keys and `rwc-<env>-api` policy by name (`envs/dev/data.tf`), so the data stack must be applied first, with the same `environment`.
 
@@ -42,7 +43,7 @@ CI runs these on every PR that touches `infra/` (`.github/workflows/infra.yml`).
 ```bash
 cd infra
 terraform fmt -check -recursive
-for dir in . envs/dev bootstrap; do (cd $dir && terraform init -backend=false && terraform validate); done
+for dir in . envs/dev bootstrap security; do (cd $dir && terraform init -backend=false && terraform validate); done
 tflint --init && tflint --recursive
 checkov -d . --config-file .checkov.yaml
 ```
@@ -58,25 +59,26 @@ Use your own AWS credentials (IAM Identity Center/SSO), never root or long-lived
    cd infra/bootstrap && terraform init && terraform apply
    ```
    Note the outputs `state_bucket` and `github_oidc_provider_arn`. Back up `bootstrap/terraform.tfstate` (it isn't in git).
-2. **Data stack:** follow [its guide](#when-the-aws-account-is-ready) (`cd infra && terraform apply -var-file=dev.tfvars`). Use `environment = "dev"`.
-3. **ECR and roles only.** The function can't be created until an image exists.
+2. **Security baseline:** `cd infra/security`, copy `terraform.tfvars.example` to `terraform.tfvars` (same `environment` and `name_prefix` as the data stack, plus `security_alert_email`), then `terraform init && terraform apply`. Confirm the SNS subscription email. Applying it first means the data resources are watched from the moment they exist.
+3. **Data stack:** follow [its guide](#when-the-aws-account-is-ready) (`cd infra && terraform apply -var-file=dev.tfvars`). Use `environment = "dev"`.
+4. **ECR and roles only.** The function can't be created until an image exists.
    ```bash
    cd infra/envs/dev
    cp terraform.tfvars.example terraform.tfvars   # set alert_email, github_oidc_provider_arn
    terraform init -backend-config="bucket=<state_bucket>"
    terraform apply -target=module.ecr -target=module.iam
    ```
-4. **GitHub setup, then push the first image.** In the repo settings:
+5. **GitHub setup, then push the first image.** In the repo settings:
    - Create an environment named `production` with a required reviewer.
-   - Add repository variables from `terraform output`: `AWS_ROLE_ARN`, `ECR_REPOSITORY`, `LAMBDA_FUNCTION`, `API_URL` (`API_URL` appears after step 5; add it then).
+   - Add repository variables from `terraform output`: `AWS_ROLE_ARN`, `ECR_REPOSITORY`, `LAMBDA_FUNCTION`, `API_URL` (`API_URL` appears after step 6; add it then).
    - Run the **Deploy** workflow (Actions tab, "Run workflow"). It builds with Whisper baked in, pushes the image, and stops with a notice because the function doesn't exist yet.
-5. **Full apply** with the pushed image: set `image_tag = "<git SHA from step 4>"` in `terraform.tfvars`, then `terraform apply`. Confirm the SNS subscription email AWS sends to `alert_email`, and add `API_URL` to the repo variables.
-6. **Load the lexicon** with the loader role (the API's own role can't write content):
+6. **Full apply** with the pushed image: set `image_tag = "<git SHA from step 5>"` in `terraform.tfvars`, then `terraform apply`. Confirm the SNS subscription email AWS sends to `alert_email`, and add `API_URL` to the repo variables.
+7. **Load the lexicon** with the loader role (the API's own role can't write content):
    ```bash
    # assume the role in terraform output loader_role_arn, then from backend/:
    VOCAB_TABLE=<table_name> AWS_REGION=ca-central-1 python -m app.dynamo_load
    ```
-7. **Check:** `curl $API_URL/health` shows `"data_source": "dynamodb"`, `"transcribe": "real"` and `"pronunciation": "real"` (the first call may take a while: cold start), the canary turns green in CloudWatch, and the dashboard (output `dashboard_url`) has data.
+8. **Check:** `curl $API_URL/health` shows `"data_source": "dynamodb"`, `"transcribe": "real"` and `"pronunciation": "real"` (the first call may take a while: cold start), the canary turns green in CloudWatch, and the dashboard (output `dashboard_url`) has data.
 
 Expect a round of fixes on the first apply: `validate` and `checkov` can't catch everything (for example the Synthetics runtime version, which AWS retires over time, and the Lambda Web Adapter version in `backend/Dockerfile`).
 
@@ -85,7 +87,7 @@ Expect a round of fixes on the first apply: `validate` and `checkov` can't catch
 - **Code changes:** merge to `main` → the Deploy workflow waits for approval → new image → new Lambda version → `live` alias moves to it after the smoke test passes, or back to the previous version if it fails.
 - **Infrastructure changes:** edit Terraform, open a PR (CI checks it), then the account owner runs `terraform apply`. CI never applies.
 - **Function settings** (environment variables, memory in `envs/dev`): `terraform apply` updates the function, and they reach traffic with the next published version, i.e. the next deploy.
-- **Lexicon changes:** re-run step 6. New entries are added; existing ones are left alone, so reviewer corrections survive. `--overwrite` replaces existing entries (and their corrections) on purpose. The app picks changes up within `VOCAB_CACHE_TTL_S` (5 minutes).
+- **Lexicon changes:** re-run step 7. New entries are added; existing ones are left alone, so reviewer corrections survive. `--overwrite` replaces existing entries (and their corrections) on purpose. The app picks changes up within `VOCAB_CACHE_TTL_S` (5 minutes).
 - **Cold starts:** the canary's 5-minute check keeps one instance warm. If the first request of the day is still too slow, set `provisioned_concurrency = 1` (billed every hour).
 - **Canary script changes** (`modules/monitoring/canary/`): Terraform may not notice a changed zip; taint the canary or bump its runtime to force an update.
 
@@ -148,6 +150,6 @@ Each of these is described in the architecture doc and deliberately left for lat
 - **Compute** (Lambda or Fargate) and **API Gateway**, pending the team's choice.
 - **Cognito** for reviewer sign-in, pending the sign-in decision.
 - **Second region:** DynamoDB global-table replicas and S3 replication to ca-west-1. Streams are already on. Replicas need a KMS key in ca-west-1.
-- **Account-level security:** CloudTrail, GuardDuty, AWS Config and Macie. These belong in an account baseline, not this stack.
+- **Account-level security:** now in its own stack, [`security/`](security/main.tf) (CloudTrail, GuardDuty, AWS Config, Access Analyzer, account-wide Block Public Access, alarms). See [docs/security-monitoring.md](../docs/security-monitoring.md). Macie is left out because it can't read audio.
 - **CloudFront access logs and WAF:** these are the two Trivy findings. Logs need an ACL-enabled log bucket. WAF is optional (see the cost estimate).
 - **Remote Terraform state.**

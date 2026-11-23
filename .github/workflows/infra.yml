@@ -28,7 +28,7 @@ jobs:
       # policies), envs/dev is compute/API/monitoring (Lambda), bootstrap is state + OIDC.
       - name: Validate
         run: |
-          for dir in . envs/dev bootstrap; do
+          for dir in . envs/dev bootstrap security; do
             terraform -chdir="$dir" init -backend=false -input=false
             terraform -chdir="$dir" validate
           done

@@ -33,8 +33,8 @@ PRICE = {
 FIXED = {
     "KMS keys (4)": 4 * PRICE["kms_key"],
     "GuardDuty (threat detection)": 5.00,
-    "AWS Config (5 rules)": 5.00,
-    "Macie (scan learner-audio)": 1.00,
+    "AWS Config (8 rules)": 5.00,
+    "KMS security-log key (Macie not used: it can't read audio)": PRICE["kms_key"],
     "CloudTrail data events": 1.00,
     "Secrets Manager (2 secrets)": 0.80,
 }
