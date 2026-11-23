@@ -1,0 +1,3 @@
+environment          = "dev"
+name_prefix          = "rwc-CHANGE-ME-dev" # same as the data stack's dev.tfvars
+security_alert_email = "privacy-lead@example.org"

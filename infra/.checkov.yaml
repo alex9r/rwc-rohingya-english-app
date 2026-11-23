@@ -1,0 +1,61 @@
+# Checkov settings for CI (.github/workflows/infra.yml).
+#
+# The compute stack (envs/dev, modules/) records its accepted findings inline, next to
+# each resource (#checkov:skip=...). The data stack (infra/*.tf) is its author's design
+# and source of truth, so the findings accepted for it are listed here instead of being
+# added to its files.
+#
+# Verified against real checkov runs (bridgecrew/checkov in Docker, with and without a
+# prior `terraform init`): these are exactly the checks the data stack trips, and every
+# one of them lands on the data stack. They are global skips, so a new resource
+# anywhere would also be exempt from them: re-run checkov when you add one.
+#
+# For the data stack's owner: CKV_AWS_300 is a small real gap (see below); the rest are
+# either deliberate, or checkov can't see through the data stack's for_each.
+#
+# Note: checkov also loads a file named .checkov.yaml from the directory it scans, so
+# this file applies even when --config-file isn't passed.
+
+skip-check:
+  # --- s3.tf ---------------------------------------------------------------------
+  # learner-audio is unversioned on purpose (the file says so): with versioning,
+  # "delete" would leave recoverable copies. The other buckets (media, logs,
+  # research-audio) ARE versioned, through aws_s3_bucket_versioning over a filtered
+  # for_each, which checkov can't evaluate, so it reports them too.
+  - CKV_AWS_21
+  # `datasets` (Object Lock) and `media` have no lifecycle rule on purpose: released
+  # lexicon snapshots and published media are kept.
+  - CKV2_AWS_61
+  # The `logs` lifecycle rule has no abort_incomplete_multipart_upload. Real but low
+  # risk (nothing writes large multipart uploads to the log bucket); worth adding.
+  - CKV_AWS_300
+  # Second region, bucket access logging and event notifications are deferred (data
+  # stack README, "Not yet included": replicas, and logs need an ACL-enabled log bucket).
+  - CKV_AWS_144
+  - CKV_AWS_18
+  - CKV2_AWS_62
+  # --- kms.tf --------------------------------------------------------------------
+  # learner-data, learner-audio and research-audio use the default key policy (the
+  # account root, so IAM policies control access) rather than a custom one.
+  - CKV2_AWS_64
+  # --- cloudfront.tf -------------------------------------------------------------
+  # Content key policy: the standard account-root kms:* statement, and a CloudFront
+  # decrypt statement scoped by aws:SourceArn. In a key policy, resource "*" means the
+  # key itself.
+  - CKV_AWS_109
+  - CKV_AWS_111
+  - CKV_AWS_356
+  # The media distribution: access logs and WAF are deferred (data stack README: two
+  # known Trivy findings; WAF optional per docs/aws-cost-estimate.md); no custom domain
+  # yet, so the default CloudFront certificate and TLS setting; a single media bucket
+  # (no origin failover); direct object URLs (no index page); no geo restriction (the
+  # Centre's users, and their relatives, may be anywhere); no custom response headers.
+  - CKV_AWS_86
+  - CKV_AWS_68
+  - CKV2_AWS_47
+  - CKV2_AWS_32
+  - CKV_AWS_310
+  - CKV_AWS_174
+  - CKV2_AWS_42
+  - CKV_AWS_305
+  - CKV_AWS_374

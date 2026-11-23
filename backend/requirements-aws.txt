@@ -1,0 +1,2 @@
+# Only needed when recordings are stored in S3 (see docs/aws-architecture.md).
+boto3>=1.34

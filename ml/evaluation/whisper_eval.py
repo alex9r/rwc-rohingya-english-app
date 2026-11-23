@@ -28,7 +28,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from .common import (DEFAULT_CLIPS, detect_language, is_looping, romanize,
+from .common import (DEFAULT_CLIPS, detect_language, romanize,
                      sample_clips, transcribe)
 
 # macOS `say` voices. Swap these if you are not on a Mac.
