@@ -1,3 +1,8 @@
-﻿__pycache__/
+ml/pronunciation/smoke_clips/
+*cache/
+__pycache__/
+.pytest_cache/
+ml/pronunciation/smoke_clips_cv/
+.venv/
 failures.csv
 .env

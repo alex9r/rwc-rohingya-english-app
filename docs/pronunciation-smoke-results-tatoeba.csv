@@ -1,0 +1,32 @@
+clip_id,pairing,accent_label,target,heard,score,status,confidence,feedback_code,needs_improvement
+tatoeba-1247735,correct,unknown,We're a peaceful people.,We're peaceful people,80,scored,0.661,good,a->-
+tatoeba-1247735,wrong_target,unknown,I reserved a place.,We're peaceful people,0,scored,0.661,try_again,i->we; reserved->are; a->peaceful; place->people
+tatoeba-1247706,correct,unknown,I reserved a place.,I reserved a place.,100,scored,0.5569,great,
+tatoeba-1247706,wrong_target,unknown,I told you all this would happen.,I reserved a place.,14,scored,0.5569,try_again,told->-; you->-; all->-; this->reserved; would->a; happen->place
+tatoeba-1285692,correct,unknown,I told you all this would happen.,I told you all this would happen.,100,scored,0.7748,great,
+tatoeba-1285692,wrong_target,unknown,What a pretty flower.,I told you all this would happen.,0,scored,0.7748,try_again,+->i; +->told; +->you; what->all; a->this; pretty->would; flower->happen
+tatoeba-1129396,correct,unknown,What a pretty flower.,What a pretty flower.,100,scored,0.7223,great,
+tatoeba-1129396,wrong_target,unknown,I barely had dinner.,What a pretty flower.,0,scored,0.7223,try_again,i->what; barely->a; had->pretty; dinner->flower
+tatoeba-1249195,correct,unknown,I barely had dinner.,I barely had dinner.,100,scored,0.6772,great,
+tatoeba-1249195,wrong_target,unknown,This is not a very good example.,I barely had dinner.,0,scored,0.6772,try_again,this->-; is->-; not->-; a->i; very->barely; good->had; example->dinner
+tatoeba-1247518,correct,unknown,This is not a very good example.,This is not a very good example,100,scored,0.9246,great,
+tatoeba-1247518,wrong_target,unknown,My big sister swims very fast.,This is not a very good example,15,scored,0.9246,try_again,my->this; big->is; sister->not; swims->a; +->good; fast->example
+tatoeba-1285547,correct,unknown,My big sister swims very fast.,My big sister swims very fast,100,scored,0.9069,great,
+tatoeba-1099931,correct,unknown,Huh. I wonder who that's for.,"Huh, I wonder who that's for?",100,scored,0.6231,great,
+tatoeba-1285486,correct,unknown,How do archeologists know where to dig?,How do archaeologists know where to dig?,99,scored,0.7212,great,archeologists->archaeologists
+tatoeba-1134378,correct,unknown,Esther has posttraumatic stress disorder.,Esther has post-traumatic stress disorder.,88,scored,0.688,good,+->post; posttraumatic->traumatic
+tatoeba-1129409,correct,unknown,He thinks that English sounds abrasive.,He thinks that English sounds abrasive.,100,scored,0.6483,great,
+tatoeba-1249331,correct,unknown,Get off your cross.,Get off your cross,100,scored,0.7079,great,
+tatoeba-1278544,correct,unknown,He heard footsteps.,He heard footsteps.,100,scored,0.5311,great,
+tatoeba-1152970,correct,unknown,I've been to every corner of Europe.,I've been to every corner of Europe.,100,scored,0.6748,great,
+tatoeba-1158055,correct,unknown,Leave me out of this!,Leave me out of this.,100,scored,0.6667,great,
+tatoeba-1158685,correct,unknown,Mary was expelled from the Senate.,Mary was expelled from the Senate.,100,scored,0.669,great,
+tatoeba-1158036,correct,unknown,He comes here once a month.,He comes here once a month.,100,scored,0.6008,great,
+tatoeba-1278580,correct,unknown,She returned quickly.,She returned quickly.,100,scored,0.6142,great,
+tatoeba-1278147,correct,unknown,She needs this.,She needs this.,100,scored,0.5576,great,
+tatoeba-1278594,correct,unknown,She is unsociable.,She is un-sourgeable.,57,scored,0.5231,keep_going,+->un; unsociable->sourgeable
+tatoeba-1278553,correct,unknown,He needs assistants.,He needs assistance.,93,scored,0.5852,great,assistants->assistance
+tatoeba-1278141,correct,unknown,She seems excited.,She seems excited.,100,scored,0.5627,great,
+tatoeba-1278572,correct,unknown,He apologized profusely.,He apologized profusely.,100,scored,0.6494,great,
+tatoeba-1278595,correct,unknown,He missed class.,He missed class.,100,scored,0.5186,great,
+tatoeba-839086,correct,unknown,The surgeon's suture technique minimizes scarring.,The surgeon's suture technique minimizes scarring.,100,scored,0.7719,great,

@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Any, Callable, Optional
 
 from .manifest import Clip
-from .metrics import NO_OUTPUT, ClipScore, breakdown, score_clip, summarize
+from .metrics import ClipScore, breakdown, score_clip, summarize
 
 # transcriber(path, language) -> (text, status). Injectable so tests need no model.
 Transcriber = Callable[[str, Optional[str]], tuple[str, str]]

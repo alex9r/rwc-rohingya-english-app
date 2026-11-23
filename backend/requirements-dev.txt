@@ -1,0 +1,7 @@
+-r requirements.txt
+pytest>=8.0
+httpx>=0.27
+ruff>=0.6
+numpy>=1.24
+av>=12
+moto[dynamodb]>=5.0  # in-process DynamoDB for tests

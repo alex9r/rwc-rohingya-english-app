@@ -1,0 +1,4 @@
+environment = "dev"
+name_prefix = "rwc-CHANGE-ME-dev"
+# Only for a throwaway dev account:
+# deletion_protection = false
