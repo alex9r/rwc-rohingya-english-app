@@ -3640,6 +3640,90 @@
       "voice": "af_heart",
       "license": "Kokoro-82M weights Apache-2.0 (hexgrad/Kokoro-82M); kokoro-onnx MIT. Model card lists CC BY training data (Koniwa, SIWIS): credit in app credits.",
       "date": "2026-11-23"
+    },
+    {
+      "word_id": "rohingya_304",
+      "path": "ml/translation/picture_dictionary/Audio/rohingya_304_audio_en_tts_placeholder.mp3",
+      "kind": "tts_placeholder",
+      "validated": false,
+      "language": "en",
+      "text": "My father works in a factory",
+      "engine": "kokoro",
+      "voice": "af_heart",
+      "license": "Kokoro-82M weights Apache-2.0 (hexgrad/Kokoro-82M); kokoro-onnx MIT. Model card lists CC BY training data (Koniwa, SIWIS): credit in app credits.",
+      "date": "2026-11-23"
+    },
+    {
+      "word_id": "rohingya_305",
+      "path": "ml/translation/picture_dictionary/Audio/rohingya_305_audio_en_tts_placeholder.mp3",
+      "kind": "tts_placeholder",
+      "validated": false,
+      "language": "en",
+      "text": "I need to go to the hospital",
+      "engine": "kokoro",
+      "voice": "af_heart",
+      "license": "Kokoro-82M weights Apache-2.0 (hexgrad/Kokoro-82M); kokoro-onnx MIT. Model card lists CC BY training data (Koniwa, SIWIS): credit in app credits.",
+      "date": "2026-11-23"
+    },
+    {
+      "word_id": "rohingya_306",
+      "path": "ml/translation/picture_dictionary/Audio/rohingya_306_audio_en_tts_placeholder.mp3",
+      "kind": "tts_placeholder",
+      "validated": false,
+      "language": "en",
+      "text": "Do I need a taxi?",
+      "engine": "kokoro",
+      "voice": "af_heart",
+      "license": "Kokoro-82M weights Apache-2.0 (hexgrad/Kokoro-82M); kokoro-onnx MIT. Model card lists CC BY training data (Koniwa, SIWIS): credit in app credits.",
+      "date": "2026-11-23"
+    },
+    {
+      "word_id": "rohingya_307",
+      "path": "ml/translation/picture_dictionary/Audio/rohingya_307_audio_en_tts_placeholder.mp3",
+      "kind": "tts_placeholder",
+      "validated": false,
+      "language": "en",
+      "text": "It really is a good price",
+      "engine": "kokoro",
+      "voice": "af_heart",
+      "license": "Kokoro-82M weights Apache-2.0 (hexgrad/Kokoro-82M); kokoro-onnx MIT. Model card lists CC BY training data (Koniwa, SIWIS): credit in app credits.",
+      "date": "2026-11-23"
+    },
+    {
+      "word_id": "rohingya_308",
+      "path": "ml/translation/picture_dictionary/Audio/rohingya_308_audio_en_tts_placeholder.mp3",
+      "kind": "tts_placeholder",
+      "validated": false,
+      "language": "en",
+      "text": "My name is Amina",
+      "engine": "kokoro",
+      "voice": "af_heart",
+      "license": "Kokoro-82M weights Apache-2.0 (hexgrad/Kokoro-82M); kokoro-onnx MIT. Model card lists CC BY training data (Koniwa, SIWIS): credit in app credits.",
+      "date": "2026-11-23"
+    },
+    {
+      "word_id": "rohingya_309",
+      "path": "ml/translation/picture_dictionary/Audio/rohingya_309_audio_en_tts_placeholder.mp3",
+      "kind": "tts_placeholder",
+      "validated": false,
+      "language": "en",
+      "text": "Nice to meet you",
+      "engine": "kokoro",
+      "voice": "af_heart",
+      "license": "Kokoro-82M weights Apache-2.0 (hexgrad/Kokoro-82M); kokoro-onnx MIT. Model card lists CC BY training data (Koniwa, SIWIS): credit in app credits.",
+      "date": "2026-11-23"
+    },
+    {
+      "word_id": "rohingya_310",
+      "path": "ml/translation/picture_dictionary/Audio/rohingya_310_audio_en_tts_placeholder.mp3",
+      "kind": "tts_placeholder",
+      "validated": false,
+      "language": "en",
+      "text": "Goodbye",
+      "engine": "kokoro",
+      "voice": "af_heart",
+      "license": "Kokoro-82M weights Apache-2.0 (hexgrad/Kokoro-82M); kokoro-onnx MIT. Model card lists CC BY training data (Koniwa, SIWIS): credit in app credits.",
+      "date": "2026-11-23"
     }
   ]
 }
