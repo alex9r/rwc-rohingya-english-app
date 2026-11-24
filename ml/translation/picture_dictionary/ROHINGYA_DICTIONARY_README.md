@@ -9,7 +9,7 @@ Load `rohingya_dictionary_200_words_and_phrases.json` as UTF-8 JSON. This packag
 - `rohingya`: the preserved source spelling, including diacritics and transcription marks.
 - `english`: the English meaning. `english_meanings` preserves multiple meanings where entries were consolidated.
 - `definition`: a short English explanation of the meaning.
-- `image_url`: a portable relative path to a matching PNG, or `null` where an image is pending.
+- `image_url`: a portable relative path to a matching PNG.
 - `english_audio`: a relative path and metadata for the English text-to-speech placeholder; the audio is machine-generated and unvalidated.
 - `source_references` and `source_entries`: published references and original file/entry pointers.
 
@@ -22,12 +22,12 @@ rohingya_dictionary_200_words_and_phrases.json
 Images_2/
   rohingya_001.png
   ...
-  rohingya_303.png
+  rohingya_310.png
 ```
 
-Vocabulary uses IDs 001–200. Phrases use IDs 201–310. Seven new phrases (304–310) do not yet have images. Keep the JSON beside `Images_2`, or resolve its relative image paths against your app's asset root. All delivered PNGs are 1024 × 1024 pixels. Existing original image filenames were preserved; the unified names are additional copies.
+Vocabulary uses IDs 001–200. Phrases use IDs 201–310. Keep the JSON beside `Images_2`, or resolve its relative image paths against your app's asset root. All delivered PNGs are 1024 × 1024 pixels. Existing original image filenames were preserved; the unified names are additional copies.
 
-English audio files are in `Audio/`, named `rohingya_001_audio_en_tts_placeholder.mp3` through `rohingya_310_audio_en_tts_placeholder.mp3`. The ID matches the catalog entry and, where present, its image. `audio_manifest.json` records the text, voice, and source details. These are English machine-generated placeholders; Rohingya recordings are not included.
+English audio files are in `Audio/`, named `rohingya_001_audio_en_tts_placeholder.mp3` through `rohingya_310_audio_en_tts_placeholder.mp3`. The ID matches the catalog entry and its image. `audio_manifest.json` records the text, voice, and source details. These are English machine-generated placeholders; Rohingya recordings are not included.
 
 To reproduce missing audio, install the dependencies and model described in `ml/tts/README.md`, then from the repository root run:
 
@@ -47,6 +47,6 @@ Every entry remains pending native-speaker review. Published attestation and imp
 
 `rohingya_dictionary_provenance.json` preserves original entry metadata, source notes and attributions, and the picture prompt set. Some original metadata contains unverified examples; use the main catalog for import. Preserve applicable source attribution and licensing information when redistributing the material.
 
-The completed asset package reuses 98 existing pictures and adds 205 pictures made with the built-in image generation tool. The 103 phrase pictures are separate from the 200 vocabulary pictures; the seven newly added phrases have no pictures yet.
+The asset package reuses 98 existing pictures and adds 212 pictures made with the built-in image generation tool. The 110 phrase pictures are separate from the 200 vocabulary pictures.
 
 `rohingya_dictionary_validation.json` records structural and file checks. These checks do not replace linguistic review.

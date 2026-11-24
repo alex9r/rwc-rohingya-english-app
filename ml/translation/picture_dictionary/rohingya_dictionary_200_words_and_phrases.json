@@ -16,7 +16,7 @@
     "Good and Fine share the supplied headword gom and are consolidated into one entry with both meanings.",
     "Earlier 30/40-entry greeting lists are overlapping source versions, not additional vocabulary.",
     "English definitions and new images are editorial learning aids, not additional translation evidence.",
-    "Seven previously excluded David-source entries are included for completeness; model fallback and conflicting translations require review, and their images are pending. The untranslated Greet is excluded."
+    "Seven previously excluded David-source entries are included for completeness; model fallback and conflicting translations require review. The untranslated Greet is excluded."
   ],
   "source_files": [
     {
@@ -12074,7 +12074,7 @@
       "definition": "Saying a family member works in a factory.",
       "part_of_speech": "phrase",
       "category": "Employment",
-      "image_url": null,
+      "image_url": "Images_2/rohingya_304.png",
       "validation_status": "source_attested_pending_native_review",
       "native_review_status": "pending",
       "source_references": [
@@ -12117,7 +12117,7 @@
       "definition": "Expressing urgent need for hospital care.",
       "part_of_speech": "phrase",
       "category": "Pharmacy / Medical",
-      "image_url": null,
+      "image_url": "Images_2/rohingya_305.png",
       "validation_status": "ai_draft_pending_native_review",
       "native_review_status": "pending",
       "source_references": [
@@ -12160,7 +12160,7 @@
       "definition": "Asking whether a taxi is needed.",
       "part_of_speech": "phrase",
       "category": "Transportation",
-      "image_url": null,
+      "image_url": "Images_2/rohingya_306.png",
       "validation_status": "source_attested_pending_native_review",
       "native_review_status": "pending",
       "source_references": [
@@ -12203,7 +12203,7 @@
       "definition": "Commenting that a price is reasonable or good.",
       "part_of_speech": "phrase",
       "category": "Groceries",
-      "image_url": null,
+      "image_url": "Images_2/rohingya_307.png",
       "validation_status": "source_attested_pending_native_review",
       "native_review_status": "pending",
       "source_references": [
@@ -12246,7 +12246,7 @@
       "definition": "Introducing yourself by name.",
       "part_of_speech": "phrase",
       "category": "Greetings",
-      "image_url": null,
+      "image_url": "Images_2/rohingya_308.png",
       "validation_status": "ai_draft_pending_native_review",
       "native_review_status": "pending",
       "source_references": [
@@ -12289,7 +12289,7 @@
       "definition": "A polite phrase when meeting someone for the first time.",
       "part_of_speech": "phrase",
       "category": "Greetings",
-      "image_url": null,
+      "image_url": "Images_2/rohingya_309.png",
       "validation_status": "ai_draft_pending_native_review",
       "native_review_status": "pending",
       "source_references": [
@@ -12332,7 +12332,7 @@
       "definition": "A common way to say goodbye.",
       "part_of_speech": "phrase",
       "category": "Greetings",
-      "image_url": null,
+      "image_url": "Images_2/rohingya_310.png",
       "validation_status": "ai_draft_pending_native_review",
       "native_review_status": "pending",
       "source_references": [

@@ -3,12 +3,12 @@
   "word_count": 200,
   "phrase_count": 110,
   "unique_word_headwords": 200,
-  "valid_images": 303,
+  "valid_images": 310,
   "image_dimensions": [
     1024,
     1024
   ],
-  "unique_image_hashes": 303,
+  "unique_image_hashes": 310,
   "audio_fields": 310,
   "source_file_checksums_matched": 9,
   "part_of_speech_counts": {
@@ -26,14 +26,6 @@
   "linguistic_review": "Pending native-speaker review; this script validates structure and files only.",
   "english_tts_files": 310,
   "english_tts_validation": "All files decoded as MP3 and matched to entry IDs and English text; listening review pending.",
-  "missing_image_count": 7,
-  "missing_image_ids": [
-    "rohingya_304",
-    "rohingya_305",
-    "rohingya_306",
-    "rohingya_307",
-    "rohingya_308",
-    "rohingya_309",
-    "rohingya_310"
-  ]
+  "missing_image_count": 0,
+  "missing_image_ids": []
 }
