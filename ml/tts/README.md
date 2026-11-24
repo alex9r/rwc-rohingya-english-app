@@ -47,9 +47,7 @@ confirmed by the TPMs.
 
 **Lexicon source.** `data/lexicon.json` does not exist yet. Until it does, the default
 `--lexicon` is the stand-in `data/rohingya_greetings_40.json` (40 greeting entries, draft
-schema, copied unchanged into this PR; it is Marcus's file to own and replace). The loader
-reads `entries[].id` with `english_meaning.word` or `english`. Point `--lexicon` at
-Marcus's file when it lands.
+schema, copied unchanged into this PR; it is Marcus's file to own and replace). The loader reads `entries[].id` with `english_meaning.word` or `english`, and also reads both `words` and `phrases` arrays in the picture dictionary. Use `--limit 310` for all 310 entries and `--audio-label` to include `_audio` in the filename. See the picture dictionary README for the complete command.
 
 ## Regenerating
 

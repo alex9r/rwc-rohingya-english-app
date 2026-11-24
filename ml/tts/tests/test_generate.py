@@ -138,6 +138,22 @@ def test_select_words_hero_limit_and_unknown():
     assert select_words(words, ids=["nope"]) == ([], ["nope"])
 
 
+def test_picture_dictionary_words_and_phrases_with_audio_label(paths):
+    out, manifest, root = paths
+    lexicon = root / "dictionary.json"
+    lexicon.write_text(json.dumps({"words": [{"id": "rohingya_001", "english": "Hello"}],
+                                  "phrases": [{"id": "rohingya_201", "english": "Good morning"}]}))
+    backend = FakeBackend()
+    report = generate(load_words(lexicon), out, manifest, backend, repo_root=root, audio_label=True)
+    assert report.created == ["rohingya_001", "rohingya_201"]
+    assert backend.heard == ["Hello", "Good morning"]
+    entries = json.loads(manifest.read_text())["entries"]
+    assert [entry["path"] for entry in entries] == [
+        "data/audio/rohingya_001_audio_en_tts_placeholder.mp3",
+        "data/audio/rohingya_201_audio_en_tts_placeholder.mp3",
+    ]
+
+
 def test_backend_registry_is_pluggable():
     register_backend("fake", lambda **o: FakeBackend())
     assert "fake" in available_backends() and "kokoro" in available_backends()

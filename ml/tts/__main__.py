@@ -26,6 +26,7 @@ def main() -> None:
     g.add_argument("--manifest", type=Path, default=REPO / "data" / "audio_manifest.json")
     g.add_argument("--backend", default=DEFAULT_BACKEND, help=f"one of: {', '.join(available_backends())}")
     g.add_argument("--voice", default=None, help="backend voice name")
+    g.add_argument("--audio-label", action="store_true", help="include _audio in output filenames")
 
     sub.add_parser("fetch-model", help="download the default engine's model files (public, no key)")
     args = ap.parse_args()
@@ -42,7 +43,10 @@ def main() -> None:
     for u in unknown:
         print(f"unknown word id (skipped): {u}")
     opts = {"voice": args.voice} if args.voice else {}
-    report = generate(chosen, args.out, args.manifest, get_backend(args.backend, **opts))
+    report = generate(
+        chosen, args.out, args.manifest, get_backend(args.backend, **opts),
+        repo_root=REPO, audio_label=args.audio_label,
+    )
     for w in report.created:
         print(f"created  {w}")
     for w in report.skipped:
