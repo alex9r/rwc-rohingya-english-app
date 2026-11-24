@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "word_count": 200,
+  "phrase_count": 103,
+  "unique_word_headwords": 200,
+  "valid_images": 303,
+  "image_dimensions": [
+    1024,
+    1024
+  ],
+  "unique_image_hashes": 303,
+  "audio_fields": 0,
+  "source_file_checksums_matched": 9,
+  "part_of_speech_counts": {
+    "interjection": 6,
+    "interjection / verb": 1,
+    "politeness marker": 1,
+    "interjection / adjective": 1,
+    "adjective": 9,
+    "adverb": 2,
+    "noun": 164,
+    "verb": 11,
+    "noun / adverb": 2,
+    "lexical expression": 3
+  },
+  "linguistic_review": "Pending native-speaker review; this script validates structure and files only."
+}
