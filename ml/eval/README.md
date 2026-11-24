@@ -8,8 +8,9 @@ manifest field. No model is needed to run the tests; no third-party dependencies
 ## Status
 
 - Built and unit-tested on hand-written strings (`python -m pytest ml/eval`).
-- **No Rohingya audio exists in the repo yet.** `data/CLEAR_Gamayun_rhg-eng_5k` is text only
-  (5,000 sentence pairs). So there are no Rohingya WER numbers, and none are quoted here.
+- **No Rohingya transcripts exist yet.** An 80-clip VOA pack has been requested from a Rohingya speaker to
+  transcribe; nothing has come back, so there are no Rohingya WER numbers and none are quoted here.
+  How the clips were chosen and how consent works: [`docs/rhg-clip-collection-and-consent.md`](../../docs/rhg-clip-collection-and-consent.md).
 
 ## Pipeline
 
@@ -20,6 +21,10 @@ python -m ml.eval prompts data/CLEAR_Gamayun_rhg-eng_5k prompts.jsonl -n 100 --m
 # 2. as recordings arrive: fill audio, speaker_id (pseudonymous), noise/pace; a Rohingya
 #    speaker checks each reference and their ID goes in verified_by
 python -m ml.eval validate manifest.jsonl
+
+# 2b. the VOA route: pick clips from a shard and write the sheet (needs: pip install openpyxl)
+python -m ml.eval pack rohingya-00000.tar out/            # audio/, transcription_sheet.xlsx, _private_source_map.csv
+python -m ml.eval ingest out/transcription_sheet.xlsx out/audio manifest.jsonl --source-map out/_private_source_map.csv
 
 # 3. evaluate (the proxy language is recorded in the report)
 python -m ml.eval run manifest.jsonl --language bn --model small --out report
