@@ -142,6 +142,29 @@ clips just under it average at least 50% WER (`--repeat-wer`). Set the result pe
 deployment with `RWC_HIGH_CONFIDENCE` / `RWC_LOW_CONFIDENCE`; re-run it when the model
 or proxy language changes (Hari's recommendation).
 
+**Re-tuning as checked clips come in.** Every clip a reviewer checks in the review queue
+(below) is another calibration point. It needs no model run, because the record already
+holds the confidence and what the model heard, and the WER is scored with Luna's
+`ml.eval` code. Sources can be combined:
+
+```bash
+python -m ml.speech.calibrate --report eval_report.json --manifest manifest.jsonl \
+    --queue speech_review --model small
+```
+
+Queue clips saved by a different model are left out. The output ends with the measure
+that matters for users:
+
+```
+repeats (heard right anyway = WER <= 0.10):
+  current     LOW 0.50: asks to repeat 21 clips, 10 of them heard right anyway
+  recommended LOW 0.40: asks to repeat 11 clips, 0 of them heard right anyway
+```
+
+"Heard right anyway" counts the times the user repeated for nothing. The queue only
+holds clips the app was unsure about, so these are counts of checked clips, not shares
+of real traffic.
+
 ## Keeping unsure clips for review
 
 `ReviewQueue` keeps low-confidence clips, with research consent, so a Rohingya speaker
@@ -223,6 +246,7 @@ They cover every failure status, m4a decoding (from a path and from bytes), ster
   confidence on them will be low. This is the honest baseline the README promises,
   not a bug.
 - The thresholds aren't calibrated on Rohingya yet: there are no transcribed Rohingya
-  clips until Luna's test set exists. The calibration path is ready (see above).
+  clips until Luna's test set exists. The calibration path is ready (see above), from
+  her report, from reviewed queue clips, or both.
 - Clips over 60 s are rejected rather than chunked; the app's clips are a word or a
   sentence.
