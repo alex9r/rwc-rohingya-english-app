@@ -1,11 +1,5 @@
 # Rohingya evaluation clips: how they were collected and how consent was given
 
-Luna, 23 Nov 2026. Part of the Rohingya test suite built with [`ml/eval`](../ml/eval/README.md).
-
-**Status: waiting for a reply.** We have asked the Rohingya Welcome Centre for a Rohingya
-speaker to transcribe an 80-clip pack. No transcripts have come back, so there are no
-Rohingya results yet. The `[to fill]` items below are filled in when they do.
-
 ## Source of the audio
 
 The clips are not recordings we made. They come from Voice of America Rohingya radio news,
@@ -71,6 +65,3 @@ python -m ml.eval ingest transcription_sheet.xlsx audio manifest.jsonl --source-
 python -m ml.eval validate manifest.jsonl
 python -m ml.eval run manifest.jsonl --language bn --model small --out report   # and --fold-marks
 ```
-
-Run the same manifest through each model being compared and keep the proxy language in the
-report. Do not quote any Rohingya number until this has been run on real transcripts.
