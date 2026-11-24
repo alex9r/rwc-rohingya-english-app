@@ -1,6 +1,6 @@
 # Rohingya picture dictionary and phrasebook
 
-Load `rohingya_dictionary_200_words_and_phrases.json` as UTF-8 JSON.
+Load `rohingya_dictionary_200_words_and_phrases.json` as UTF-8 JSON. This package is separate from `ml/translation/data` because its schema differs from the datasets loaded by the translator and backend seeder; it is not imported by those components automatically.
 
 - `words`: exactly 200 vocabulary entries, including lexical compounds such as “sore throat.”
 - `phrases`: 103 complete phrase entries, additional to the 200 vocabulary entries.
