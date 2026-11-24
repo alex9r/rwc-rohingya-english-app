@@ -60,10 +60,14 @@ def load_words(lexicon_path: Path) -> list[WordItem]:
 
     Understands the draft shapes in the repo: ``entries[].english_meaning.word`` (the
     greetings/phrases files) and ``entries[].english`` (the README's lexicon shape).
-    A list at the top level is also accepted.
+    Picture dictionaries with separate ``words`` and ``phrases`` lists and a list
+    at the top level are also accepted.
     """
     data = json.loads(Path(lexicon_path).read_text(encoding="utf-8"))
-    entries = data.get("entries", data.get("words", [])) if isinstance(data, dict) else data
+    if isinstance(data, dict):
+        entries = data["entries"] if "entries" in data else data.get("words", []) + data.get("phrases", [])
+    else:
+        entries = data
     items = []
     for e in entries:
         word_id = e.get("id") or e.get("word_id")
@@ -121,6 +125,7 @@ def generate(
     *,
     repo_root: Optional[Path] = None,
     today: Optional[dt.date] = None,
+    audio_label: bool = False,
 ) -> GenerateReport:
     """Create missing placeholder files and record them in the manifest. Idempotent.
 
@@ -138,7 +143,7 @@ def generate(
         if not _SAFE_ID.match(item.word_id):
             report.failed.append((item.word_id, "unsafe word id for a filename"))
             continue
-        path = out_dir / f"{item.word_id}{SUFFIX}"
+        path = out_dir / f"{item.word_id}{'_audio' if audio_label else ''}{SUFFIX}"
         if path.exists():
             report.skipped.append(item.word_id)
             if (item.word_id, KIND) not in known:

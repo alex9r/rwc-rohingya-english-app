@@ -86,7 +86,13 @@
           "pointer": "/entries/0",
           "id": "greeting_001"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_001_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_002",
@@ -117,7 +123,13 @@
           "pointer": "/entries/1",
           "id": "greeting_002"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_002_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_003",
@@ -148,7 +160,13 @@
           "pointer": "/entries/2",
           "id": "greeting_003"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_003_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_004",
@@ -179,7 +197,13 @@
           "pointer": "/entries/3",
           "id": "greeting_004"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_004_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_005",
@@ -210,7 +234,13 @@
           "pointer": "/entries/4",
           "id": "greeting_005"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_005_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_006",
@@ -241,7 +271,13 @@
           "pointer": "/entries/5",
           "id": "greeting_006"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_006_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_007",
@@ -272,7 +308,13 @@
           "pointer": "/entries/6",
           "id": "greeting_007"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_007_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_008",
@@ -303,7 +345,13 @@
           "pointer": "/entries/7",
           "id": "greeting_008"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_008_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_009",
@@ -334,7 +382,13 @@
           "pointer": "/entries/8",
           "id": "greeting_009"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_009_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_010",
@@ -374,7 +428,13 @@
           "pointer": "/entries/10",
           "id": "greeting_011"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_010_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_011",
@@ -405,7 +465,13 @@
           "pointer": "/entries/11",
           "id": "greeting_012"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_011_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_012",
@@ -436,7 +502,13 @@
           "pointer": "/entries/12",
           "id": "greeting_013"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_012_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_013",
@@ -467,7 +539,13 @@
           "pointer": "/entries/13",
           "id": "greeting_014"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_013_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_014",
@@ -498,7 +576,13 @@
           "pointer": "/entries/14",
           "id": "greeting_015"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_014_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_015",
@@ -529,7 +613,13 @@
           "pointer": "/entries/15",
           "id": "greeting_016"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_015_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_016",
@@ -560,7 +650,13 @@
           "pointer": "/entries/16",
           "id": "greeting_017"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_016_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_017",
@@ -591,7 +687,13 @@
           "pointer": "/entries/17",
           "id": "greeting_018"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_017_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_018",
@@ -622,7 +724,13 @@
           "pointer": "/entries/18",
           "id": "greeting_019"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_018_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_019",
@@ -653,7 +761,13 @@
           "pointer": "/entries/20",
           "id": "greeting_021"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_019_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_020",
@@ -684,7 +798,13 @@
           "pointer": "/entries/21",
           "id": "greeting_022"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_020_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_021",
@@ -715,7 +835,13 @@
           "pointer": "/entries/22",
           "id": "greeting_023"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_021_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_022",
@@ -746,7 +872,13 @@
           "pointer": "/entries/23",
           "id": "greeting_024"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_022_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_023",
@@ -777,7 +909,13 @@
           "pointer": "/entries/24",
           "id": "greeting_025"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_023_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_024",
@@ -808,7 +946,13 @@
           "pointer": "/entries/25",
           "id": "greeting_026"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_024_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_025",
@@ -839,7 +983,13 @@
           "pointer": "/entries/26",
           "id": "greeting_027"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_025_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_026",
@@ -870,7 +1020,13 @@
           "pointer": "/entries/27",
           "id": "greeting_028"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_026_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_027",
@@ -901,7 +1057,13 @@
           "pointer": "/entries/28",
           "id": "greeting_029"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_027_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_028",
@@ -932,7 +1094,13 @@
           "pointer": "/entries/29",
           "id": "greeting_030"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_028_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_029",
@@ -963,7 +1131,13 @@
           "pointer": "/entries/30",
           "id": "greeting_031"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_029_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_030",
@@ -994,7 +1168,13 @@
           "pointer": "/entries/31",
           "id": "greeting_032"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_030_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_031",
@@ -1025,7 +1205,13 @@
           "pointer": "/entries/32",
           "id": "greeting_033"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_031_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_032",
@@ -1056,7 +1242,13 @@
           "pointer": "/entries/33",
           "id": "greeting_034"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_032_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_033",
@@ -1087,7 +1279,13 @@
           "pointer": "/entries/34",
           "id": "greeting_035"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_033_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_034",
@@ -1118,7 +1316,13 @@
           "pointer": "/entries/35",
           "id": "greeting_036"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_034_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_035",
@@ -1149,7 +1353,13 @@
           "pointer": "/entries/36",
           "id": "greeting_037"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_035_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_036",
@@ -1180,7 +1390,13 @@
           "pointer": "/entries/37",
           "id": "greeting_038"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_036_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_037",
@@ -1211,7 +1427,13 @@
           "pointer": "/entries/38",
           "id": "greeting_039"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_037_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_038",
@@ -1242,7 +1464,13 @@
           "pointer": "/entries/39",
           "id": "greeting_040"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_038_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_039",
@@ -1273,7 +1501,13 @@
           "pointer": "/entries/40",
           "id": "healthcare_001"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_039_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_040",
@@ -1304,7 +1538,13 @@
           "pointer": "/entries/41",
           "id": "healthcare_002"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_040_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_041",
@@ -1335,7 +1575,13 @@
           "pointer": "/entries/42",
           "id": "healthcare_003"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_041_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_042",
@@ -1366,7 +1612,13 @@
           "pointer": "/entries/43",
           "id": "healthcare_004"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_042_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_043",
@@ -1397,7 +1649,13 @@
           "pointer": "/entries/44",
           "id": "healthcare_005"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_043_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_044",
@@ -1428,7 +1686,13 @@
           "pointer": "/entries/45",
           "id": "healthcare_006"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_044_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_045",
@@ -1459,7 +1723,13 @@
           "pointer": "/entries/46",
           "id": "healthcare_007"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_045_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_046",
@@ -1490,7 +1760,13 @@
           "pointer": "/entries/47",
           "id": "healthcare_008"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_046_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_047",
@@ -1521,7 +1797,13 @@
           "pointer": "/entries/48",
           "id": "healthcare_009"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_047_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_048",
@@ -1552,7 +1834,13 @@
           "pointer": "/entries/49",
           "id": "healthcare_010"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_048_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_049",
@@ -1583,7 +1871,13 @@
           "pointer": "/entries/50",
           "id": "healthcare_011"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_049_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_050",
@@ -1614,7 +1908,13 @@
           "pointer": "/entries/51",
           "id": "healthcare_012"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_050_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_051",
@@ -1645,7 +1945,13 @@
           "pointer": "/entries/52",
           "id": "healthcare_013"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_051_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_052",
@@ -1676,7 +1982,13 @@
           "pointer": "/entries/53",
           "id": "healthcare_014"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_052_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_053",
@@ -1707,7 +2019,13 @@
           "pointer": "/entries/54",
           "id": "healthcare_015"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_053_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_054",
@@ -1738,7 +2056,13 @@
           "pointer": "/entries/55",
           "id": "healthcare_016"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_054_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_055",
@@ -1769,7 +2093,13 @@
           "pointer": "/entries/56",
           "id": "healthcare_017"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_055_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_056",
@@ -1800,7 +2130,13 @@
           "pointer": "/entries/57",
           "id": "healthcare_018"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_056_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_057",
@@ -1831,7 +2167,13 @@
           "pointer": "/entries/58",
           "id": "healthcare_019"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_057_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_058",
@@ -1862,7 +2204,13 @@
           "pointer": "/entries/59",
           "id": "healthcare_020"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_058_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_059",
@@ -1893,7 +2241,13 @@
           "pointer": "/entries/60",
           "id": "healthcare_021"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_059_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_060",
@@ -1924,7 +2278,13 @@
           "pointer": "/entries/61",
           "id": "healthcare_022"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_060_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_061",
@@ -1955,7 +2315,13 @@
           "pointer": "/entries/62",
           "id": "healthcare_023"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_061_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_062",
@@ -1986,7 +2352,13 @@
           "pointer": "/entries/63",
           "id": "healthcare_024"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_062_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_063",
@@ -2017,7 +2389,13 @@
           "pointer": "/entries/64",
           "id": "healthcare_025"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_063_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_064",
@@ -2048,7 +2426,13 @@
           "pointer": "/entries/65",
           "id": "healthcare_026"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_064_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_065",
@@ -2079,7 +2463,13 @@
           "pointer": "/entries/66",
           "id": "healthcare_027"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_065_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_066",
@@ -2110,7 +2500,13 @@
           "pointer": "/entries/67",
           "id": "healthcare_028"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_066_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_067",
@@ -2141,7 +2537,13 @@
           "pointer": "/entries/68",
           "id": "healthcare_029"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_067_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_068",
@@ -2172,7 +2574,13 @@
           "pointer": "/entries/69",
           "id": "healthcare_030"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_068_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_069",
@@ -2203,7 +2611,13 @@
           "pointer": "/entries/70",
           "id": "daily_life_001"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_069_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_070",
@@ -2234,7 +2648,13 @@
           "pointer": "/entries/71",
           "id": "daily_life_002"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_070_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_071",
@@ -2265,7 +2685,13 @@
           "pointer": "/entries/72",
           "id": "daily_life_003"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_071_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_072",
@@ -2296,7 +2722,13 @@
           "pointer": "/entries/73",
           "id": "daily_life_004"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_072_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_073",
@@ -2327,7 +2759,13 @@
           "pointer": "/entries/74",
           "id": "daily_life_005"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_073_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_074",
@@ -2358,7 +2796,13 @@
           "pointer": "/entries/75",
           "id": "daily_life_006"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_074_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_075",
@@ -2389,7 +2833,13 @@
           "pointer": "/entries/76",
           "id": "daily_life_007"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_075_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_076",
@@ -2420,7 +2870,13 @@
           "pointer": "/entries/77",
           "id": "daily_life_008"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_076_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_077",
@@ -2451,7 +2907,13 @@
           "pointer": "/entries/78",
           "id": "daily_life_009"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_077_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_078",
@@ -2482,7 +2944,13 @@
           "pointer": "/entries/79",
           "id": "daily_life_010"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_078_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_079",
@@ -2513,7 +2981,13 @@
           "pointer": "/entries/80",
           "id": "daily_life_011"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_079_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_080",
@@ -2544,7 +3018,13 @@
           "pointer": "/entries/81",
           "id": "daily_life_012"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_080_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_081",
@@ -2575,7 +3055,13 @@
           "pointer": "/entries/82",
           "id": "daily_life_013"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_081_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_082",
@@ -2606,7 +3092,13 @@
           "pointer": "/entries/83",
           "id": "daily_life_014"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_082_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_083",
@@ -2637,7 +3129,13 @@
           "pointer": "/entries/84",
           "id": "daily_life_015"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_083_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_084",
@@ -2668,7 +3166,13 @@
           "pointer": "/entries/85",
           "id": "daily_life_016"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_084_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_085",
@@ -2699,7 +3203,13 @@
           "pointer": "/entries/86",
           "id": "daily_life_017"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_085_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_086",
@@ -2730,7 +3240,13 @@
           "pointer": "/entries/87",
           "id": "daily_life_018"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_086_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_087",
@@ -2761,7 +3277,13 @@
           "pointer": "/entries/88",
           "id": "daily_life_019"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_087_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_088",
@@ -2792,7 +3314,13 @@
           "pointer": "/entries/89",
           "id": "daily_life_020"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_088_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_089",
@@ -2823,7 +3351,13 @@
           "pointer": "/entries/90",
           "id": "daily_life_021"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_089_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_090",
@@ -2854,7 +3388,13 @@
           "pointer": "/entries/91",
           "id": "daily_life_022"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_090_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_091",
@@ -2885,7 +3425,13 @@
           "pointer": "/entries/92",
           "id": "daily_life_023"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_091_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_092",
@@ -2916,7 +3462,13 @@
           "pointer": "/entries/93",
           "id": "daily_life_024"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_092_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_093",
@@ -2947,7 +3499,13 @@
           "pointer": "/entries/94",
           "id": "daily_life_025"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_093_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_094",
@@ -2978,7 +3536,13 @@
           "pointer": "/entries/95",
           "id": "daily_life_026"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_094_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_095",
@@ -3009,7 +3573,13 @@
           "pointer": "/entries/96",
           "id": "daily_life_027"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_095_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_096",
@@ -3040,7 +3610,13 @@
           "pointer": "/entries/97",
           "id": "daily_life_028"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_096_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_097",
@@ -3071,7 +3647,13 @@
           "pointer": "/entries/98",
           "id": "daily_life_029"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_097_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_098",
@@ -3102,7 +3684,13 @@
           "pointer": "/entries/99",
           "id": "daily_life_030"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_098_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_099",
@@ -3140,7 +3728,13 @@
           "pointer": "/key_terms/1",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_099_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_100",
@@ -3176,7 +3770,13 @@
           "pointer": "/key_terms/2",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_100_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_101",
@@ -3213,7 +3813,13 @@
           "pointer": "/key_terms/3",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_101_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_102",
@@ -3250,7 +3856,13 @@
           "pointer": "/key_terms/4",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_102_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_103",
@@ -3288,7 +3900,13 @@
           "pointer": "/key_terms/5",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_103_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_104",
@@ -3326,7 +3944,13 @@
           "pointer": "/key_terms/6",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_104_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_105",
@@ -3364,7 +3988,13 @@
           "pointer": "/key_terms/7",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_105_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_106",
@@ -3401,7 +4031,13 @@
           "pointer": "/key_terms/8",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_106_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_107",
@@ -3437,7 +4073,13 @@
           "pointer": "/key_terms/9",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_107_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_108",
@@ -3475,7 +4117,13 @@
           "pointer": "/key_terms/5",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_108_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_109",
@@ -3513,7 +4161,13 @@
           "pointer": "/key_terms/7",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_109_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_110",
@@ -3550,7 +4204,13 @@
           "pointer": "/key_terms/8",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_110_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_111",
@@ -3588,7 +4248,13 @@
           "pointer": "/key_terms/9",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_111_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_112",
@@ -3626,7 +4292,13 @@
           "pointer": "/key_terms/10",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_112_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_113",
@@ -3664,7 +4336,13 @@
           "pointer": "/key_terms/0",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_113_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_114",
@@ -3702,7 +4380,13 @@
           "pointer": "/key_terms/1",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_114_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_115",
@@ -3740,7 +4424,13 @@
           "pointer": "/key_terms/2",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_115_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_116",
@@ -3778,7 +4468,13 @@
           "pointer": "/key_terms/3",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_116_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_117",
@@ -3816,7 +4512,13 @@
           "pointer": "/key_terms/4",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_117_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_118",
@@ -3854,7 +4556,13 @@
           "pointer": "/key_terms/5",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_118_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_119",
@@ -3892,7 +4600,13 @@
           "pointer": "/key_terms/6",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_119_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_120",
@@ -3930,7 +4644,13 @@
           "pointer": "/key_terms/7",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_120_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_121",
@@ -3967,7 +4687,13 @@
           "pointer": "/key_terms/8",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_121_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_122",
@@ -4005,7 +4731,13 @@
           "pointer": "/key_terms/9",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_122_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_123",
@@ -4043,7 +4775,13 @@
           "pointer": "/key_terms/10",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_123_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_124",
@@ -4081,7 +4819,13 @@
           "pointer": "/key_terms/11",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_124_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_125",
@@ -4119,7 +4863,13 @@
           "pointer": "/key_terms/6",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_125_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_126",
@@ -4157,7 +4907,13 @@
           "pointer": "/key_terms/11",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_126_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_127",
@@ -4195,7 +4951,13 @@
           "pointer": "/key_terms/0",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_127_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_128",
@@ -4233,7 +4995,13 @@
           "pointer": "/key_terms/1",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_128_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_129",
@@ -4269,7 +5037,13 @@
           "pointer": "/key_terms/2",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_129_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_130",
@@ -4307,7 +5081,13 @@
           "pointer": "/key_terms/3",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_130_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_131",
@@ -4345,7 +5125,13 @@
           "pointer": "/key_terms/4",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_131_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_132",
@@ -4383,7 +5169,13 @@
           "pointer": "/key_terms/5",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_132_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_133",
@@ -4421,7 +5213,13 @@
           "pointer": "/key_terms/6",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_133_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_134",
@@ -4459,7 +5257,13 @@
           "pointer": "/key_terms/7",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_134_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_135",
@@ -4497,7 +5301,13 @@
           "pointer": "/key_terms/8",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_135_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_136",
@@ -4535,7 +5345,13 @@
           "pointer": "/key_terms/9",
           "id": null
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_136_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_137",
@@ -4571,7 +5387,13 @@
           "lookup_term": "Father",
           "parsed_line": 2298
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_137_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_138",
@@ -4607,7 +5429,13 @@
           "lookup_term": "Mother",
           "parsed_line": 3885
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_138_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_139",
@@ -4643,7 +5471,13 @@
           "lookup_term": "Child",
           "parsed_line": 1065
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_139_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_140",
@@ -4679,7 +5513,13 @@
           "lookup_term": "Brother",
           "parsed_line": 828
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_140_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_141",
@@ -4715,7 +5555,13 @@
           "lookup_term": "Sister",
           "parsed_line": 5524
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_141_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_142",
@@ -4751,7 +5597,13 @@
           "lookup_term": "Baby",
           "parsed_line": 519
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_142_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_143",
@@ -4787,7 +5639,13 @@
           "lookup_term": "Son",
           "parsed_line": 5631
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_143_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_144",
@@ -4823,7 +5681,13 @@
           "lookup_term": "Daughter",
           "parsed_line": 1650
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_144_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_145",
@@ -4859,7 +5723,13 @@
           "lookup_term": "Husband",
           "parsed_line": 2953
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_145_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_146",
@@ -4895,7 +5765,13 @@
           "lookup_term": "Wife",
           "parsed_line": 6694
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_146_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_147",
@@ -4931,7 +5807,13 @@
           "lookup_term": "Grandfather",
           "parsed_line": 2658
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_147_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_148",
@@ -4967,7 +5849,13 @@
           "lookup_term": "Food",
           "parsed_line": 2434
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_148_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_149",
@@ -5003,7 +5891,13 @@
           "lookup_term": "Person",
           "parsed_line": 4423
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_149_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_150",
@@ -5039,7 +5933,13 @@
           "lookup_term": "Woman",
           "parsed_line": 6743
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_150_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_151",
@@ -5075,7 +5975,13 @@
           "lookup_term": "Boy",
           "parsed_line": 775
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_151_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_152",
@@ -5111,7 +6017,13 @@
           "lookup_term": "Girl",
           "parsed_line": 2609
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_152_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_153",
@@ -5147,7 +6059,13 @@
           "lookup_term": "Water",
           "parsed_line": 6601
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_153_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_154",
@@ -5183,7 +6101,13 @@
           "lookup_term": "Rice",
           "parsed_line": 5149
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_154_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_155",
@@ -5219,7 +6143,13 @@
           "lookup_term": "Bread",
           "parsed_line": 794
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_155_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_156",
@@ -5255,7 +6185,13 @@
           "lookup_term": "Milk",
           "parsed_line": 3793
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_156_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_157",
@@ -5291,7 +6227,13 @@
           "lookup_term": "Banana",
           "parsed_line": 546
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_157_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_158",
@@ -5327,7 +6269,13 @@
           "lookup_term": "Apple",
           "parsed_line": 302
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_158_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_159",
@@ -5363,7 +6311,13 @@
           "lookup_term": "Orange",
           "parsed_line": 4221
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_159_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_160",
@@ -5399,7 +6353,13 @@
           "lookup_term": "Potato",
           "parsed_line": 4567
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_160_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_161",
@@ -5435,7 +6395,13 @@
           "lookup_term": "Onion",
           "parsed_line": 4188
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_161_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_162",
@@ -5471,7 +6437,13 @@
           "lookup_term": "Tomato",
           "parsed_line": 6177
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_162_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_163",
@@ -5507,7 +6479,13 @@
           "lookup_term": "Carrot",
           "parsed_line": 951
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_163_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_164",
@@ -5543,7 +6521,13 @@
           "lookup_term": "Chicken",
           "parsed_line": 1060
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_164_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_165",
@@ -5579,7 +6563,13 @@
           "lookup_term": "Vegetable",
           "parsed_line": 6481
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_165_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_166",
@@ -5615,7 +6605,13 @@
           "lookup_term": "Sugar",
           "parsed_line": 5850
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_166_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_167",
@@ -5651,7 +6647,13 @@
           "lookup_term": "Oil",
           "parsed_line": 4156
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_167_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_168",
@@ -5687,7 +6689,13 @@
           "lookup_term": "Flour",
           "parsed_line": 2414
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_168_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_169",
@@ -5723,7 +6731,13 @@
           "lookup_term": "Table",
           "parsed_line": 5960
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_169_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_170",
@@ -5759,7 +6773,13 @@
           "lookup_term": "Chair",
           "parsed_line": 1005
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_170_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_171",
@@ -5795,7 +6815,13 @@
           "lookup_term": "Spoon",
           "parsed_line": 5702
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_171_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_172",
@@ -5831,7 +6857,13 @@
           "lookup_term": "Fork",
           "parsed_line": 2470
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_172_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_173",
@@ -5867,7 +6899,13 @@
           "lookup_term": "Knife",
           "parsed_line": 3353
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_173_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_174",
@@ -5903,7 +6941,13 @@
           "lookup_term": "Pot",
           "parsed_line": 4566
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_174_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_175",
@@ -5939,7 +6983,13 @@
           "lookup_term": "Soap",
           "parsed_line": 5603
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_175_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_176",
@@ -5975,7 +7025,13 @@
           "lookup_term": "Towel",
           "parsed_line": 6204
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_176_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_177",
@@ -6011,7 +7067,13 @@
           "lookup_term": "Bucket",
           "parsed_line": 841
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_177_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_178",
@@ -6047,7 +7109,13 @@
           "lookup_term": "Basket",
           "parsed_line": 565
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_178_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_179",
@@ -6083,7 +7151,13 @@
           "lookup_term": "Toothbrush",
           "parsed_line": 6190
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_179_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_180",
@@ -6119,7 +7193,13 @@
           "lookup_term": "Broom",
           "parsed_line": 827
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_180_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_181",
@@ -6155,7 +7235,13 @@
           "lookup_term": "Sun",
           "parsed_line": 5866
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_181_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_182",
@@ -6191,7 +7277,13 @@
           "lookup_term": "Moon",
           "parsed_line": 3872
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_182_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_183",
@@ -6227,7 +7319,13 @@
           "lookup_term": "Tree",
           "parsed_line": 6251
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_183_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_184",
@@ -6263,7 +7361,13 @@
           "lookup_term": "Flower",
           "parsed_line": 2418
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_184_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_185",
@@ -6299,7 +7403,13 @@
           "lookup_term": "Leaf",
           "parsed_line": 3420
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_185_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_186",
@@ -6335,7 +7445,13 @@
           "lookup_term": "River",
           "parsed_line": 5183
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_186_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_187",
@@ -6371,7 +7487,13 @@
           "lookup_term": "Sea",
           "parsed_line": 5319
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_187_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_188",
@@ -6407,7 +7529,13 @@
           "lookup_term": "Sky",
           "parsed_line": 5543
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_188_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_189",
@@ -6443,7 +7571,13 @@
           "lookup_term": "Star",
           "parsed_line": 5732
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_189_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_190",
@@ -6479,7 +7613,13 @@
           "lookup_term": "Cloud",
           "parsed_line": 1148
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_190_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_191",
@@ -6515,7 +7655,13 @@
           "lookup_term": "School",
           "parsed_line": 5302
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_191_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_192",
@@ -6551,7 +7697,13 @@
           "lookup_term": "Bank",
           "parsed_line": 549
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_192_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_193",
@@ -6587,7 +7739,13 @@
           "lookup_term": "Bicycle",
           "parsed_line": 661
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_193_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_194",
@@ -6623,7 +7781,13 @@
           "lookup_term": "Bridge",
           "parsed_line": 809
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_194_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_195",
@@ -6659,7 +7823,13 @@
           "lookup_term": "Hand",
           "parsed_line": 2738
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_195_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_196",
@@ -6695,7 +7865,13 @@
           "lookup_term": "Arm",
           "parsed_line": 349
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_196_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_197",
@@ -6731,7 +7907,13 @@
           "lookup_term": "Finger",
           "parsed_line": 2374
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_197_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_198",
@@ -6767,7 +7949,13 @@
           "lookup_term": "Heart",
           "parsed_line": 2819
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_198_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_199",
@@ -6803,7 +7991,13 @@
           "lookup_term": "Back",
           "parsed_line": 520
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_199_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_200",
@@ -6839,7 +8033,13 @@
           "lookup_term": "Dog",
           "parsed_line": 1875
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_200_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     }
   ],
   "phrases": [
@@ -6874,7 +8074,13 @@
           "pointer": "/entries/0",
           "id": "employment_001"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_201_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_202",
@@ -6907,7 +8113,13 @@
           "pointer": "/entries/1",
           "id": "employment_002"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_202_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_203",
@@ -6940,7 +8152,13 @@
           "pointer": "/entries/2",
           "id": "employment_003"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_203_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_204",
@@ -6973,7 +8191,13 @@
           "pointer": "/entries/3",
           "id": "employment_004"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_204_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_205",
@@ -7006,7 +8230,13 @@
           "pointer": "/entries/4",
           "id": "employment_005"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_205_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_206",
@@ -7039,7 +8269,13 @@
           "pointer": "/entries/6",
           "id": "employment_007"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_206_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_207",
@@ -7072,7 +8308,13 @@
           "pointer": "/entries/7",
           "id": "employment_008"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_207_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_208",
@@ -7105,7 +8347,13 @@
           "pointer": "/entries/8",
           "id": "employment_009"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_208_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_209",
@@ -7138,7 +8386,13 @@
           "pointer": "/entries/9",
           "id": "employment_010"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_209_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_210",
@@ -7171,7 +8425,13 @@
           "pointer": "/entries/10",
           "id": "employment_011"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_210_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_211",
@@ -7204,7 +8464,13 @@
           "pointer": "/entries/11",
           "id": "employment_012"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_211_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_212",
@@ -7237,7 +8503,13 @@
           "pointer": "/entries/12",
           "id": "employment_013"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_212_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_213",
@@ -7270,7 +8542,13 @@
           "pointer": "/entries/13",
           "id": "employment_014"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_213_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_214",
@@ -7303,7 +8581,13 @@
           "pointer": "/entries/14",
           "id": "employment_015"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_214_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_215",
@@ -7336,7 +8620,13 @@
           "pointer": "/entries/0",
           "id": "everyday_001"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_215_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_216",
@@ -7369,7 +8659,13 @@
           "pointer": "/entries/1",
           "id": "everyday_002"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_216_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_217",
@@ -7402,7 +8698,13 @@
           "pointer": "/entries/2",
           "id": "everyday_003"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_217_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_218",
@@ -7435,7 +8737,13 @@
           "pointer": "/entries/3",
           "id": "everyday_004"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_218_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_219",
@@ -7468,7 +8776,13 @@
           "pointer": "/entries/4",
           "id": "everyday_005"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_219_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_220",
@@ -7501,7 +8815,13 @@
           "pointer": "/entries/5",
           "id": "everyday_006"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_220_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_221",
@@ -7534,7 +8854,13 @@
           "pointer": "/entries/6",
           "id": "everyday_007"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_221_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_222",
@@ -7567,7 +8893,13 @@
           "pointer": "/entries/7",
           "id": "everyday_008"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_222_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_223",
@@ -7600,7 +8932,13 @@
           "pointer": "/entries/8",
           "id": "everyday_009"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_223_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_224",
@@ -7633,7 +8971,13 @@
           "pointer": "/entries/9",
           "id": "everyday_010"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_224_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_225",
@@ -7666,7 +9010,13 @@
           "pointer": "/entries/10",
           "id": "everyday_011"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_225_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_226",
@@ -7699,7 +9049,13 @@
           "pointer": "/entries/11",
           "id": "everyday_012"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_226_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_227",
@@ -7732,7 +9088,13 @@
           "pointer": "/entries/12",
           "id": "everyday_013"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_227_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_228",
@@ -7765,7 +9127,13 @@
           "pointer": "/entries/13",
           "id": "everyday_014"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_228_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_229",
@@ -7798,7 +9166,13 @@
           "pointer": "/entries/14",
           "id": "everyday_015"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_229_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_230",
@@ -7831,7 +9205,13 @@
           "pointer": "/entries/15",
           "id": "everyday_016"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_230_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_231",
@@ -7864,7 +9244,13 @@
           "pointer": "/entries/16",
           "id": "everyday_017"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_231_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_232",
@@ -7897,7 +9283,13 @@
           "pointer": "/entries/0",
           "id": "groceries_001"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_232_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_233",
@@ -7930,7 +9322,13 @@
           "pointer": "/entries/1",
           "id": "groceries_002"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_233_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_234",
@@ -7963,7 +9361,13 @@
           "pointer": "/entries/2",
           "id": "groceries_003"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_234_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_235",
@@ -7996,7 +9400,13 @@
           "pointer": "/entries/3",
           "id": "groceries_004"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_235_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_236",
@@ -8029,7 +9439,13 @@
           "pointer": "/entries/4",
           "id": "groceries_005"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_236_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_237",
@@ -8062,7 +9478,13 @@
           "pointer": "/entries/5",
           "id": "groceries_006"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_237_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_238",
@@ -8095,7 +9517,13 @@
           "pointer": "/entries/6",
           "id": "groceries_007"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_238_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_239",
@@ -8128,7 +9556,13 @@
           "pointer": "/entries/7",
           "id": "groceries_008"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_239_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_240",
@@ -8161,7 +9595,13 @@
           "pointer": "/entries/8",
           "id": "groceries_009"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_240_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_241",
@@ -8194,7 +9634,13 @@
           "pointer": "/entries/9",
           "id": "groceries_010"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_241_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_242",
@@ -8227,7 +9673,13 @@
           "pointer": "/entries/10",
           "id": "groceries_011"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_242_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_243",
@@ -8260,7 +9712,13 @@
           "pointer": "/entries/11",
           "id": "groceries_012"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_243_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_244",
@@ -8293,7 +9751,13 @@
           "pointer": "/entries/12",
           "id": "groceries_013"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_244_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_245",
@@ -8326,7 +9790,13 @@
           "pointer": "/entries/13",
           "id": "groceries_014"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_245_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_246",
@@ -8359,7 +9829,13 @@
           "pointer": "/entries/0",
           "id": "pharmacy_001"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_246_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_247",
@@ -8392,7 +9868,13 @@
           "pointer": "/entries/1",
           "id": "pharmacy_002"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_247_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_248",
@@ -8425,7 +9907,13 @@
           "pointer": "/entries/2",
           "id": "pharmacy_003"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_248_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_249",
@@ -8458,7 +9946,13 @@
           "pointer": "/entries/3",
           "id": "pharmacy_004"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_249_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_250",
@@ -8491,7 +9985,13 @@
           "pointer": "/entries/4",
           "id": "pharmacy_005"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_250_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_251",
@@ -8524,7 +10024,13 @@
           "pointer": "/entries/5",
           "id": "pharmacy_006"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_251_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_252",
@@ -8557,7 +10063,13 @@
           "pointer": "/entries/6",
           "id": "pharmacy_007"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_252_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_253",
@@ -8590,7 +10102,13 @@
           "pointer": "/entries/7",
           "id": "pharmacy_008"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_253_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_254",
@@ -8623,7 +10141,13 @@
           "pointer": "/entries/8",
           "id": "pharmacy_009"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_254_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_255",
@@ -8656,7 +10180,13 @@
           "pointer": "/entries/9",
           "id": "pharmacy_010"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_255_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_256",
@@ -8689,7 +10219,13 @@
           "pointer": "/entries/10",
           "id": "pharmacy_011"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_256_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_257",
@@ -8722,7 +10258,13 @@
           "pointer": "/entries/11",
           "id": "pharmacy_012"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_257_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_258",
@@ -8755,7 +10297,13 @@
           "pointer": "/entries/12",
           "id": "pharmacy_013"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_258_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_259",
@@ -8788,7 +10336,13 @@
           "pointer": "/entries/0",
           "id": "transportation_001"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_259_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_260",
@@ -8821,7 +10375,13 @@
           "pointer": "/entries/1",
           "id": "transportation_002"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_260_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_261",
@@ -8854,7 +10414,13 @@
           "pointer": "/entries/2",
           "id": "transportation_003"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_261_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_262",
@@ -8887,7 +10453,13 @@
           "pointer": "/entries/3",
           "id": "transportation_004"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_262_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_263",
@@ -8920,7 +10492,13 @@
           "pointer": "/entries/4",
           "id": "transportation_005"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_263_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_264",
@@ -8953,7 +10531,13 @@
           "pointer": "/entries/5",
           "id": "transportation_006"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_264_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_265",
@@ -8986,7 +10570,13 @@
           "pointer": "/entries/6",
           "id": "transportation_007"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_265_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_266",
@@ -9019,7 +10609,13 @@
           "pointer": "/entries/7",
           "id": "transportation_008"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_266_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_267",
@@ -9052,7 +10648,13 @@
           "pointer": "/entries/8",
           "id": "transportation_009"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_267_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_268",
@@ -9085,7 +10687,13 @@
           "pointer": "/entries/9",
           "id": "transportation_010"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_268_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_269",
@@ -9118,7 +10726,13 @@
           "pointer": "/entries/10",
           "id": "transportation_011"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_269_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_270",
@@ -9151,7 +10765,13 @@
           "pointer": "/entries/11",
           "id": "transportation_012"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_270_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_271",
@@ -9184,7 +10804,13 @@
           "pointer": "/entries/12",
           "id": "transportation_013"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_271_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_272",
@@ -9217,7 +10843,13 @@
           "pointer": "/entries/0",
           "id": "phrase_001"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_272_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_273",
@@ -9250,7 +10882,13 @@
           "pointer": "/entries/1",
           "id": "phrase_002"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_273_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_274",
@@ -9283,7 +10921,13 @@
           "pointer": "/entries/2",
           "id": "phrase_003"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_274_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_275",
@@ -9316,7 +10960,13 @@
           "pointer": "/entries/4",
           "id": "phrase_005"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_275_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_276",
@@ -9349,7 +10999,13 @@
           "pointer": "/entries/5",
           "id": "phrase_006"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_276_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_277",
@@ -9382,7 +11038,13 @@
           "pointer": "/entries/6",
           "id": "phrase_007"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_277_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_278",
@@ -9415,7 +11077,13 @@
           "pointer": "/entries/7",
           "id": "phrase_008"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_278_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_279",
@@ -9448,7 +11116,13 @@
           "pointer": "/entries/8",
           "id": "phrase_009"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_279_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_280",
@@ -9481,7 +11155,13 @@
           "pointer": "/entries/10",
           "id": "phrase_011"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_280_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_281",
@@ -9514,7 +11194,13 @@
           "pointer": "/entries/11",
           "id": "phrase_012"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_281_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_282",
@@ -9547,7 +11233,13 @@
           "pointer": "/entries/12",
           "id": "phrase_013"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_282_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_283",
@@ -9580,7 +11272,13 @@
           "pointer": "/entries/14",
           "id": "phrase_015"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_283_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_284",
@@ -9613,7 +11311,13 @@
           "pointer": "/entries/15",
           "id": "phrase_016"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_284_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_285",
@@ -9646,7 +11350,13 @@
           "pointer": "/entries/16",
           "id": "phrase_017"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_285_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_286",
@@ -9679,7 +11389,13 @@
           "pointer": "/entries/17",
           "id": "phrase_018"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_286_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_287",
@@ -9712,7 +11428,13 @@
           "pointer": "/entries/18",
           "id": "phrase_019"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_287_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_288",
@@ -9745,7 +11467,13 @@
           "pointer": "/entries/19",
           "id": "phrase_020"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_288_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_289",
@@ -9778,7 +11506,13 @@
           "pointer": "/entries/20",
           "id": "phrase_021"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_289_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_290",
@@ -9811,7 +11545,13 @@
           "pointer": "/entries/21",
           "id": "phrase_022"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_290_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_291",
@@ -9844,7 +11584,13 @@
           "pointer": "/entries/22",
           "id": "phrase_023"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_291_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_292",
@@ -9877,7 +11623,13 @@
           "pointer": "/entries/23",
           "id": "phrase_024"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_292_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_293",
@@ -9910,7 +11662,13 @@
           "pointer": "/entries/24",
           "id": "phrase_025"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_293_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_294",
@@ -9943,7 +11701,13 @@
           "pointer": "/entries/25",
           "id": "phrase_026"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_294_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_295",
@@ -9976,7 +11740,13 @@
           "pointer": "/entries/26",
           "id": "phrase_027"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_295_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_296",
@@ -10009,7 +11779,13 @@
           "pointer": "/entries/27",
           "id": "phrase_028"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_296_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_297",
@@ -10042,7 +11818,13 @@
           "pointer": "/entries/28",
           "id": "phrase_029"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_297_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_298",
@@ -10075,7 +11857,13 @@
           "pointer": "/entries/29",
           "id": "phrase_030"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_298_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_299",
@@ -10108,7 +11896,13 @@
           "pointer": "/entries/30",
           "id": "phrase_031"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_299_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_300",
@@ -10141,7 +11935,13 @@
           "pointer": "/entries/31",
           "id": "phrase_032"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_300_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_301",
@@ -10174,7 +11974,13 @@
           "pointer": "/entries/32",
           "id": "phrase_033"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_301_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_302",
@@ -10207,7 +12013,13 @@
           "pointer": "/entries/33",
           "id": "phrase_034"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_302_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     },
     {
       "id": "rohingya_303",
@@ -10240,7 +12052,13 @@
           "pointer": "/entries/34",
           "id": "phrase_035"
         }
-      ]
+      ],
+      "english_audio": {
+        "path": "Audio/rohingya_303_audio_en_tts_placeholder.mp3",
+        "kind": "tts_placeholder",
+        "language": "en",
+        "validated": false
+      }
     }
   ]
 }

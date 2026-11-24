@@ -9,7 +9,7 @@
     1024
   ],
   "unique_image_hashes": 303,
-  "audio_fields": 0,
+  "audio_fields": 303,
   "source_file_checksums_matched": 9,
   "part_of_speech_counts": {
     "interjection": 6,
@@ -23,5 +23,7 @@
     "noun / adverb": 2,
     "lexical expression": 3
   },
-  "linguistic_review": "Pending native-speaker review; this script validates structure and files only."
+  "linguistic_review": "Pending native-speaker review; this script validates structure and files only.",
+  "english_tts_files": 303,
+  "english_tts_validation": "All files decoded as MP3 and matched to entry IDs and English text; listening review pending."
 }

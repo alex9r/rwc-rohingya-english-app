@@ -10,6 +10,7 @@ Load `rohingya_dictionary_200_words_and_phrases.json` as UTF-8 JSON. This packag
 - `english`: the English meaning. `english_meanings` preserves multiple meanings where entries were consolidated.
 - `definition`: a short English explanation of the meaning.
 - `image_url`: a portable relative path to a matching PNG.
+- `english_audio`: a relative path and metadata for the English text-to-speech placeholder; the audio is machine-generated and unvalidated.
 - `source_references` and `source_entries`: published references and original file/entry pointers.
 
 ## File naming
@@ -26,7 +27,15 @@ Images_2/
 
 Vocabulary uses IDs 001–200. Phrases use IDs 201–303. Keep the JSON beside `Images_2`, or resolve its relative image paths against your app's asset root. All delivered PNGs are 1024 × 1024 pixels. Existing original image filenames were preserved; the unified names are additional copies.
 
-Audio fields and files are omitted. They can be added later using the same stable entry IDs.
+English audio files are in `Audio/`, named `rohingya_001_audio_en_tts_placeholder.mp3` through `rohingya_303_audio_en_tts_placeholder.mp3`. The ID matches the corresponding image and catalog entry. `audio_manifest.json` records the text, voice, and source details. These are English machine-generated placeholders; Rohingya recordings are not included.
+
+To reproduce missing audio, install the dependencies and model described in `ml/tts/README.md`, then from the repository root run:
+
+```sh
+python -m ml.tts generate --lexicon ml/translation/picture_dictionary/rohingya_dictionary_200_words_and_phrases.json --limit 303 --out ml/translation/picture_dictionary/Audio --manifest ml/translation/picture_dictionary/audio_manifest.json --audio-label
+```
+
+The generator does not overwrite existing files. The app and translation loader do not automatically import this package.
 
 ## Selection and review
 
